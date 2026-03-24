@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishnu Prasad Portfolio</title>
+
+    <!-- AOS Animations -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Typed.js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</head>
+<body>
+    <!-- Header / Hero -->
+    <header>
+        <div class="hero-container">
+            <h1>Vishnu Prasad</h1>
+            <p id="typed"></p>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" data-aos="fade-right" data-aos-delay="100">
+        <h2>About Me</h2>
+        <p>
+            Hi! I’m Vishnu Prasad, a master’s student in Mechatronics and Cyber-Physical Systems. I work on XR/VR, robotics, and immersive simulation projects. I thrive on building intuitive and interactive experiences that make complex systems easy to understand.
+        </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" data-aos="zoom-in" data-aos-delay="200">
+        <h2>Skills</h2>
+        <ul class="skills-list">
+            <li>Unity 3D, MRTK 3, OpenXR, XR Interaction Toolkit</li>
+            <li>C#, Python, MATLAB</li>
+            <li>VR/MR Simulation, Motion Capture, Full-Body Tracking</li>
+            <li>ROS, SLAM, Path Planning, Sensor Integration</li>
+            <li>Blender, Solidworks, Ansys</li>
+            <li>Documentation & System Handover Workflows</li>
+        </ul>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" data-aos="fade-left" data-aos-delay="100">
+        <h2>Projects</h2>
+        <div id="project-list"></div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" data-aos="fade-up" data-aos-delay="100">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:prasadvnv@gmail.com">prasadvnv@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/prasadvnv" target="_blank">github.com/prasadvnv</a></p>
+    </section>
+
+    <!-- Scripts -->
+    <script src="projects.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Typed.js intro
+        new Typed('#typed', {
+            strings: [
+                "XR Developer",
+                "Unity • OpenXR • VR/MR",
+                "Building Immersive Experiences"
+            ],
+            typeSpeed: 60,
+            backSpeed: 30,
+            backDelay: 1500,
+            loop: true
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Vanilla Tilt for project cards
+        VanillaTilt.init(document.querySelectorAll(".project-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2
+        });
+    </script>
+</body>
+</html>

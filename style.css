@@ -1,0 +1,135 @@
+/* General */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
+/* Headers */
+h1, h2 {
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+section {
+    padding: 4rem 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Hero Header */
+header {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    color: #00bfff; /* Bright blue accent */
+    text-align: center;
+    padding: 8rem 2rem;
+}
+
+.hero-container h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #00bfff;
+}
+
+.hero-container p {
+    font-size: 1.5rem;
+    color: #80d4ff;
+}
+
+/* Projects */
+#project-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.project-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    flex: 1 1 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.5);
+}
+
+.project-card h3 {
+    margin-top: 0;
+    color: #00bfff;
+}
+
+.project-card p {
+    color: #cfd8dc;
+}
+
+.project-card a {
+    color: #80d4ff;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s ease;
+}
+
+.project-card a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #00bfff;
+    bottom: -2px;
+    left: 0;
+    transition: 0.3s ease;
+}
+
+.project-card a:hover::after {
+    width: 100%;
+}
+
+/* Skills */
+.skills-list {
+    list-style: none;
+    padding: 0;
+}
+
+.skills-list li {
+    background: #00bfff10; /* light blue semi-transparent */
+    margin: 0.5rem 0;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    transform: translateY(10px);
+    opacity: 0;
+    animation: skillFade 0.8s forwards ease-in-out;
+    color: #cfd8dc;
+}
+
+@keyframes skillFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contact Links */
+a {
+    color: #00bfff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Section Titles */
+section h2 {
+    border-bottom: 2px solid #00bfff;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.5rem;
+}
