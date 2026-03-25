@@ -133,3 +133,58 @@ section h2 {
     padding-bottom: 0.3rem;
     margin-bottom: 1.5rem;
 }
+
+/* Language Section */
+.lang-circle-container {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.lang-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.lang-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lang-svg {
+    transform: rotate(0deg);
+}
+
+.bg-circle {
+    fill: none;
+    stroke: #333;
+    stroke-width: 10;
+}
+
+.progress-circle {
+    fill: none;
+    stroke: #00bfff;
+    stroke-width: 10;
+    stroke-dasharray: 314; /* 2 * PI * r (r = 50) */
+    stroke-dashoffset: 235.5;
+    transition: stroke-dashoffset 1.5s ease;
+     transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.level-text {
+    font-size: 18px;
+    fill: #cfd8dc;
+}
+
+.lang-name {
+    margin-top: 0.8rem;
+    font-size: 1rem;
+    color: #cfd8dc;
+}
