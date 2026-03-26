@@ -3,128 +3,916 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishnu Prasad Portfolio</title>
+    <title>Vishnu Prasad — XR Developer</title>
 
-    <!-- AOS Animations -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Typed.js -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <style>
+        :root {
+            --bg-dark:    #0a0e17;
+            --bg-mid:     #0f1520;
+            --bg-band:    #111827;
+            --accent:     #00c8ff;
+            --accent2:    #0066ff;
+            --text:       #e2e8f0;
+            --muted:      #8899aa;
+            --card:       #151e2d;
+            --border:     rgba(0,200,255,0.15);
+            --glow:       0 0 20px rgba(0,200,255,0.25);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ─── NAVBAR ─── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 5%;
+            background: rgba(10,14,23,0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.25s;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* ─── HERO ─── */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .hero-tag {
+            display: inline-block;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            border: 1px solid var(--border);
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+        }
+
+        .hero-name {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-name span { color: var(--accent); }
+
+        .hero-typed {
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            color: var(--muted);
+            min-height: 2em;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-typed .typed-cursor { color: var(--accent); }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: #33d4ff;
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: rgba(0,200,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .scroll-hint .line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollLine 1.8s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+            0%,100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(0.6); }
+        }
+
+        /* ─── SECTION BANDS ─── */
+        .section-band {
+            padding: 6rem 5%;
+        }
+
+        .band-dark  { background: var(--bg-dark); }
+        .band-mid   { background: var(--bg-mid); }
+        .band-card  { background: var(--bg-band); }
+
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--accent);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .title-line {
+            width: 50px; height: 3px;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            margin-bottom: 2.5rem;
+            border-radius: 2px;
+        }
+
+        /* ─── ABOUT ─── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-avatar {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .avatar-ring {
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+            position: relative;
+        }
+
+        .avatar-inner {
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #fff;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+            font-size: 0.97rem;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(0,200,255,0.08);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ─── SKILLS ─── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+            border-color: rgba(0,200,255,0.4);
+        }
+
+        .skill-icon {
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0,200,255,0.2), rgba(0,102,255,0.2));
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .skill-item span {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* ─── PROJECTS ─── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.8rem;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,200,255,0.15);
+            border-color: rgba(0,200,255,0.35);
+        }
+
+        .project-card:hover::before { opacity: 1; }
+
+        .card-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.7rem;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: gap 0.25s;
+        }
+
+        .card-link:hover { gap: 0.7rem; }
+
+        /* ─── LANGUAGES ─── */
+        .lang-row {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .lang-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .lang-svg { transform: rotate(-90deg); }
+
+        .bg-circle {
+            fill: none;
+            stroke: rgba(255,255,255,0.07);
+            stroke-width: 8;
+        }
+
+        .progress-circle {
+            fill: none;
+            stroke: url(#grad);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1);
+        }
+
+        .level-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            fill: #fff;
+            transform: rotate(90deg);
+            transform-origin: 60px 60px;
+        }
+
+        .lang-name {
+            font-size: 0.95rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ─── CONTACT ─── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info p {
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-size: 0.97rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text);
+            text-decoration: none;
+            padding: 1rem 1.2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            border-color: rgba(0,200,255,0.4);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .contact-link i {
+            color: var(--accent);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.9rem 1.1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: var(--muted); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #060a12;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        footer span { color: var(--accent); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: rgba(10,14,23,0.97);
+                flex-direction: column;
+                padding: 1.5rem 5%;
+                gap: 1.2rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-avatar { order: -1; }
+            .avatar-ring { width: 160px; height: 160px; }
+            .avatar-inner { width: 144px; height: 144px; font-size: 3.5rem; }
+            .lang-row { gap: 2rem; }
+            .section-band { padding: 4rem 5%; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header / Hero -->
-    <header>
-        <div class="hero-container">
-            <h1>Vishnu Prasad N V</h1>
-            <p id="typed"></p>
-        </div>
-    </header>
 
-    <!-- About Section -->
-    <section id="about" data-aos="fade-right" data-aos-delay="100">
-        <h2>About Me</h2>
-        <p>
-            Hi! I’m Vishnu Prasad, a master’s student in Mechatronics and Cyber-Physical Systems. I work on XR/VR, robotics, and immersive simulation projects. I thrive on building intuitive and interactive experiences that make complex systems easy to understand.
-        </p>
-    </section>
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+    <a href="#home" class="nav-logo">&lt;VP /&gt;</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#languages">Languages</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
 
-    <!-- Skills Section -->
-    <section id="skills" data-aos="zoom-in" data-aos-delay="200">
-        <h2>Skills</h2>
-        <ul class="skills-list">
-            <li>Unity 3D, MRTK 3, OpenXR, XR Interaction Toolkit</li>
-            <li>C#, Python, MATLAB</li>
-            <li>VR/MR Simulation, Motion Capture, Full-Body Tracking</li>
-            <li>ROS, SLAM, Path Planning, Sensor Integration</li>
-            <li>Blender, Solidworks, Ansys</li>
-            <li>Documentation & System Handover Workflows</li>
-        </ul>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" data-aos="fade-left" data-aos-delay="100">
-        <h2>Projects</h2>
-        <div id="project-list"></div>
-    </section>
-
-    <section id="languages">
-    <h2>Languages</h2>
-    <div class="lang-container">
-        <div class="lang-item">
-            <svg class="lang-svg" width="120" height="120">
-                <circle class="bg-circle" cx="60" cy="60" r="50" />
-                <circle class="progress-circle" cx="60" cy="60" r="50" />
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="level-text">C1</text>
-            </svg>
-            <p class="lang-name">English</p>
-        </div>
-
-        <div class="lang-item">
-            <svg class="lang-svg" width="120" height="120">
-                <circle class="bg-circle" cx="60" cy="60" r="50" />
-                <circle class="progress-circle" cx="60" cy="60" r="50" />
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="level-text">B1</text>
-            </svg>
-            <p class="lang-name">German</p>
-        </div>
-
-        <div class="lang-item">
-            <svg class="lang-svg" width="120" height="120">
-                <circle class="bg-circle" cx="60" cy="60" r="50" />
-                <circle class="progress-circle" cx="60" cy="60" r="50" />
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="level-text">Native</text>
-            </svg>
-            <p class="lang-name">Malayalam</p>
+<!-- ═══ HERO ═══ -->
+<section id="home">
+    <div class="grid-bg"></div>
+    <div class="hero-content" data-aos="fade-up">
+        <div class="hero-tag">👋 Welcome to my portfolio</div>
+        <h1 class="hero-name">Vishnu Prasad <span>N V</span></h1>
+        <p class="hero-typed"><span id="typed"></span></p>
+        <div class="hero-btns">
+            <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
+            <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Contact Me</a>
         </div>
     </div>
-    </section>
+    <div class="scroll-hint">
+        <div class="line"></div>
+        <span>scroll</span>
+    </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact" data-aos="fade-up" data-aos-delay="100">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:prasadvnv@gmail.com">prasadvnv@gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/prasadvnv" target="_blank">github.com/prasadvnv</a></p>
-    </section>
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="section-band band-mid">
+    <div class="section-inner">
+        <div class="section-label">01 — About</div>
+        <h2 class="section-title">About Me</h2>
+        <div class="title-line"></div>
+        <div class="about-grid">
+            <div class="about-avatar" data-aos="zoom-in">
+                <div class="avatar-ring">
+                    <div class="avatar-inner">🤖</div>
+                </div>
+            </div>
+            <div class="about-text" data-aos="fade-left" data-aos-delay="100">
+                <p>Hi! I'm <strong style="color:#fff">Vishnu Prasad</strong>, a master's student in <strong style="color:var(--accent)">Mechatronics and Cyber-Physical Systems</strong>.</p>
+                <p>I work on XR/VR, robotics, and immersive simulation projects. I thrive on building intuitive and interactive experiences that make complex systems easy to understand.</p>
+                <p>From VR safety training to autonomous robots — I build things that bridge the physical and digital world.</p>
+                <div class="about-tags">
+                    <span class="tag">Unity 3D</span>
+                    <span class="tag">OpenXR</span>
+                    <span class="tag">ROS</span>
+                    <span class="tag">C#</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">MATLAB</span>
+                    <span class="tag">Blender</span>
+                </div>
+                <br>
+                <a href="mailto:prasadvnv@gmail.com" class="btn btn-outline" style="margin-top:1rem">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="projects.js"></script>
-    <script src="lang.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-    <script>
-        // Typed.js intro
-        new Typed('#typed', {
-            strings: [
-                "XR Developer",
-                "Unity • OpenXR • VR/MR • ROS Developer ",
-                "Building Immersive Experiences",
-                "Building Simulations"
-            ],
-            typeSpeed: 60,
-            backSpeed: 30,
-            backDelay: 1500,
-            loop: true
-        });
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" class="section-band band-card">
+    <div class="section-inner">
+        <div class="section-label">02 — Skills</div>
+        <h2 class="section-title">My Skills</h2>
+        <div class="title-line"></div>
+        <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+</section>
 
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects" class="section-band band-dark">
+    <div class="section-inner">
+        <div class="section-label">03 — Work</div>
+        <h2 class="section-title">Projects</h2>
+        <div class="title-line"></div>
+        <div class="projects-grid" id="project-list"></div>
+    </div>
+</section>
 
-        // Vanilla Tilt for project cards
-        VanillaTilt.init(document.querySelectorAll(".project-card"), {
-            max: 15,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.2
-        });
-    </script>
+<!-- ═══ LANGUAGES ═══ -->
+<section id="languages" class="section-band band-mid">
+    <div class="section-inner" style="text-align:center">
+        <div class="section-label">04 — Languages</div>
+        <h2 class="section-title">Languages</h2>
+        <div class="title-line" style="margin:0 auto 2.5rem"></div>
+        <div class="lang-row" id="langRow">
+            <div class="lang-item">
+                <svg class="lang-svg" width="130" height="130" viewBox="0 0 120 120">
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00c8ff"/>
+                            <stop offset="100%" style="stop-color:#0066ff"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="bg-circle" cx="60" cy="60" r="50"/>
+                    <circle class="progress-circle" cx="60" cy="60" r="50" data-level="C1"/>
+                    <text x="60" y="60" class="level-text" text-anchor="middle" dominant-baseline="middle">C1</text>
+                </svg>
+                <p class="lang-name">English</p>
+            </div>
+            <div class="lang-item">
+                <svg class="lang-svg" width="130" height="130" viewBox="0 0 120 120">
+                    <circle class="bg-circle" cx="60" cy="60" r="50"/>
+                    <circle class="progress-circle" cx="60" cy="60" r="50" data-level="B1"/>
+                    <text x="60" y="60" class="level-text" text-anchor="middle" dominant-baseline="middle">B1</text>
+                </svg>
+                <p class="lang-name">German</p>
+            </div>
+            <div class="lang-item">
+                <svg class="lang-svg" width="130" height="130" viewBox="0 0 120 120">
+                    <circle class="bg-circle" cx="60" cy="60" r="50"/>
+                    <circle class="progress-circle" cx="60" cy="60" r="50" data-level="Native"/>
+                    <text x="60" y="60" class="level-text" text-anchor="middle" dominant-baseline="middle">Native</text>
+                </svg>
+                <p class="lang-name">Malayalam</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="section-band band-card">
+    <div class="section-inner">
+        <div class="section-label">05 — Contact</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="title-line"></div>
+        <div class="contact-grid">
+            <div class="contact-info" data-aos="fade-right">
+                <p>I'm always open to discussing new projects, research collaborations, or just a chat about XR and robotics. Feel free to reach out!</p>
+                <div class="contact-links">
+                    <a href="mailto:prasadvnv@gmail.com" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>prasadvnv@gmail.com</span>
+                    </a>
+                    <a href="https://github.com/prasadvnv" target="_blank" class="contact-link">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/prasadvnv</span>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="contact-link">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn Profile</span>
+                    </a>
+                </div>
+            </div>
+            <form class="contact-form" data-aos="fade-left" data-aos-delay="100" onsubmit="handleForm(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required/>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required/>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="align-self:flex-start">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+    <p>© 2025 <span>Vishnu Prasad N V</span> — Built with passion &amp; pixels</p>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script>
+// ── Typed.js
+new Typed('#typed', {
+    strings: [
+        "XR / VR Developer",
+        "Unity · OpenXR · MRTK 3",
+        "ROS · SLAM · Robotics",
+        "Building Immersive Experiences"
+    ],
+    typeSpeed: 55,
+    backSpeed: 28,
+    backDelay: 1800,
+    loop: true
+});
+
+// ── AOS
+AOS.init({ duration: 800, once: true });
+
+// ── Navbar toggle
+function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── Navbar scroll shrink
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.padding = window.scrollY > 50 ? '0.7rem 5%' : '1.1rem 5%';
+});
+
+// ── Skills data
+const skills = [
+    { icon: 'fas fa-vr-cardboard', label: 'Unity 3D · MRTK 3 · OpenXR' },
+    { icon: 'fas fa-code',         label: 'C# · Python · MATLAB' },
+    { icon: 'fas fa-robot',        label: 'ROS · SLAM · Path Planning' },
+    { icon: 'fas fa-cube',         label: 'VR/MR Simulation' },
+    { icon: 'fas fa-camera',       label: 'Motion Capture · Full-Body Tracking' },
+    { icon: 'fas fa-microchip',    label: 'Sensor Integration' },
+    { icon: 'fas fa-drafting-compass', label: 'Blender · SolidWorks · Ansys' },
+    { icon: 'fas fa-file-alt',     label: 'Documentation & Handover Workflows' },
+    { icon: 'fas fa-cogs',         label: 'XR Interaction Toolkit' },
+];
+
+const skillsGrid = document.getElementById('skillsGrid');
+skills.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'skill-item';
+    el.setAttribute('data-aos', 'fade-up');
+    el.setAttribute('data-aos-delay', i * 60);
+    el.innerHTML = `
+        <div class="skill-icon"><i class="${s.icon}"></i></div>
+        <span>${s.label}</span>
+    `;
+    skillsGrid.appendChild(el);
+});
+
+// ── Projects data
+const projects = [
+    {
+        name: "VR Safety Training",
+        description: "Immersive VR training simulation for industrial environments using Unity, C#, and OpenXR.",
+        link: "https://github.com/prasadvnv/VR-Safety-Training---Industrial-Oven"
+    },
+    {
+        name: "Dual Axis Solar Tracker",
+        description: "Smart solar tracking system using Arduino and Python for maximum energy efficiency.",
+        link: "https://github.com/prasadvnv/Dual-Axis-Solar-Tracker"
+    },
+    {
+        name: "Inventory Bot with SLAM",
+        description: "Autonomous mobile robot using ROS, LiDAR, and camera sensors for warehouse inventory management.",
+        link: "https://github.com/prasadvnv/Inventory-Bot"
+    }
+];
+
+const projectList = document.getElementById('project-list');
+projects.forEach((proj, i) => {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('data-aos', 'fade-up');
+    card.setAttribute('data-aos-delay', i * 100);
+    card.innerHTML = `
+        <div class="card-num">0${i + 1}</div>
+        <h3>${proj.name}</h3>
+        <p>${proj.description}</p>
+        <a href="${proj.link}" target="_blank" class="card-link">
+            View on GitHub <i class="fas fa-arrow-right"></i>
+        </a>
+    `;
+    projectList.appendChild(card);
+});
+
+// ── VanillaTilt on project cards
+VanillaTilt.init(document.querySelectorAll('.project-card'), {
+    max: 10, speed: 400, glare: true, 'max-glare': 0.15
+});
+
+// ── Language circles
+const levelMap = { 'C1': 85, 'B1': 45, 'Native': 100 };
+const circumference = 2 * Math.PI * 50;
+
+function animateCircles() {
+    document.querySelectorAll('.progress-circle').forEach(circle => {
+        const level = circle.getAttribute('data-level');
+        const pct = levelMap[level] || 0;
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = circumference * (1 - pct / 100);
+    });
+}
+
+// Trigger when languages section is visible
+const langObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) animateCircles(); });
+}, { threshold: 0.3 });
+
+const langSection = document.getElementById('languages');
+if (langSection) langObserver.observe(langSection);
+
+// ── Contact form
+function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+    btn.style.background = '#00c851';
+    setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        btn.style.background = '';
+        e.target.reset();
+    }, 3000);
+}
+</script>
 </body>
 </html>
