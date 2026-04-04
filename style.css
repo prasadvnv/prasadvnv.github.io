@@ -455,6 +455,26 @@ nav.scrolled { padding: .8rem 5%; }
 .cs-footer-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
 .cs-footer-chips span { font-size: .68rem; font-family: var(--fm); color: var(--muted); border: 1px solid var(--border); padding: .18rem .6rem; border-radius: 3px; letter-spacing: .04em; }
 
+/* ── Bot project full-width video ── */
+.proj-bot-video {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    margin: 2rem auto 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--border);
+    aspect-ratio: 16/9;
+}
+.proj-bot-vid {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #000;
+}
+
 /* ── Skills ── */
 .skills-table { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1rem; }
 .sk-row { display: grid; grid-template-columns: 170px 1fr; border-bottom: 1px solid var(--border); transition: background .2s; }

@@ -93,11 +93,11 @@ window.addEventListener('resize', () => { resize(); initPts(); });
 /* ─── 3. TYPED.JS ─────────────────────── */
 new Typed('#typed', {
     strings: [
-        'XR Developer',
+        'XR Developer · Robotics Engineer',
         'Unity · MRTK 3 · OpenXR',
-        'Full-Body Motion Capture',
-        'VR · MR · AR',
-        'Building Immersive Futures'
+        'ROS · SLAM · Autonomous Systems',
+        'VR · MR · AR · Simulation',
+        'Building Immersive & Intelligent Systems'
     ],
     typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true
 });
@@ -185,7 +185,6 @@ document.querySelectorAll('.cs-video').forEach(vid => {
         const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
         if (notice) notice.classList.add('visible');
     });
-    // Also check after a short delay if video has no duration (failed silently)
     setTimeout(() => {
         if (vid.readyState === 0 || vid.networkState === 3) {
             const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
@@ -193,6 +192,25 @@ document.querySelectorAll('.cs-video').forEach(vid => {
         }
     }, 2500);
 });
+
+/* ─── 9b. BOT VIDEO — scroll-triggered autoplay ── */
+const botVid = document.getElementById('botVid');
+if (botVid) {
+    new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                botVid.play();
+            } else {
+                botVid.pause();
+            }
+        });
+    }, { threshold: 0.3 }).observe(botVid);
+
+    botVid.addEventListener('error', () => {
+        const notice = botVid.closest('.proj-bot-video')?.querySelector('.mkv-notice');
+        if (notice) notice.classList.add('visible');
+    });
+}
 
 /* ─── 10. SKILLS chip ripple ──────────── */
 document.querySelectorAll('.sk-chips span').forEach(s => {
