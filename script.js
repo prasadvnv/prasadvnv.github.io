@@ -1,170 +1,209 @@
 /* ============================================================
-   script.js — Vishnu Prasad Portfolio
+   script.js — Vishnu Prasad Portfolio v4
    ============================================================ */
 
-/* ─────────────────────────────────────────
-   1. TYPED.JS  — animated hero subtitle
-───────────────────────────────────────── */
+/* ─── 1. CUSTOM CURSOR ─────────────────── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+});
+(function tick() {
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+})();
+
+document.querySelectorAll('a,button,.sk-chips span,.proj-chips span,.cs-card,.polaroid-stack').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+        cursor.style.background = 'rgba(0,212,255,0.4)';
+        ring.style.width = ring.style.height = '48px';
+    });
+    el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        cursor.style.background = 'var(--accent)';
+        ring.style.width = ring.style.height = '30px';
+    });
+});
+
+/* ─── 2. HERO CANVAS ──────────────────── */
+const canvas = document.getElementById('heroCanvas');
+const ctx    = canvas.getContext('2d');
+let W, H, pts = [];
+
+function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+}
+function initPts() {
+    pts = [];
+    const n = Math.floor(W / 14);
+    for (let i = 0; i < n; i++) {
+        pts.push({
+            x: Math.random() * W, y: Math.random() * H,
+            r: Math.random() * 1.2 + 0.2,
+            vx: (Math.random() - .5) * .25,
+            vy: (Math.random() - .5) * .25,
+            a: Math.random()
+        });
+    }
+}
+resize(); initPts();
+window.addEventListener('resize', () => { resize(); initPts(); });
+
+(function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(0,212,255,0.022)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 80) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 80) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,212,255,${.12 + p.a * .2})`;
+        ctx.fill();
+    });
+    for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+            const d  = Math.sqrt(dx*dx + dy*dy);
+            if (d < 110) {
+                ctx.beginPath();
+                ctx.moveTo(pts[i].x, pts[i].y);
+                ctx.lineTo(pts[j].x, pts[j].y);
+                ctx.strokeStyle = `rgba(0,212,255,${.045 * (1 - d/110)})`;
+                ctx.lineWidth = .4;
+                ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(draw);
+})();
+
+/* ─── 3. TYPED.JS ─────────────────────── */
 new Typed('#typed', {
     strings: [
-        "XR / VR Developer",
-        "Unity · OpenXR · MRTK 3",
-        "ROS · SLAM · Robotics",
-        "Building Immersive Experiences"
+        'XR Developer',
+        'Unity · MRTK 3 · OpenXR',
+        'Full-Body Motion Capture',
+        'VR · MR · AR',
+        'Building Immersive Futures'
     ],
-    typeSpeed:  55,
-    backSpeed:  28,
-    backDelay: 1800,
-    loop: true
+    typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true
 });
 
-/* ─────────────────────────────────────────
-   2. AOS  — scroll animations
-───────────────────────────────────────── */
-AOS.init({
-    duration: 800,
-    once: true
-});
+/* ─── 4. AOS ──────────────────────────── */
+AOS.init({ duration: 850, once: true, easing: 'ease-out-cubic', offset: 50 });
 
-/* ─────────────────────────────────────────
-   3. NAVBAR  — toggle (mobile) & shrink on scroll
-───────────────────────────────────────── */
+/* ─── 5. NAVBAR ───────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
 function toggleNav() {
     document.getElementById('navLinks').classList.toggle('open');
 }
+document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+);
 
-window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    nav.style.padding = window.scrollY > 50 ? '0.7rem 5%' : '1.1rem 5%';
-});
-
-/* ─────────────────────────────────────────
-   4. SKILLS  — data + dynamic rendering
-   Add / remove skill objects here to update the section
-───────────────────────────────────────── */
-const skills = [
-    { icon: 'fas fa-vr-cardboard',      label: 'Unity 3D · MRTK 3 · OpenXR' },
-    { icon: 'fas fa-code',              label: 'C# · Python · MATLAB' },
-    { icon: 'fas fa-robot',             label: 'ROS · SLAM · Path Planning' },
-    { icon: 'fas fa-cube',              label: 'VR/MR Simulation' },
-    { icon: 'fas fa-camera',            label: 'Motion Capture · Full-Body Tracking' },
-    { icon: 'fas fa-microchip',         label: 'Sensor Integration' },
-    { icon: 'fas fa-drafting-compass',  label: 'Blender · SolidWorks · Ansys' },
-    { icon: 'fas fa-file-alt',          label: 'Documentation & Handover Workflows' },
-    { icon: 'fas fa-cogs',              label: 'XR Interaction Toolkit' },
-];
-
-const skillsGrid = document.getElementById('skillsGrid');
-
-skills.forEach((s, i) => {
-    const el = document.createElement('div');
-    el.className = 'skill-item';
-    el.setAttribute('data-aos', 'fade-up');
-    el.setAttribute('data-aos-delay', i * 60);
-    el.innerHTML = `
-        <div class="skill-icon"><i class="${s.icon}"></i></div>
-        <span>${s.label}</span>
-    `;
-    skillsGrid.appendChild(el);
-});
-
-/* ─────────────────────────────────────────
-   5. PROJECTS  — data + dynamic rendering
-   Add your projects here; cards are generated automatically
-───────────────────────────────────────── */
-const projects = [
-    {
-        name:        "VR Safety Training",
-        description: "Immersive VR training simulation for industrial environments using Unity, C#, and OpenXR.",
-        link:        "https://github.com/prasadvnv/VR-Safety-Training---Industrial-Oven"
-    },
-    {
-        name:        "Dual Axis Solar Tracker",
-        description: "Smart solar tracking system using Arduino and Python for maximum energy efficiency.",
-        link:        "https://github.com/prasadvnv/Dual-Axis-Solar-Tracker"
-    },
-    {
-        name:        "Inventory Bot with SLAM",
-        description: "Autonomous mobile robot using ROS, LiDAR, and camera sensors for warehouse inventory management.",
-        link:        "https://github.com/prasadvnv/Inventory-Bot"
-    }
-];
-
-const projectList = document.getElementById('project-list');
-
-projects.forEach((proj, i) => {
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.setAttribute('data-aos', 'fade-up');
-    card.setAttribute('data-aos-delay', i * 100);
-    card.innerHTML = `
-        <div class="card-num">0${i + 1}</div>
-        <h3>${proj.name}</h3>
-        <p>${proj.description}</p>
-        <a href="${proj.link}" target="_blank" class="card-link">
-            View on GitHub <i class="fas fa-arrow-right"></i>
-        </a>
-    `;
-    projectList.appendChild(card);
-});
-
-/* Apply VanillaTilt after cards are in the DOM */
-VanillaTilt.init(document.querySelectorAll('.project-card'), {
-    max:          10,
-    speed:       400,
-    glare:       true,
-    'max-glare': 0.15
-});
-
-/* ─────────────────────────────────────────
-   6. LANGUAGE CIRCLES  — animated on scroll
-   levelMap keys must match the data-level attributes in index.html
-───────────────────────────────────────── */
-const levelMap = {
-    'C1':     85,
-    'B1':     45,
-    'Native': 100
-};
-
-const circumference = 2 * Math.PI * 50; // r = 50
-
-function animateCircles() {
-    document.querySelectorAll('.progress-circle').forEach(circle => {
-        const level = circle.getAttribute('data-level');
-        const pct   = levelMap[level] || 0;
-        circle.style.strokeDasharray  = circumference;
-        circle.style.strokeDashoffset = circumference * (1 - pct / 100);
-    });
-}
-
-/* Fire animation when #languages scrolls into view */
-const langObserver = new IntersectionObserver(entries => {
+/* ─── 6. LANGUAGE CIRCLES ─────────────── */
+const circumference = 2 * Math.PI * 28;
+const langSection = document.getElementById('langCircles') || document.body;
+new IntersectionObserver(entries => {
     entries.forEach(e => {
-        if (e.isIntersecting) animateCircles();
+        if (e.isIntersecting) {
+            document.querySelectorAll('.lc-prog').forEach(c => {
+                const pct = parseFloat(c.getAttribute('data-pct')) || 0;
+                c.style.strokeDasharray  = circumference;
+                c.style.strokeDashoffset = circumference * (1 - pct / 100);
+            });
+        }
     });
-}, { threshold: 0.3 });
+}, { threshold: 0.4 }).observe(langSection);
 
-const langSection = document.getElementById('languages');
-if (langSection) langObserver.observe(langSection);
+/* ─── 7. CASE STUDY IMAGE STRIP ─────────
+   Auto-slideshow with dot navigation
+────────────────────────────────────────── */
+function initStrip(stripId, dotsId) {
+    const strip  = document.getElementById(stripId);
+    const dotsEl = document.getElementById(dotsId);
+    if (!strip || !dotsEl) return;
 
-/* ─────────────────────────────────────────
-   7. CONTACT FORM  — mock submit feedback
-   Replace this with a real backend / EmailJS / Formspree call
-───────────────────────────────────────── */
-function handleForm(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
+    const items = strip.querySelectorAll('.strip-item');
+    const count = items.length;
+    let current = 0;
 
-    // Show success state
-    btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-    btn.style.background = '#00c851';
-    btn.disabled = true;
+    // Build dots
+    for (let i = 0; i < count; i++) {
+        const d = document.createElement('span');
+        if (i === 0) d.classList.add('active');
+        d.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(d);
+    }
 
-    // Reset after 3 seconds
-    setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        btn.style.background = '';
-        btn.disabled = false;
-        e.target.reset();
-    }, 3000);
+    // Lock strip dimensions
+    strip.style.display = 'flex';
+    strip.style.width = `${count * 100}%`;
+    items.forEach(it => { it.style.flex = `0 0 ${100 / count}%`; });
+
+    function goTo(n) {
+        current = (n + count) % count;
+        strip.style.transform = `translateX(-${current * (100 / count)}%)`;
+        strip.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+        dotsEl.querySelectorAll('span').forEach((d, i) =>
+            d.classList.toggle('active', i === current));
+    }
+
+    setInterval(() => goTo(current + 1), 3200);
 }
+
+initStrip('strip-vr',    'dots-vr');
+initStrip('strip-solar', 'dots-solar');
+
+/* ─── 8. POLAROID STACK — tap to fan on mobile + hint ─── */
+document.querySelectorAll('.polaroid-stack').forEach(stack => {
+    stack.addEventListener('click', () => stack.classList.toggle('fanned'));
+    const hint = document.createElement('p');
+    hint.className = 'pol-hint';
+    hint.textContent = 'hover to fan · tap on mobile';
+    stack.insertAdjacentElement('afterend', hint);
+});
+
+/* ─── 9. MKV VIDEO FALLBACK ──────────── */
+document.querySelectorAll('.cs-video').forEach(vid => {
+    vid.addEventListener('error', () => {
+        const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
+        if (notice) notice.classList.add('visible');
+    });
+    // Also check after a short delay if video has no duration (failed silently)
+    setTimeout(() => {
+        if (vid.readyState === 0 || vid.networkState === 3) {
+            const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
+            if (notice) notice.classList.add('visible');
+        }
+    }, 2500);
+});
+
+/* ─── 10. SKILLS chip ripple ──────────── */
+document.querySelectorAll('.sk-chips span').forEach(s => {
+    s.addEventListener('click', () => {
+        s.style.borderColor = 'var(--accent)';
+        s.style.color = 'var(--accent)';
+        s.style.background = 'rgba(0,212,255,.1)';
+        setTimeout(() => {
+            s.style.borderColor = '';
+            s.style.color = '';
+            s.style.background = '';
+        }, 600);
+    });
+});
