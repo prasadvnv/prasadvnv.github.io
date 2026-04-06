@@ -213,7 +213,30 @@ nav.scrolled { padding: .8rem 5%; }
 .proj-tag { font-family: var(--fm); font-size: .7rem; color: var(--muted); letter-spacing: .1em; }
 .proj-org { font-size: .82rem; color: var(--muted2); font-weight: 500; }
 .proj-title { font-family: var(--fh); font-size: clamp(1.9rem,3.5vw,2.8rem); font-weight: 700; color: #fff; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.1rem; }
-.proj-desc { font-size: .92rem; color: var(--muted2); line-height: 1.85; margin-bottom: 1.3rem; }
+.proj-desc { font-size: .92rem; color: var(--muted2); line-height: 1.85; margin-bottom: 1.1rem; }
+.proj-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1.3rem;
+    padding-left: .1rem;
+}
+.proj-bullets li {
+    font-size: .88rem;
+    color: var(--muted2);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.65;
+}
+.proj-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: .88rem;
+    line-height: 1.65;
+}
 .proj-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
 .proj-chips span { font-family: var(--fm); font-size: .68rem; color: var(--muted2); border: 1px solid var(--border); padding: .25rem .7rem; border-radius: 3px; transition: all .2s; }
 .proj-chips span:hover { border-color: var(--accent); color: var(--accent); }

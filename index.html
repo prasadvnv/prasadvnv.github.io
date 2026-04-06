@@ -90,15 +90,14 @@
                 <h2 class="sec-title">Engineering immersive &amp;<br><em>intelligent systems</em></h2>
             </div>
             <div data-aos="fade-left" data-aos-delay="80">
-                <p class="body-text">XR Developer and Robotics Engineer building systems that bridge physical and virtual worlds. With hands-on enterprise experience at <strong>Lufthansa Technik AG</strong>, I've shipped immersive solutions spanning standalone VR motion capture pipelines, AR training interfaces, and cinematic XR experiences — combining engineering precision with systems thinking and interaction design.</p>
-                <p class="body-text">Currently completing my <strong>Master's in Mechatronics &amp; Cyber-Physical Systems</strong> at Deggendorf Institute of Technology. My background spans mechanical engineering, robotics (ROS · SLAM · path planning), and scalable XR architecture — including system design, documentation, and USS/UXML UI pipelines.</p>
+                <p class="body-text">Master’s student in Mechatronics &amp; Cyber-Physical Systems, with six months of enterprise XR development experience at <strong>Lufthansa Technik AG</strong>. I build systems across the full stack — from standalone VR motion capture pipelines and cinematic XR experiences to autonomous robots with SLAM navigation — combining engineering rigour, spatial computing, and a strong focus on clean system architecture.</p>
                 <div class="stats-row">
                     <div class="stat"><span class="stat-n">6</span><span class="stat-l">months XR dev<br>@ Lufthansa</span></div>
-                    <div class="stat"><span class="stat-n">5<sup>+</sup></span><span class="stat-l">systems built<br>VR · MR · AR · ROS</span></div>
+                    <div class="stat"><span class="stat-n">6<sup>+</sup></span><span class="stat-l">systems built<br>VR · MR · AR · ROS</span></div>
                     <div class="stat"><span class="stat-n">8.5</span><span class="stat-l">GPA<br>B.Tech</span></div>
                 </div>
                 <div class="about-row">
-                    <a href="Resume_Vishnu_XRMTB.pdf" target="_blank" class="btn-sm"><i class="fas fa-file-pdf"></i> Download CV</a>
+                    <a href="Resume_Vishnu.pdf" target="_blank" class="btn-sm"><i class="fas fa-file-pdf"></i> Download CV</a>
                     <div class="lang-circles" id="langCircles">
                         <div class="lc-item">
                             <svg class="lc-svg" width="70" height="70" viewBox="0 0 70 70">
@@ -149,13 +148,10 @@
                         <span class="tl-date">Oct 2025 — Mar 2026</span>
                     </div>
                     <ul class="tl-list">
-                        <li>Developed enterprise VR &amp; MR training apps for standalone devices (Unity · MRTK 3 · OpenXR)</li>
-                        <li>Engineered the <strong>first full-body mocap pipeline for Android standalone VR</strong> — custom IK, calibration, real-time recording &amp; JSON playback</li>
-                        <li>Integrated MR passthrough (VIVE OpenXR API) bridging physical and virtual environments</li>
-                        <li>Designed USS/UXML dynamic UI systems and produced full architecture documentation</li>
-                        <li>Built VR Builder MCQ training application with adaptive scoring &amp; session analytics</li>
-                        <li>Created multi-stage cinematic XR trailer: orbital entry → Earth fly-in → interactive geospatial globe</li>
-                        <li>Built AR training interface for cabin crew with QR-based world locking</li>
+                        <li>Delivered five enterprise XR applications across VR, MR, and AR for standalone headsets — from motion capture systems to cinematic experiences and training platforms</li>
+                        <li>Worked across the full development lifecycle — system architecture, implementation, UI design (USS/UXML), and technical documentation for each project</li>
+                        <li>Built scalable, modular XR systems designed for reuse across multiple training scenarios within Lufthansa Technik's enterprise pipeline</li>
+                        <li>Sole developer on all projects, managing scope, technical decisions, and delivery independently throughout the internship</li>
                     </ul>
                     <div class="tl-chips"><span>Unity 3D</span><span>MRTK 3</span><span>OpenXR</span><span>C#</span><span>USS/UXML</span><span>Motion Capture</span><span>MR Passthrough</span><span>VR Builder</span></div>
                 </div>
@@ -195,9 +191,16 @@
             <div class="proj-layout-full">
                 <div class="proj-header">
                     <div class="proj-meta"><span class="proj-num">01</span><span class="proj-tag">VR · Motion Capture</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Full-Body Motion Capture<br>in Standalone VR</h3>
-                    <p class="proj-desc">Engineered the <strong>first full-body mocap pipeline for Android Standalone VR</strong> at Lufthansa Technik. Custom IK systems for arms, legs, waist, and head using Unity's animation rigs and OpenXR pose data. Runtime calibration, posture alignment, dynamic avatar remapping, real-time recording/playback with JSON serialization, and VIVE OpenXR Passthrough for mixed-reality motion recording.</p>
-                    <div class="proj-chips"><span>Unity 3D</span><span>OpenXR</span><span>VIVE XR</span><span>IK Rigs</span><span>C#</span><span>JSON Serialization</span><span>MR Passthrough</span></div>
+                    <h3 class="proj-title">Standalone XR Full-Body<br>Motion Capture System</h3>
+                    <p class="proj-desc">Built a full-body motion capture system running entirely on Android standalone XR — no PC, no external processing. The system tracks, solves, and records motion in real time using a custom IK pipeline built on OpenXR pose data, with runtime T-pose calibration and JSON-based animation serialization for reusable playback inside Unity.</p>
+                    <ul class="proj-bullets">
+                        <li>Designed modular architecture separating tracking input, IK solving, and recording into independent pipelines for maintainability and extensibility</li>
+                        <li>Built full-body IK system covering arms, legs, and hips using Unity Animator IK with constraint-based stabilization and tracker-to-avatar retargeting</li>
+                        <li>Developed runtime T-pose calibration for position and rotation alignment across all tracked joints at session start</li>
+                        <li>Engineered hierarchical transform recording per frame, serialized to JSON and reconstructable as Unity AnimationClips for reuse</li>
+                        <li>Integrated VIVE OpenXR passthrough for mixed-reality recording, optimized for real-time performance on standalone Android XR with no external compute</li>
+                    </ul>
+                    <div class="proj-chips"><span>Unity 3D</span><span>OpenXR</span><span>C#</span><span>Full-Body IK</span><span>Motion Capture Pipelines</span><span>XR Input Systems</span><span>JSON Serialization</span><span>MR Passthrough</span></div>
                 </div>
                 <!-- 2 videos side by side — full width -->
                 <div class="proj-videos-row">
@@ -235,9 +238,14 @@
             <div class="proj-layout-full">
                 <div class="proj-header">
                     <div class="proj-meta"><span class="proj-num">02</span><span class="proj-tag">XR · Cinematics</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Cinematic VR Trailer<br>&amp; Branding Reveal</h3>
-                    <p class="proj-desc">Multi-stage XR cinematic system for Lufthansa Technik's brand reveal — orbital camera entry, Earth fly-in sequence, and interactive geospatial globe with location pins. Custom VFX, smooth state transitions, and spatial audio design delivering a premium immersive brand experience.</p>
-                    <div class="proj-chips"><span>Unity 3D</span><span>VFX</span><span>State Machines</span><span>Geospatial</span><span>C#</span><span>Cinematic UX</span></div>
+                    <h3 class="proj-title">Cinematic XR<br>Space-to-Earth Experience</h3>
+                    <p class="proj-desc">An immersive cinematic intro sequence built in XR — simulating a flight from outer space toward Earth along a Cinemachine Dolly Spline, with the XR rig synchronized to the camera path for full spatial presence. The experience transitions through orbital movement, a metallic logo reveal, and a 3D globe with modular location pins, designed as a flagship brand experience for Lufthansa Technik.</p>
+                    <ul class="proj-bullets">
+                        <li>Developed a dynamic 3D Earth visualization with interactive geographic pin placement, supporting modular location markers with runtime position correction</li>
+                        <li>Implemented a cinematic flight system using Cinemachine Dolly Spline with the XR rig synchronized to the camera path, giving users full spatial presence throughout the sequence</li>
+                        <li>Built a modular title and logo reveal system featuring curved orbital text animation and a controlled lighting-based metallic reveal effect</li>
+                    </ul>
+                    <div class="proj-chips"><span>Unity 3D</span><span>Cinemachine</span><span>OpenXR</span><span>C#</span><span>World Map Globe</span><span>State Machines</span><span>Spatial Lighting</span><span>Geospatial Systems</span></div>
                 </div>
                 <div class="proj-videos-row">
                     <div class="proj-video-panel">
@@ -275,9 +283,16 @@
             <div class="proj-layout-full">
                 <div class="proj-header">
                     <div class="proj-meta"><span class="proj-num">03</span><span class="proj-tag">Robotics · ROS</span><span class="proj-org">Academic Project</span></div>
-                    <h3 class="proj-title">Autonomous Inventory Bot<br>with SLAM Navigation</h3>
-                    <p class="proj-desc">Autonomous mobile robot built in the ROSI framework featuring SLAM, obstacle avoidance, and path planning. Complete URDF model for a 4-wheeled AMR with tray actuation, fusing LiDAR and RGB camera data for warehouse navigation. Demonstrates end-to-end robotic systems thinking from hardware modelling to autonomous decision-making.</p>
-                    <div class="proj-chips"><span>ROS</span><span>Python</span><span>SLAM</span><span>URDF</span><span>LiDAR</span><span>Gazebo</span><span>Sensor Fusion</span><span>Path Planning</span></div>
+                    <h3 class="proj-title">Autonomous Warehouse Robot<br>with SLAM Navigation</h3>
+                    <p class="proj-desc">A 4-wheeled autonomous mobile robot designed for warehouse navigation and tray manipulation, simulated end-to-end in ROS and Gazebo. The robot localizes on a pre-built map, plans collision-free paths, and actuates a prismatic tray joint — all without human input.</p>
+                    <ul class="proj-bullets">
+                        <li>Modelled complete robot in URDF with 4 continuous wheel joints, prismatic tray joint, Hokuyo LiDAR, and RGB camera with full inertial and collision properties</li>
+                        <li>Implemented AMCL localization fusing LiDAR scan data against a pre-built map for real-time pose estimation inside a warehouse environment</li>
+                        <li>Configured move_base stack with DWA planner and custom global/local costmaps for autonomous point-to-point navigation with obstacle avoidance</li>
+                        <li>Built tray actuation via Gazebo SetModelConfiguration service using 100-step interpolation for smooth prismatic joint movement to any target height</li>
+                        <li>Integrated omni-directional drive plugin with odometry feedback, enabling precise velocity-commanded motion published over cmd_vel</li>
+                    </ul>
+                    <div class="proj-chips"><span>ROS</span><span>Python</span><span>URDF</span><span>AMCL</span><span>move_base</span><span>Gazebo</span><span>LiDAR</span><span>RViz</span></div>
                     <a href="https://github.com/prasadvnv/Inventory-Bot" target="_blank" class="btn-sm" style="margin-top:1.2rem"><i class="fab fa-github"></i> View on GitHub</a>
                 </div>
                 <div class="proj-bot-video">
@@ -300,9 +315,14 @@
             <div class="proj-layout proj-layout-rev">
                 <div class="proj-header">
                     <div class="proj-meta"><span class="proj-num">04</span><span class="proj-tag">VR · Training</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Interactive XR Training<br>System — VR Builder</h3>
-                    <p class="proj-desc">Dynamic MCQ-based VR training application with beginner and advanced modes, real-time feedback, adaptive scoring, and progression tracking. Modular scriptable UI components with color-coded feedback and session analytics. Scalable for multi-user or repeated sessions.</p>
-                    <div class="proj-chips"><span>VR Builder</span><span>Unity 3D</span><span>C#</span><span>Session Analytics</span><span>Adaptive UX</span><span>Modular UI</span></div>
+                    <h3 class="proj-title">Modular VR Training<br>&amp; Assessment Platform</h3>
+                    <p class="proj-desc">A data-driven VR training framework where all content is loaded from ScriptableObjects and all UI is generated at runtime — no hardcoded screens. Designed as a plug-and-play VR Builder behavior, it slots into any industrial training scenario as a self-contained learning module.</p>
+                    <ul class="proj-bullets">
+                        <li>MCQ engine built on ScriptableObjects with per-session answer shuffling and two modes — Beginner with live feedback and Advanced with post-session analytics only</li>
+                        <li>Full session analytics tracking correctness, error rate, and retry count, displayed as a structured performance table inside VR at session end</li>
+                        <li>Packaged as a custom VR Builder Behavior so the entire quiz system can be dropped into any scenario pipeline without modification</li>
+                    </ul>
+                    <div class="proj-chips"><span>Unity 3D</span><span>VR Builder</span><span>C#</span><span>ScriptableObjects</span><span>Runtime UI</span><span>Session Analytics</span><span>OpenXR</span></div>
                 </div>
                 <div class="proj-media proj-media-center">
                     <div class="pol-wrap">
@@ -311,7 +331,7 @@
                             <div class="pol-card" style="--r:5deg;--tx:8px;--ty:-5px;--z:2"><img src="assets/images/vr-training-2.jpg" alt="VR Training 2"></div>
                             <div class="pol-card" style="--r:-2deg;--tx:-5px;--ty:5px;--z:3"><img src="assets/images/vr-training-1.jpg" alt="VR Training 1"></div>
                             <div class="pol-card pol-top" style="--r:2deg;--tx:4px;--ty:-2px;--z:4">
-                                <img src="assets/images/vr-training-4.jpg" alt="VR Training 4 — wide">
+                                <img src="assets/images/vr-training-4.jpg" alt="VR Training 4">
                                 <div class="pol-caption">hover to fan open</div>
                             </div>
                         </div>
@@ -321,12 +341,43 @@
         </div>
     </div>
 
-    <!-- ═══ PROJECT 05: AR Training ═══ -->
+    <!-- ═══ PROJECT 05: VR Builder Custom Conditions ═══ -->
     <div class="proj-block" data-aos="fade-up">
+        <div class="wrap">
+            <div class="proj-layout">
+                <div class="proj-header">
+                    <div class="proj-meta"><span class="proj-num">05</span><span class="proj-tag">VR · Tools</span><span class="proj-org">Lufthansa Technik</span></div>
+                    <h3 class="proj-title">Custom VR Builder<br>Condition Extensions</h3>
+                    <p class="proj-desc">Two custom conditions built as native extensions to the VR Builder framework, expanding its out-of-the-box capabilities for enterprise training scenarios at Lufthansa Technik.</p>
+                    <ul class="proj-bullets">
+                        <li>Visibility &amp; Gaze Condition — detects whether a target object is within the camera frustum or directly gazed at for a configurable duration, with support for distance limits, gaze angle threshold, and accumulative timing</li>
+                        <li>Visual Inspection Condition — requires the user to look at a target from within a defined distance and angle for a set time, with a circular progress indicator, optional object highlight, and a scene-view editor preview for designer-friendly placement</li>
+                    </ul>
+                    <div class="proj-chips"><span>Unity 3D</span><span>VR Builder</span><span>C#</span><span>Custom Editor Tools</span><span>Gaze Interaction</span><span>XR UX</span></div>
+                </div>
+                <div class="proj-media proj-media-center">
+                    <div class="pol-wrap">
+                        <div class="polaroid-stack polaroid-stack-lg" data-count="4">
+                            <div class="pol-card" style="--r:-8deg;--tx:-10px;--ty:8px;--z:1"><img src="assets/images/vrb-condition-4.jpg" alt="VR Builder Condition 4"></div>
+                            <div class="pol-card" style="--r:5deg;--tx:8px;--ty:-5px;--z:2"><img src="assets/images/vrb-condition-3.jpg" alt="VR Builder Condition 3"></div>
+                            <div class="pol-card" style="--r:-3deg;--tx:-5px;--ty:5px;--z:3"><img src="assets/images/vrb-condition-2.jpg" alt="VR Builder Condition 2"></div>
+                            <div class="pol-card pol-top" style="--r:2deg;--tx:4px;--ty:-2px;--z:4">
+                                <img src="assets/images/vrb-condition-1.jpg" alt="VR Builder Condition 1">
+                                <div class="pol-caption">hover to fan open</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PROJECT 06: AR Training ═══ -->
+    <div class="proj-block proj-block-alt" data-aos="fade-up">
         <div class="wrap">
             <div class="proj-layout-full">
                 <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">05</span><span class="proj-tag">AR · UI/UX</span><span class="proj-org">Lufthansa Technik</span></div>
+                    <div class="proj-meta"><span class="proj-num">06</span><span class="proj-tag">AR · UI/UX</span><span class="proj-org">Lufthansa Technik</span></div>
                     <h3 class="proj-title">AR Training Interface<br>for Cabin Crew</h3>
                     <p class="proj-desc">AR-based training interface for Lufthansa Technik cabin crew with QR-based world locking for precise spatial anchoring. USS/UXML-driven interactive UI, 3D model visualization, and guided navigation workflows with real-world AR overlay integration and scalable content delivery for aviation training.</p>
                     <div class="proj-chips"><span>Unity 3D</span><span>MRTK 3</span><span>USS/UXML</span><span>AR</span><span>QR World Locking</span><span>3D Visualization</span></div>
@@ -390,7 +441,7 @@
         <div class="skills-table" data-aos="fade-up" data-aos-delay="80">
             <div class="sk-row"><span class="sk-cat">Immersive Tech</span><div class="sk-chips"><span>Unity 3D</span><span>MRTK 3</span><span>Meta Oculus SDK</span><span>VIVE XR</span><span>XR Interaction Toolkit</span><span>OpenXR</span><span>VR Builder</span><span>USS/UXML</span></div></div>
             <div class="sk-row"><span class="sk-cat">Programming</span><div class="sk-chips"><span>C#</span><span>Python</span><span>MATLAB</span></div></div>
-            <div class="sk-row"><span class="sk-cat">Robotics</span><div class="sk-chips"><span>ROS</span><span>ROSI</span><span>SLAM</span><span>Path Planning</span><span>Obstacle Avoidance</span><span>Sensor Fusion</span><span>Gazebo</span><span>RViz</span></div></div>
+            <div class="sk-row"><span class="sk-cat">Robotics</span><div class="sk-chips"><span>ROS</span><span>SLAM</span><span>Path Planning</span><span>Obstacle Avoidance</span><span>Sensor Fusion</span><span>Gazebo</span><span>RViz</span></div></div>
             <div class="sk-row"><span class="sk-cat">3D &amp; Design</span><div class="sk-chips"><span>Blender</span><span>SolidWorks</span><span>Ansys</span></div></div>
             <div class="sk-row"><span class="sk-cat">Tools</span><div class="sk-chips"><span>Git</span><span>MS Office</span><span>System Documentation</span><span>Modular Architecture</span></div></div>
         </div>
