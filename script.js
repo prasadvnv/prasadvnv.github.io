@@ -169,6 +169,7 @@ function initStrip(stripId, dotsId) {
 
 initStrip('strip-vr',    'dots-vr');
 initStrip('strip-solar', 'dots-solar');
+initStrip('strip-sae',   'dots-sae');
 
 /* ─── 8. POLAROID STACK — tap to fan on mobile + hint ─── */
 document.querySelectorAll('.polaroid-stack').forEach(stack => {
