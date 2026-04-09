@@ -672,3 +672,33 @@ footer { background: #040608; border-top: 1px solid var(--border); padding: 2rem
     .footer-row { flex-direction: column; text-align: center; }
     .pol-wrap { padding: 2rem 1.5rem 3rem; }
 }
+/* ── VR Training — background image block ── */
+.proj-block-vr-training {
+    position: relative;
+    background-color: var(--bg2); /* fallback */
+    background-image: url('assets/images/vr-training-bg.jpg');
+    background-size: contain;        /* show full image, no crop */
+    background-position: center center;
+    background-repeat: no-repeat;
+    isolation: isolate;
+}
+.proj-block-vr-training::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 9, 15, 0.58);
+    z-index: 0;
+    pointer-events: none;
+}
+.proj-block-vr-training .wrap {
+    position: relative;
+    z-index: 1;
+}
+.nav-logo svg {
+    display: block;
+    transition: opacity .2s, transform .2s;
+}
+.nav-logo:hover svg {
+    opacity: 0.8;
+    transform: scale(1.08);
+}
