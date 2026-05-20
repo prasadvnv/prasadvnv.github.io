@@ -132,7 +132,9 @@ new IntersectionObserver(entries => {
 }, { threshold: 0.4 }).observe(langSection);
 
 /* ─── 7. CASE STUDY IMAGE STRIP ─────────
-   Auto-slideshow with dot navigation
+   Auto-slideshow with dot navigation.
+   Works for both .cs-img-strip (card strips)
+   and .proj-ar-strip (full-width project strip).
 ────────────────────────────────────────── */
 function initStrip(stripId, dotsId) {
     const strip  = document.getElementById(stripId);
@@ -170,6 +172,7 @@ function initStrip(stripId, dotsId) {
 initStrip('strip-vr',    'dots-vr');
 initStrip('strip-solar', 'dots-solar');
 initStrip('strip-sae',   'dots-sae');
+// AR Training now uses polaroid stack — strip-ar removed
 
 /* ─── 8. POLAROID STACK — tap to fan on mobile + hint ─── */
 document.querySelectorAll('.polaroid-stack').forEach(stack => {

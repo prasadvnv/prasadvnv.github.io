@@ -184,10 +184,6 @@ nav.scrolled { padding: .8rem 5%; }
 .proj-block-alt { background: var(--bg2); }
 .proj-block:last-of-type { padding-bottom: 5rem; border-bottom: 1px solid var(--border); }
 
-/*
-  Layout: text left, media right — but we let media breathe full-width
-  by going BELOW the text on wide screens for projects with video+stack
-*/
 .proj-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -198,7 +194,6 @@ nav.scrolled { padding: .8rem 5%; }
 .proj-layout-rev { direction: rtl; }
 .proj-layout-rev > * { direction: ltr; }
 
-/* For projects with both videos and a stack — go full width, stack below */
 .proj-layout-full {
     display: block;
     padding-bottom: 3rem;
@@ -241,17 +236,14 @@ nav.scrolled { padding: .8rem 5%; }
 .proj-chips span { font-family: var(--fm); font-size: .68rem; color: var(--muted2); border: 1px solid var(--border); padding: .25rem .7rem; border-radius: 3px; transition: all .2s; }
 .proj-chips span:hover { border-color: var(--accent); color: var(--accent); }
 
-/* Media column (used in 2-col layout) */
 .proj-media { display: flex; flex-direction: column; gap: 1.4rem; padding-top: .5rem; }
 .proj-media-center { align-items: center; }
 
-/* ── Video panels — STACKED vertically, full-width ── */
 .proj-videos {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
-/* Full-width video row (for full-layout projects) */
 .proj-videos-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -270,7 +262,7 @@ nav.scrolled { padding: .8rem 5%; }
 .proj-vid {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* no cropping — letterbox instead */
+    object-fit: contain;
     display: block;
     background: #000;
 }
@@ -282,42 +274,71 @@ nav.scrolled { padding: .8rem 5%; }
     letter-spacing: .08em; display: flex; align-items: center; gap: .4rem;
 }
 
+/* ── AR Training project strip ── */
+.proj-ar-strip-wrap {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+.proj-ar-strip {
+    display: flex;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+.proj-ar-strip .strip-item {
+    flex: 0 0 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.proj-ar-strip .strip-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.92) saturate(0.95);
+    transition: filter .3s;
+}
+.proj-ar-strip-wrap:hover .strip-item img {
+    filter: brightness(1) saturate(1);
+}
+.proj-ar-strip-wrap .strip-dots {
+    position: absolute;
+    bottom: .75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: .4rem;
+    z-index: 2;
+}
+
 /* ══════════════════════════════════════
    POLAROID SPREAD GALLERY
-   — cards fan out wide enough to all be visible
    ══════════════════════════════════════ */
-
-/* The outer wrapper gives the overflow space for fanning */
 .pol-wrap {
-    /* overflow visible so fanned cards aren't clipped */
     overflow: visible;
     display: flex;
     justify-content: center;
-    padding: 2.5rem 3rem 3.5rem; /* room for fan to breathe */
+    padding: 2.5rem 3rem 3.5rem;
 }
 
 .polaroid-stack {
     position: relative;
-    /* The "resting" stack is compact; the fan expands into padding */
     width: 200px;
     height: 220px;
     cursor: pointer;
     flex-shrink: 0;
 }
-
-/* Taller stack for portrait-format images (mocap 820×820, VR training) */
 .polaroid-stack-tall {
     width: 180px;
     height: 270px;
 }
-
-/* Square images (820×820 mocap) */
 .polaroid-stack-square {
     width: 200px;
     height: 230px;
 }
-
-/* Standalone (image-only projects) — slightly larger resting size */
 .polaroid-stack-lg {
     width: 220px;
     height: 240px;
@@ -343,7 +364,6 @@ nav.scrolled { padding: .8rem 5%; }
 .pol-card img {
     width: 100%;
     height: calc(100% - 30px);
-    /* CONTAIN so nothing is cropped — letterbox with dark bg */
     object-fit: contain;
     object-position: center;
     display: block;
@@ -352,7 +372,6 @@ nav.scrolled { padding: .8rem 5%; }
     transition: filter 0.35s;
 }
 
-/* Polaroid paper strip at bottom */
 .pol-card::after {
     content: '';
     position: absolute;
@@ -407,13 +426,11 @@ nav.scrolled { padding: .8rem 5%; }
     box-shadow: 0 16px 50px rgba(0,0,0,.6);
 }
 
-/* Reveal image quality when fanned */
 .polaroid-stack:hover .pol-card img {
     filter: brightness(0.97) saturate(1) contrast(1.02);
 }
 .polaroid-stack:hover .pol-caption { opacity: 0; }
 
-/* hint text */
 .pol-hint {
     text-align: center;
     font-family: var(--fm);
@@ -424,7 +441,6 @@ nav.scrolled { padding: .8rem 5%; }
     opacity: .5;
 }
 
-/* MKV warning — shown by JS if video fails to load */
 .mkv-notice {
     display: none;
     position: absolute;
@@ -445,7 +461,6 @@ nav.scrolled { padding: .8rem 5%; }
 .cs-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: transform .3s, box-shadow .3s, border-color .3s; }
 .cs-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.4); border-color: rgba(0,212,255,.3); }
 
-/* Case study image strip */
 .cs-media-wrap { position: relative; }
 .cs-img-strip { display: flex; overflow: hidden; aspect-ratio: 16/9; }
 .strip-item { flex: 0 0 100%; height: 100%; overflow: hidden; }
@@ -455,7 +470,6 @@ nav.scrolled { padding: .8rem 5%; }
 .strip-dots span { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.2); transition: background .3s; cursor: pointer; }
 .strip-dots span.active { background: var(--accent); }
 
-/* Case study video (Inventory Bot) */
 .cs-video-wrap { position: relative; aspect-ratio: 16/9; background: #000; overflow: hidden; }
 .cs-video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .cs-video-badge {
@@ -498,6 +512,144 @@ nav.scrolled { padding: .8rem 5%; }
     background: #000;
 }
 
+/* ── Gaussian Splatting CS Card ── */
+.cs-card-gsplat {
+    border-color: rgba(0, 212, 255, 0.12);
+    background: linear-gradient(160deg, var(--surface) 70%, rgba(0,87,255,0.06) 100%);
+}
+.cs-gsplat-header {
+    position: relative;
+    height: 120px;
+    background: linear-gradient(135deg, #0a0f1a 0%, #0d1a2e 50%, #070c18 100%);
+    border-bottom: 1px solid rgba(0,212,255,.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.cs-gsplat-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 30% 50%, rgba(0,87,255,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 75% 40%, rgba(0,212,255,0.08) 0%, transparent 70%);
+}
+/* Animated splat particles in header */
+.cs-gsplat-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle 2px at 20% 35%, rgba(0,212,255,0.5) 0%, transparent 100%),
+        radial-gradient(circle 3px at 45% 60%, rgba(0,87,255,0.4) 0%, transparent 100%),
+        radial-gradient(circle 2px at 70% 25%, rgba(0,212,255,0.6) 0%, transparent 100%),
+        radial-gradient(circle 4px at 82% 65%, rgba(0,150,255,0.3) 0%, transparent 100%),
+        radial-gradient(circle 2px at 55% 80%, rgba(0,212,255,0.4) 0%, transparent 100%),
+        radial-gradient(circle 3px at 10% 70%, rgba(0,87,255,0.35) 0%, transparent 100%),
+        radial-gradient(circle 2px at 92% 40%, rgba(0,212,255,0.45) 0%, transparent 100%);
+    animation: splat-float 6s ease-in-out infinite alternate;
+}
+@keyframes splat-float {
+    from { opacity: 0.6; transform: scale(1) translateY(0); }
+    to   { opacity: 1;   transform: scale(1.04) translateY(-3px); }
+}
+.cs-gsplat-icon {
+    position: relative;
+    z-index: 2;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--accent);
+    box-shadow: 0 0 30px rgba(0,212,255,0.2);
+    backdrop-filter: blur(4px);
+}
+.cs-gsplat-badge-row {
+    position: absolute;
+    bottom: .75rem;
+    right: .85rem;
+    display: flex;
+    gap: .45rem;
+    z-index: 2;
+}
+.cs-gsplat-badge {
+    font-family: var(--fm);
+    font-size: .58rem;
+    letter-spacing: .08em;
+    color: var(--accent);
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.25);
+    padding: .18rem .55rem;
+    border-radius: 3px;
+}
+.cs-gsplat-org-badge {
+    font-family: var(--fm);
+    font-size: .58rem;
+    letter-spacing: .08em;
+    color: var(--muted2);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: .18rem .55rem;
+    border-radius: 3px;
+}
+
+/* Gsplat bullet list */
+.gsplat-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin: .8rem 0 1rem;
+    padding-left: 0;
+}
+.gsplat-bullets li {
+    display: flex;
+    gap: .6rem;
+    font-size: .84rem;
+    color: var(--muted2);
+    line-height: 1.65;
+}
+.gsplat-bullets li i {
+    color: var(--accent);
+    font-size: .6rem;
+    margin-top: .35rem;
+    flex-shrink: 0;
+}
+
+/* Findings row */
+.cs-gsplat-findings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+.gsplat-finding {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: var(--fm);
+    font-size: .62rem;
+    letter-spacing: .05em;
+    padding: .25rem .7rem;
+    border-radius: 4px;
+}
+.gsplat-finding-ok {
+    color: #4ade80;
+    background: rgba(74,222,128,0.07);
+    border: 1px solid rgba(74,222,128,0.25);
+}
+.gsplat-finding-warn {
+    color: #facc15;
+    background: rgba(250,204,21,0.07);
+    border: 1px solid rgba(250,204,21,0.25);
+}
+
 /* ── Skills ── */
 .skills-table { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1rem; }
 .sk-row { display: grid; grid-template-columns: 170px 1fr; border-bottom: 1px solid var(--border); transition: background .2s; }
@@ -523,115 +675,44 @@ nav.scrolled { padding: .8rem 5%; }
 .cl-arr { color: var(--muted); font-size: .75rem; transition: transform .25s, color .25s; }
 .cl-item:hover .cl-arr { transform: translateX(3px); color: var(--accent); }
 
-/* SAE team brand — clickable card */
+/* SAE team brand */
 .sae-team-brand {
-    display: flex;
-    align-items: center;
-    gap: .85rem;
-    margin: .75rem 0 1rem;
-    padding: .65rem .9rem;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform .25s cubic-bezier(.16,1,.3,1),
-                border-color .25s,
-                background .25s,
-                box-shadow .25s;
+    display: flex; align-items: center; gap: .85rem;
+    margin: .75rem 0 1rem; padding: .65rem .9rem;
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px; text-decoration: none; cursor: pointer;
+    transition: transform .25s cubic-bezier(.16,1,.3,1), border-color .25s, background .25s, box-shadow .25s;
 }
 .sae-team-brand:hover {
-    transform: translateY(-3px);
-    border-color: rgba(0,212,255,.45);
+    transform: translateY(-3px); border-color: rgba(0,212,255,.45);
     background: rgba(0,212,255,.06);
     box-shadow: 0 6px 28px rgba(0,212,255,.15), 0 0 0 1px rgba(0,212,255,.12);
 }
 .sae-team-logo {
-    width: 44px;
-    height: 44px;
-    object-fit: contain;
-    border-radius: 6px;
+    width: 44px; height: 44px; object-fit: contain; border-radius: 6px;
     filter: brightness(1.05) drop-shadow(0 0 8px rgba(255,255,255,.12));
-    flex-shrink: 0;
-    transition: filter .25s;
+    flex-shrink: 0; transition: filter .25s;
 }
-.sae-team-brand:hover .sae-team-logo {
-    filter: brightness(1.15) drop-shadow(0 0 12px rgba(0,212,255,.35));
-}
-.sae-team-info {
-    display: flex;
-    flex-direction: column;
-    gap: .15rem;
-    flex: 1;
-}
-.sae-team-name {
-    font-family: var(--fh);
-    font-size: .98rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -.01em;
-    transition: color .25s;
-}
+.sae-team-brand:hover .sae-team-logo { filter: brightness(1.15) drop-shadow(0 0 12px rgba(0,212,255,.35)); }
+.sae-team-info { display: flex; flex-direction: column; gap: .15rem; flex: 1; }
+.sae-team-name { font-family: var(--fh); font-size: .98rem; font-weight: 700; color: #fff; letter-spacing: -.01em; transition: color .25s; }
 .sae-team-brand:hover .sae-team-name { color: var(--accent); }
-.sae-team-uni {
-    font-family: var(--fm);
-    font-size: .58rem;
-    color: var(--muted);
-    letter-spacing: .1em;
-    text-transform: uppercase;
-}
-.sae-brand-arrow {
-    font-size: .65rem;
-    color: var(--muted);
-    opacity: 0;
-    transform: translate(-4px, 4px);
-    transition: opacity .25s, transform .25s, color .25s;
-    flex-shrink: 0;
-}
-.sae-team-brand:hover .sae-brand-arrow {
-    opacity: 1;
-    transform: translate(0, 0);
-    color: var(--accent);
-}
+.sae-team-uni { font-family: var(--fm); font-size: .58rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.sae-brand-arrow { font-size: .65rem; color: var(--muted); opacity: 0; transform: translate(-4px, 4px); transition: opacity .25s, transform .25s, color .25s; flex-shrink: 0; }
+.sae-team-brand:hover .sae-brand-arrow { opacity: 1; transform: translate(0, 0); color: var(--accent); }
 
-/* SAE Card Extras */
 .cs-sae-media { position: relative; }
-
-/* Gold Captain Badge */
 .sae-captain-badge {
     display: inline-flex; align-items: center; gap: .35rem;
     font-family: var(--fm); font-size: .6rem; letter-spacing: .07em;
-    color: #f5c842;
-    border: 1px solid rgba(245,200,66,.4);
-    background: rgba(245,200,66,.07);
-    padding: .2rem .65rem;
-    border-radius: 3px;
-    white-space: nowrap;
+    color: #f5c842; border: 1px solid rgba(245,200,66,.4);
+    background: rgba(245,200,66,.07); padding: .2rem .65rem;
+    border-radius: 3px; white-space: nowrap;
 }
 .sae-captain-badge i { font-size: .55rem; }
-
-/* SAE contribution bullets with checkmarks */
-.sae-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: .55rem;
-    margin: .9rem 0 1.1rem;
-    padding-left: 0;
-}
-.sae-bullets li {
-    display: flex;
-    gap: .65rem;
-    font-size: .86rem;
-    color: var(--muted2);
-    line-height: 1.65;
-}
-.sae-bullets li i {
-    color: #4ade80;
-    font-size: .65rem;
-    margin-top: .32rem;
-    flex-shrink: 0;
-}
+.sae-bullets { list-style: none; display: flex; flex-direction: column; gap: .55rem; margin: .9rem 0 1.1rem; padding-left: 0; }
+.sae-bullets li { display: flex; gap: .65rem; font-size: .86rem; color: var(--muted2); line-height: 1.65; }
+.sae-bullets li i { color: #4ade80; font-size: .65rem; margin-top: .32rem; flex-shrink: 0; }
 
 /* ── Footer ── */
 footer { background: #040608; border-top: 1px solid var(--border); padding: 2rem 0; }
@@ -654,7 +735,6 @@ footer { background: #040608; border-top: 1px solid var(--border); padding: 2rem
     .contact-links { margin-top: 0; }
     .sk-row { grid-template-columns: 110px 1fr; }
     .proj-videos-row { grid-template-columns: 1fr; }
-    /* Tighter fan on small screens */
     .polaroid-stack[data-count="3"]:hover .pol-card:nth-child(1) { transform: rotate(-22deg) translate(-120px, 18px) scale(0.88); }
     .polaroid-stack[data-count="3"]:hover .pol-card:nth-child(3) { transform: rotate(22deg) translate(118px, 16px) scale(0.88); }
     .polaroid-stack[data-count="4"]:hover .pol-card:nth-child(1) { transform: rotate(-28deg) translate(-150px, 22px) scale(0.83); }
@@ -672,12 +752,13 @@ footer { background: #040608; border-top: 1px solid var(--border); padding: 2rem
     .footer-row { flex-direction: column; text-align: center; }
     .pol-wrap { padding: 2rem 1.5rem 3rem; }
 }
-/* ── VR Training — background image block ── */
+
+/* ── VR Training background block ── */
 .proj-block-vr-training {
     position: relative;
-    background-color: var(--bg2); /* fallback */
+    background-color: var(--bg2);
     background-image: url('assets/images/vr-training-bg.jpg');
-    background-size: contain;        /* show full image, no crop */
+    background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
     isolation: isolate;
@@ -694,11 +775,5 @@ footer { background: #040608; border-top: 1px solid var(--border); padding: 2rem
     position: relative;
     z-index: 1;
 }
-.nav-logo svg {
-    display: block;
-    transition: opacity .2s, transform .2s;
-}
-.nav-logo:hover svg {
-    opacity: 0.8;
-    transform: scale(1.08);
-}
+.nav-logo svg { display: block; transition: opacity .2s, transform .2s; }
+.nav-logo:hover svg { opacity: 0.8; transform: scale(1.08); }
