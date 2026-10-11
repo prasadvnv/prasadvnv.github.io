@@ -1,657 +1,880 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishnu Prasad N V — Software Engineer · XR & Interactive Systems</title>
-    <meta name="description" content="Vishnu Prasad N V — software engineer working across XR, interactive systems, and mechatronics. Currently contributing to the XR²ACH VR vocational-training project at the Virtual Dimension Center; previously an XR Developer Intern at Lufthansa Technik.">
-    <meta property="og:title" content="Vishnu Prasad N V — Software Engineer · XR & Interactive Systems">
-    <meta property="og:description" content="Portfolio of Vishnu Prasad N V — Unity/C# and XR development, robotics simulation, and engineering systems.">
+    <title>Vishnu Prasad N V | XR developer and mechatronics engineer</title>
+    <meta name="description" content="Portfolio of Vishnu Prasad N V, an XR developer working in Unity and C# with a mechatronics and robotics background. Currently at the Virtual Dimension Center, previously XR developer intern at Lufthansa Technik.">
+    <meta property="og:title" content="Vishnu Prasad N V | XR developer and mechatronics engineer">
+    <meta property="og:description" content="Unity and C# XR applications, motion capture, VR training, and robotics simulation.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://prasadvnv.github.io">
     <meta name="twitter:card" content="summary">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307090f'/><rect x='6.5' y='7.5' width='19' height='17' rx='6' fill='%23ffffff' opacity='0.95'/><rect x='8.5' y='11' width='15' height='8' rx='4' fill='%2307090f'/><circle cx='12.5' cy='15' r='3' fill='%2300d4ff' opacity='0.95'/><circle cx='19.5' cy='15' r='3' fill='%2300d4ff' opacity='0.6'/><circle cx='16' cy='16' r='10' stroke='%2300d4ff' stroke-width='1' opacity='0.15' fill='none'/></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <meta name="theme-color" content="#F3F5F9">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t !== 'light' && t !== 'dark') {
+                    t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- HEADER -->
+<header class="site-header" id="top">
+    <div class="wrap bar">
+        <a href="#top" class="brand" aria-label="Vishnu Prasad N V, back to top">
+            <svg class="logo" viewBox="0 0 32 32" width="38" height="38" aria-hidden="true" focusable="false">
+                <rect class="lg-bg" width="32" height="32" rx="7"/>
+                <rect class="lg-body" x="6.5" y="7.5" width="19" height="17" rx="6"/>
+                <rect class="lg-visor" x="8.5" y="11" width="15" height="8" rx="4"/>
+                <circle class="lg-eye" cx="12.5" cy="15" r="3"/>
+                <circle class="lg-eye lg-eye2" cx="19.5" cy="15" r="3"/>
+            </svg>
+            <span class="brand-name">Vishnu Prasad N V</span>
+        </a>
 
-<!-- NAVBAR -->
-<nav id="nav">
-    <a href="#hero" class="nav-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="38" height="38">
-        <rect width="32" height="32" rx="7" fill="#07090f"/>
-        <rect x="6.5" y="7.5" width="19" height="17" rx="6" fill="#ffffff" opacity="0.95"/>
-        <rect x="8.5" y="11" width="15" height="8" rx="4" fill="#07090f"/>
-        <circle cx="12.5" cy="15" r="3" fill="#00d4ff" opacity="0.95"/>
-        <circle cx="19.5" cy="15" r="3" fill="#00d4ff" opacity="0.6"/>
-        <circle cx="16" cy="16" r="10" stroke="#00d4ff" stroke-width="1" opacity="0.15" fill="none"/>
-    </svg>
-    </a>
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#case-studies">Case Studies</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="mailto:prasadvnv299@gmail.com" class="nav-cta">Get in Touch <i class="fas fa-arrow-up-right-from-square"></i></a>
-    <button class="hamburger" id="hamburger" onclick="toggleNav()">
-        <span></span><span></span>
-    </button>
-</nav>
+        <nav id="siteNav" class="nav" aria-label="Primary">
+            <ul>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="nav-cv"><a href="Resume_Vishnu.pdf" target="_blank" rel="noopener">CV (PDF)</a></li>
+            </ul>
+        </nav>
 
-<!-- HERO -->
-<section id="hero">
-    <canvas id="heroCanvas"></canvas>
-    <div class="hero-inner">
-        <div class="hero-status">
-            <span class="status-dot"></span>
-            Currently at the Virtual Dimension Center — XR²ACH project
-        </div>
-        <h1 class="hero-name">
-            <span class="line-wrap"><span class="reveal">Vishnu</span></span>
-            <span class="line-wrap"><span class="reveal r2">Prasad <span class="stroke-text">NV</span></span></span>
-        </h1>
-        <p class="hero-role">Software Engineer <span class="hr-sep">·</span> XR &amp; Interactive Systems <span class="hr-sep">·</span> Mechatronics</p>
-        <p class="hero-typed"><span id="typed"></span></p>
-        <div class="hero-meta">
-            <div class="hm-item"><span class="hm-label">Currently</span><span class="hm-val">XR Development &amp; Learning Analytics @ VDC</span></div>
-            <div class="hm-sep"></div>
-            <div class="hm-item"><span class="hm-label">Studying</span><span class="hm-val">M.Eng. Mechatronics &amp; Cyber-Physical Systems, THD</span></div>
-            <div class="hm-sep"></div>
-            <div class="hm-item"><span class="hm-label">Based</span><span class="hm-val">Hamburg, Germany</span></div>
-        </div>
-        <div class="hero-btns">
-            <a href="#projects" class="btn-fill">View Projects <i class="fas fa-arrow-right"></i></a>
-            <a href="#contact" class="btn-ghost">Get in touch</a>
+        <div class="bar-tools">
+            <button type="button" id="themeToggle" class="bulb" aria-label="Switch to dark theme">
+                <svg viewBox="0 0 36 40" width="26" height="29" aria-hidden="true" focusable="false">
+                    <g class="bulb-rays">
+                        <path d="M18 3V0M26.8 6.7L29 4.5M30.5 15.5h3M9.2 6.7L7 4.5M5.5 15.5h-3"/>
+                    </g>
+                    <path class="bulb-glass" d="M18 6a9.5 9.5 0 0 1 5.6 17.2c-.9.7-1.3 1.6-1.3 2.6V27h-8.6v-1.2c0-1-.4-1.9-1.3-2.6A9.5 9.5 0 0 1 18 6z"/>
+                    <path class="bulb-fil" d="M15.5 23V18L18 15l2.5 3v5"/>
+                    <path class="bulb-base" d="M14 30h8M15 33.5h6"/>
+                </svg>
+            </button>
+            <button type="button" id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+                <span></span><span></span>
+            </button>
         </div>
     </div>
-    <div class="hero-scroll">
-        <div class="hs-line"></div>
-        <span>scroll</span>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+        <div class="hero-copy">
+            <p class="kicker">XR developer · Mechatronics engineer</p>
+            <h1 id="hero-title">Building experiences <em>beyond the screen.</em></h1>
+            <p class="lede">Unity, immersive technology, and engineering that connects the virtual and physical worlds.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#work">Explore my work <span aria-hidden="true">→</span></a>
+                <a class="btn btn-quiet" href="#contact">Get in touch</a>
+            </div>
+            <p class="hero-note">Now at the Virtual Dimension Center in Fellbach, working on XR²ACH. Based in Stuttgart.</p>
+        </div>
+
+        <div class="hero-art">
+            <svg viewBox="0 0 600 520" role="img" aria-label="Illustration of a Meta Quest 3 style VR headset floating above a floor grid, with coordinate axes, a globe and an orbit">
+                <defs>
+                    <linearGradient id="shell" gradientUnits="userSpaceOnUse" x1="0" y1="-68.1" x2="0" y2="74.9"><stop offset="0" style="stop-color:var(--il-top)"/><stop offset=".55" style="stop-color:var(--il-front)"/><stop offset="1" style="stop-color:var(--il-side)"/></linearGradient>
+                </defs>
+
+                <!-- floor -->
+                <g class="il-floor">
+                    <path d="M102 400L300 514M135 381L333 495M168 362L366 476M201 343L399 457M234 324L432 438M267 305L465 419M300 286L498 400"/>
+                    <path d="M102 400L300 286M135 419L333 305M168 438L366 324M201 457L399 343M234 476L432 362M267 495L465 381M300 514L498 400"/>
+                </g>
+                <polygon class="il-floor-edge" points="102,400 300,286 498,400 300,514"/>
+
+                <!-- open box planes -->
+                <polygon class="il-plane" points="300,286 498,400 498,230 300,116"/>
+                <path class="il-thin" d="M102 400V215L300 116"/>
+
+                <!-- orbit -->
+                <g transform="rotate(-16 300 300)">
+                    <ellipse class="il-orbit" cx="300" cy="300" rx="236" ry="104"/>
+                    <circle class="orbit-dot" r="5.5"/>
+                </g>
+
+                <!-- globe -->
+                <g class="il-globe">
+                    <circle class="gl-fill" cx="505" cy="92" r="46"/>
+                    <ellipse cx="505" cy="92" rx="46" ry="16"/>
+                    <ellipse cx="505" cy="92" rx="18" ry="46"/>
+                    <path d="M505 46v92M459 92h92"/>
+                    <circle class="gl-ring" cx="505" cy="92" r="46"/>
+                </g>
+
+                <!-- axes -->
+                <g class="il-axes">
+                    <path class="ax-y" d="M64 150V92M64 92l-4 9M64 92l4 9"/>
+                    <path class="ax-x" d="M64 150L112 178M112 178l-9-1M112 178l-4-8"/>
+                    <path class="ax-z" d="M64 150L22 176M22 176l9-1M22 176l4-8"/>
+                    <text x="59" y="84" class="ax-t">y</text>
+                    <text x="118" y="188" class="ax-t">x</text>
+                    <text x="8" y="186" class="ax-t">z</text>
+                </g>
+
+                <!-- markers -->
+                <g class="il-cross">
+                    <path d="M332 120h12M338 114v12M150 330h12M156 324v12"/>
+                </g>
+                <g class="il-corner">
+                    <circle cx="102" cy="400" r="3"/><circle cx="300" cy="286" r="3"/><circle cx="498" cy="400" r="3"/><circle cx="300" cy="514" r="3"/>
+                </g>
+
+                <!-- shadow -->
+                <ellipse class="il-shadow" cx="300" cy="432" rx="104" ry="24"/>
+
+                <!-- headset: Meta Quest 3 style, three rectangular sensor windows, strap arms anchored on the side walls -->
+                <g transform="translate(300 288) scale(1.25) translate(-13.9 18.3)">
+                    <g class="il-headset">
+                        <path class="strap-o" d="M-67.7 -23.6 L-66.3 -24.1 L-64.7 -24.7 L-62.9 -25.3 L-60.9 -26.1 L-58.7 -26.9 L-56.3 -27.8 L-53.7 -28.7 L-51.1 -29.7 L-48.3 -30.6 L-45.4 -31.6 L-42.4 -32.5 L-39.4 -33.4 L-36.3 -34.3 L-33.1 -35.0 L-29.9 -35.8 L-26.6 -36.5 L-23.1 -37.3 L-19.5 -38.0 L-15.8 -38.8 L-12.0 -39.5 L-8.1 -40.2 L-4.1 -40.9 L-0.1 -41.5 L3.9 -42.2 L8.0 -42.7 L12.1 -43.3 L16.1 -43.8 L20.2 -44.2 L24.3 -44.6 L28.6 -44.9 L33.0 -45.2 L37.5 -45.5 L42.0 -45.7 L46.6 -45.9 L51.2 -46.0 L55.7 -46.1 L60.1 -46.2 L64.5 -46.3 L68.8 -46.3 L72.9 -46.3 L76.8 -46.3 L80.5 -46.3 L84.0 -46.2 L87.5 -46.2 L90.8 -46.1 L94.0 -45.9 L97.1 -45.8 L100.1 -45.6 L103.0 -45.4 L105.9 -45.2 L108.6 -44.9 L111.3 -44.6 L113.8 -44.3 L116.3 -43.9 L118.7 -43.6 L121.1 -43.1 L123.3 -42.7 L125.5 -42.2 L127.6 -41.7 L129.6 -41.2 L131.5 -40.6 L133.3 -40.0 L135.0 -39.4 L136.7 -38.7 L138.2 -38.1 L139.8 -37.3 L141.2 -36.6 L142.6 -35.8 L143.9 -35.0 L145.2 -34.1 L146.5 -33.2 L147.7 -32.2 L148.9 -31.2 L150.1 -30.2 L151.2 -29.1 L152.3 -28.0 L153.3 -26.8 L154.1 -25.6 L154.8 -24.5 L155.4 -23.3 L155.9 -22.1 L156.2 -20.9 L156.2 -19.8 L156.1 -18.6 L155.8 -17.5 L155.3 -16.3 L154.6 -15.2 L153.7 -14.0 L152.6 -12.8 L151.5 -11.6 L150.2 -10.4 L148.8 -9.3 L147.3 -8.1 L145.7 -7.0 L144.1 -5.8 L142.4 -4.7 L140.7 -3.7 L138.9 -2.7 L137.1 -1.7 L134.9 -0.6 L132.6 0.4 L130.1 1.4 L127.5 2.4 L124.9 3.4 L122.2 4.3 L119.6 5.3 L117.1 6.1 L114.7 6.9 L112.5 7.7 L110.6 8.3 L109.0 8.9 L107.6 9.4"/>
+                        <path class="strap" d="M-67.7 -23.6 L-66.3 -24.1 L-64.7 -24.7 L-62.9 -25.3 L-60.9 -26.1 L-58.7 -26.9 L-56.3 -27.8 L-53.7 -28.7 L-51.1 -29.7 L-48.3 -30.6 L-45.4 -31.6 L-42.4 -32.5 L-39.4 -33.4 L-36.3 -34.3 L-33.1 -35.0 L-29.9 -35.8 L-26.6 -36.5 L-23.1 -37.3 L-19.5 -38.0 L-15.8 -38.8 L-12.0 -39.5 L-8.1 -40.2 L-4.1 -40.9 L-0.1 -41.5 L3.9 -42.2 L8.0 -42.7 L12.1 -43.3 L16.1 -43.8 L20.2 -44.2 L24.3 -44.6 L28.6 -44.9 L33.0 -45.2 L37.5 -45.5 L42.0 -45.7 L46.6 -45.9 L51.2 -46.0 L55.7 -46.1 L60.1 -46.2 L64.5 -46.3 L68.8 -46.3 L72.9 -46.3 L76.8 -46.3 L80.5 -46.3 L84.0 -46.2 L87.5 -46.2 L90.8 -46.1 L94.0 -45.9 L97.1 -45.8 L100.1 -45.6 L103.0 -45.4 L105.9 -45.2 L108.6 -44.9 L111.3 -44.6 L113.8 -44.3 L116.3 -43.9 L118.7 -43.6 L121.1 -43.1 L123.3 -42.7 L125.5 -42.2 L127.6 -41.7 L129.6 -41.2 L131.5 -40.6 L133.3 -40.0 L135.0 -39.4 L136.7 -38.7 L138.2 -38.1 L139.8 -37.3 L141.2 -36.6 L142.6 -35.8 L143.9 -35.0 L145.2 -34.1 L146.5 -33.2 L147.7 -32.2 L148.9 -31.2 L150.1 -30.2 L151.2 -29.1 L152.3 -28.0 L153.3 -26.8 L154.1 -25.6 L154.8 -24.5 L155.4 -23.3 L155.9 -22.1 L156.2 -20.9 L156.2 -19.8 L156.1 -18.6 L155.8 -17.5 L155.3 -16.3 L154.6 -15.2 L153.7 -14.0 L152.6 -12.8 L151.5 -11.6 L150.2 -10.4 L148.8 -9.3 L147.3 -8.1 L145.7 -7.0 L144.1 -5.8 L142.4 -4.7 L140.7 -3.7 L138.9 -2.7 L137.1 -1.7 L134.9 -0.6 L132.6 0.4 L130.1 1.4 L127.5 2.4 L124.9 3.4 L122.2 4.3 L119.6 5.3 L117.1 6.1 L114.7 6.9 L112.5 7.7 L110.6 8.3 L109.0 8.9 L107.6 9.4"/>
+                        <path class="hs-body" d="M-128.4 -21.7 L-127.9 -27.6 L-126.6 -33.2 L-124.5 -38.3 L-121.6 -42.8 L-118.0 -46.4 L-113.8 -49.1 L-109.2 -50.8 L-36.9 -67.5 L-32.8 -68.1 L-28.6 -67.7 L94.4 -44.6 L98.6 -43.4 L102.7 -41.3 L106.5 -38.4 L110.0 -34.9 L113.0 -30.7 L115.4 -26.2 L117.2 -21.2 L118.3 -16.2 L118.7 -11.1 L118.7 19.9 L118.3 24.8 L117.2 29.5 L115.4 33.7 L113.0 37.4 L110.0 40.4 L106.5 42.7 L48.0 72.5 L43.4 74.2 L38.5 74.9 L33.4 74.4 L-99.3 49.5 L-104.3 48.0 L-109.2 45.5 L-113.8 42.1 L-118.0 37.8 L-121.6 32.9 L-124.5 27.3 L-126.6 21.5 L-127.9 15.4 L-128.4 9.2Z" fill="url(#shell)"/>
+                        <path class="hs-face" d="M62.5 14.2 L62.1 8.1 L60.8 2.0 L58.6 -3.9 L55.7 -9.4 L52.1 -14.4 L48.0 -18.6 L43.4 -22.1 L38.5 -24.5 L33.4 -26.0 L-99.3 -51.0 L-104.3 -51.4 L-109.2 -50.8 L-113.8 -49.1 L-118.0 -46.4 L-121.6 -42.8 L-124.5 -38.3 L-126.6 -33.2 L-127.9 -27.6 L-128.4 -21.7 L-128.4 9.2 L-127.9 15.4 L-126.6 21.5 L-124.5 27.3 L-121.6 32.9 L-118.0 37.8 L-113.8 42.1 L-109.2 45.5 L-104.3 48.0 L-99.3 49.5 L33.4 74.4 L38.5 74.9 L43.4 74.2 L48.0 72.5 L52.1 69.8 L55.7 66.2 L58.6 61.8 L60.8 56.7 L62.1 51.1 L62.5 45.1Z"/>
+                        <path class="hs-plate" d="M52.5 16.4 L52.2 11.6 L51.2 6.9 L49.5 2.3 L47.2 -2.0 L44.5 -5.9 L41.2 -9.2 L37.6 -11.9 L33.8 -13.8 L29.9 -14.9 L-96.3 -38.7 L-100.2 -39.0 L-104.1 -38.5 L-107.6 -37.2 L-110.9 -35.1 L-113.7 -32.3 L-115.9 -28.8 L-117.6 -24.9 L-118.6 -20.5 L-119.0 -15.9 L-119.0 7.3 L-118.6 12.1 L-117.6 16.8 L-115.9 21.4 L-113.7 25.7 L-110.9 29.5 L-107.6 32.8 L-104.1 35.5 L-100.2 37.5 L-96.3 38.6 L29.9 62.3 L33.8 62.7 L37.6 62.2 L41.2 60.8 L44.5 58.7 L47.2 55.9 L49.5 52.5 L51.2 48.5 L52.2 44.2 L52.5 39.5Z"/>
+                        <clipPath id="plateclip"><path d="M52.5 16.4 L52.2 11.6 L51.2 6.9 L49.5 2.3 L47.2 -2.0 L44.5 -5.9 L41.2 -9.2 L37.6 -11.9 L33.8 -13.8 L29.9 -14.9 L-96.3 -38.7 L-100.2 -39.0 L-104.1 -38.5 L-107.6 -37.2 L-110.9 -35.1 L-113.7 -32.3 L-115.9 -28.8 L-117.6 -24.9 L-118.6 -20.5 L-119.0 -15.9 L-119.0 7.3 L-118.6 12.1 L-117.6 16.8 L-115.9 21.4 L-113.7 25.7 L-110.9 29.5 L-107.6 32.8 L-104.1 35.5 L-100.2 37.5 L-96.3 38.6 L29.9 62.3 L33.8 62.7 L37.6 62.2 L41.2 60.8 L44.5 58.7 L47.2 55.9 L49.5 52.5 L51.2 48.5 L52.2 44.2 L52.5 39.5Z"/></clipPath>
+                        <g clip-path="url(#plateclip)"><path class="hs-shine" d="M-90.0 -37.4 L-64.1 -32.5 L-96.5 38.7 L-117.5 34.7Z"/><path class="hs-shine" d="M-52.8 -30.4 L-43.1 -28.6 L-75.5 42.6 L-85.2 40.8Z"/></g>
+                        <path class="hs-pill" d="M-88.1 -18.6 L-88.5 -21.4 L-89.5 -24.0 L-91.1 -26.2 L-93.1 -27.8 L-95.4 -28.7 L-101.1 -29.7 L-103.3 -29.7 L-105.3 -28.9 L-106.9 -27.3 L-108.0 -25.0 L-108.3 -22.4 L-108.3 18.1 L-108.0 20.9 L-106.9 23.5 L-105.3 25.7 L-103.3 27.4 L-101.1 28.2 L-95.4 29.3 L-93.1 29.3 L-91.1 28.4 L-89.5 26.8 L-88.5 24.6 L-88.1 22.0Z"/>
+                        <path class="hs-pill" d="M-23.4 0.3 L-23.7 -2.4 L-24.8 -5.1 L-26.4 -7.3 L-28.4 -8.9 L-30.7 -9.7 L-36.3 -10.8 L-38.6 -10.8 L-40.6 -10.0 L-42.2 -8.3 L-43.3 -6.1 L-43.6 -3.5 L-43.6 23.6 L-43.3 26.3 L-42.2 28.9 L-40.6 31.2 L-38.6 32.8 L-36.3 33.6 L-30.7 34.7 L-28.4 34.7 L-26.4 33.8 L-24.8 32.2 L-23.7 30.0 L-23.4 27.4Z"/>
+                        <path class="hs-pill" d="M41.3 5.7 L41.0 3.0 L39.9 0.4 L38.3 -1.9 L36.3 -3.5 L34.0 -4.3 L28.4 -5.4 L26.1 -5.4 L24.1 -4.5 L22.5 -2.9 L21.5 -0.7 L21.1 1.9 L21.1 42.5 L21.5 45.2 L22.5 47.9 L24.1 50.1 L26.1 51.7 L28.4 52.6 L34.0 53.6 L36.3 53.6 L38.3 52.8 L39.9 51.1 L41.0 48.9 L41.3 46.3Z"/>
+                        <path class="hs-lens" d="M-93.5 -11.7 L-93.7 -13.3 L-94.2 -14.9 L-95.0 -16.3 L-96.0 -17.4 L-97.2 -18.2 L-98.5 -18.7 L-99.8 -18.7 L-101.0 -18.3 L-102.1 -17.6 L-102.9 -16.5 L-103.4 -15.1 L-103.5 -13.6 L-103.4 -12.0 L-102.9 -10.5 L-102.1 -9.1 L-101.0 -8.0 L-99.8 -7.1 L-98.5 -6.7 L-97.2 -6.7 L-96.0 -7.0 L-95.0 -7.8 L-94.2 -8.9 L-93.7 -10.2Z"/>
+                        <path class="hs-lens" d="M-95.0 14.1 L-95.1 12.9 L-95.4 11.8 L-96.0 10.9 L-96.7 10.0 L-97.6 9.5 L-98.5 9.1 L-99.4 9.1 L-100.3 9.4 L-101.0 9.9 L-101.6 10.7 L-102.0 11.6 L-102.1 12.7 L-102.0 13.8 L-101.6 14.9 L-101.0 15.9 L-100.3 16.7 L-99.4 17.3 L-98.5 17.6 L-97.6 17.7 L-96.7 17.4 L-96.0 16.9 L-95.4 16.1 L-95.1 15.1Z"/>
+                        <path class="hs-lens" d="M35.9 12.6 L35.8 11.0 L35.3 9.5 L34.5 8.1 L33.4 6.9 L32.2 6.1 L30.9 5.7 L29.6 5.6 L28.4 6.0 L27.4 6.8 L26.6 7.8 L26.1 9.2 L25.9 10.7 L26.1 12.3 L26.6 13.8 L27.4 15.2 L28.4 16.4 L29.6 17.2 L30.9 17.6 L32.2 17.7 L33.4 17.3 L34.5 16.6 L35.3 15.5 L35.8 14.1Z"/>
+                        <path class="hs-lens" d="M34.5 38.4 L34.4 37.3 L34.0 36.2 L33.4 35.2 L32.7 34.4 L31.8 33.8 L30.9 33.5 L30.0 33.5 L29.1 33.7 L28.4 34.3 L27.8 35.0 L27.5 36.0 L27.4 37.1 L27.5 38.2 L27.8 39.3 L28.4 40.3 L29.1 41.1 L30.0 41.7 L30.9 42.0 L31.8 42.0 L32.7 41.7 L33.4 41.2 L34.0 40.4 L34.4 39.5Z"/>
+                        <path class="hs-lens" d="M-30.1 6.0 L-30.2 4.8 L-30.6 3.7 L-31.2 2.6 L-31.9 1.8 L-32.8 1.2 L-33.8 0.8 L-34.8 0.8 L-35.7 1.1 L-36.4 1.6 L-37.0 2.5 L-37.4 3.5 L-37.5 4.6 L-37.4 5.8 L-37.0 6.9 L-36.4 7.9 L-35.7 8.8 L-34.8 9.4 L-33.8 9.7 L-32.8 9.8 L-31.9 9.5 L-31.2 8.9 L-30.6 8.1 L-30.2 7.1Z"/>
+                        <path class="hs-glint" d="M-98.9 -14.7 L-99.1 -15.6 L-99.8 -16.3 L-100.6 -16.4 L-101.2 -16.0 L-101.5 -15.1 L-101.2 -14.2 L-100.6 -13.5 L-99.8 -13.4 L-99.1 -13.8Z"/>
+                        <path class="hs-glint" d="M30.5 9.7 L30.3 8.7 L29.6 8.0 L28.8 7.9 L28.2 8.3 L28.0 9.2 L28.2 10.1 L28.8 10.8 L29.6 11.0 L30.3 10.5Z"/>
+                        <path class="hs-glint" d="M-34.3 3.3 L-34.6 2.4 L-35.1 1.8 L-35.8 1.7 L-36.4 2.1 L-36.6 2.9 L-36.4 3.7 L-35.8 4.3 L-35.1 4.4 L-34.6 4.0Z"/>
+                        <path class="led" d="M-31.7 24.0 L-31.9 22.9 L-32.5 21.9 L-33.3 21.3 L-34.3 21.1 L-35.1 21.4 L-35.7 22.2 L-35.9 23.2 L-35.7 24.4 L-35.1 25.3 L-34.3 26.0 L-33.3 26.2 L-32.5 25.8 L-31.9 25.1Z"/>
+                        <path class="hs-tab" d="M119.5 -7.4 L103.1 -1.5 L103.1 27.5 L119.5 21.6Z"/>
+                        <path class="strap-o" d="M121.1 -43.1 L123.3 -42.7 L125.5 -42.2 L127.6 -41.7 L129.6 -41.2 L131.5 -40.6 L133.3 -40.0 L135.0 -39.4 L136.7 -38.7 L138.2 -38.1 L139.8 -37.3 L141.2 -36.6 L142.6 -35.8 L143.9 -35.0 L145.2 -34.1 L146.5 -33.2 L147.7 -32.2 L148.9 -31.2 L150.1 -30.2 L151.2 -29.1 L152.3 -28.0 L153.3 -26.8 L154.1 -25.6 L154.8 -24.5 L155.4 -23.3 L155.9 -22.1 L156.2 -20.9 L156.2 -19.8 L156.1 -18.6 L155.8 -17.5 L155.3 -16.3 L154.6 -15.2 L153.7 -14.0 L152.6 -12.8 L151.5 -11.6 L150.2 -10.4 L148.8 -9.3 L147.3 -8.1 L145.7 -7.0 L144.1 -5.8 L142.4 -4.7 L140.7 -3.7 L138.9 -2.7 L137.1 -1.7 L134.9 -0.6 L132.6 0.4 L130.1 1.4 L127.5 2.4 L124.9 3.4 L122.2 4.3 L119.6 5.3 L117.1 6.1 L114.7 6.9 L112.5 7.7 L110.6 8.3 L109.0 8.9 L107.6 9.4"/>
+                        <path class="strap" d="M121.1 -43.1 L123.3 -42.7 L125.5 -42.2 L127.6 -41.7 L129.6 -41.2 L131.5 -40.6 L133.3 -40.0 L135.0 -39.4 L136.7 -38.7 L138.2 -38.1 L139.8 -37.3 L141.2 -36.6 L142.6 -35.8 L143.9 -35.0 L145.2 -34.1 L146.5 -33.2 L147.7 -32.2 L148.9 -31.2 L150.1 -30.2 L151.2 -29.1 L152.3 -28.0 L153.3 -26.8 L154.1 -25.6 L154.8 -24.5 L155.4 -23.3 L155.9 -22.1 L156.2 -20.9 L156.2 -19.8 L156.1 -18.6 L155.8 -17.5 L155.3 -16.3 L154.6 -15.2 L153.7 -14.0 L152.6 -12.8 L151.5 -11.6 L150.2 -10.4 L148.8 -9.3 L147.3 -8.1 L145.7 -7.0 L144.1 -5.8 L142.4 -4.7 L140.7 -3.7 L138.9 -2.7 L137.1 -1.7 L134.9 -0.6 L132.6 0.4 L130.1 1.4 L127.5 2.4 L124.9 3.4 L122.2 4.3 L119.6 5.3 L117.1 6.1 L114.7 6.9 L112.5 7.7 L110.6 8.3 L109.0 8.9 L107.6 9.4"/>
+                        <path class="hs-tab" d="M116.3 -8.0 L99.8 -2.1 L99.8 26.9 L116.3 21.0Z"/>
+                        <path class="hs-tab" d="M9.0 -59.9 L33.3 -55.3 L18.0 -49.9 L-6.3 -54.4Z"/>
+                        <path class="strap-o" d="M12.9 -50.8 L13.6 -51.6 L14.3 -52.6 L15.1 -53.8 L16.1 -55.1 L17.1 -56.5 L18.2 -58.0 L19.3 -59.6 L20.6 -61.3 L21.9 -63.0 L23.3 -64.8 L24.7 -66.6 L26.2 -68.4 L27.8 -70.3 L29.4 -72.1 L31.1 -74.0 L32.9 -76.1 L34.8 -78.4 L36.8 -80.7 L38.9 -83.1 L41.1 -85.5 L43.3 -87.9 L45.5 -90.3 L47.8 -92.6 L50.0 -94.8 L52.2 -96.9 L54.5 -98.8 L56.6 -100.6 L58.8 -102.1 L60.9 -103.4 L63.0 -104.7 L65.2 -105.9 L67.3 -107.0 L69.5 -108.1 L71.7 -109.0 L73.8 -109.7 L76.0 -110.4 L78.1 -110.9 L80.2 -111.2 L82.3 -111.4 L84.3 -111.3 L86.2 -111.1 L88.2 -110.6 L90.1 -109.9 L92.0 -108.9 L93.8 -107.7 L95.7 -106.3 L97.6 -104.8 L99.4 -103.0 L101.2 -101.1 L102.9 -99.1 L104.6 -97.0 L106.2 -94.9 L107.7 -92.7 L109.1 -90.5 L110.4 -88.3 L111.7 -86.1 L112.8 -83.9 L113.8 -81.4 L114.8 -78.7 L115.7 -75.8 L116.5 -72.9 L117.2 -69.9 L117.9 -67.0 L118.5 -64.1 L119.0 -61.3 L119.5 -58.7 L119.9 -56.3 L120.4 -54.1 L120.7 -52.3 L121.1 -50.9"/>
+                        <path class="strap" d="M12.9 -50.8 L13.6 -51.6 L14.3 -52.6 L15.1 -53.8 L16.1 -55.1 L17.1 -56.5 L18.2 -58.0 L19.3 -59.6 L20.6 -61.3 L21.9 -63.0 L23.3 -64.8 L24.7 -66.6 L26.2 -68.4 L27.8 -70.3 L29.4 -72.1 L31.1 -74.0 L32.9 -76.1 L34.8 -78.4 L36.8 -80.7 L38.9 -83.1 L41.1 -85.5 L43.3 -87.9 L45.5 -90.3 L47.8 -92.6 L50.0 -94.8 L52.2 -96.9 L54.5 -98.8 L56.6 -100.6 L58.8 -102.1 L60.9 -103.4 L63.0 -104.7 L65.2 -105.9 L67.3 -107.0 L69.5 -108.1 L71.7 -109.0 L73.8 -109.7 L76.0 -110.4 L78.1 -110.9 L80.2 -111.2 L82.3 -111.4 L84.3 -111.3 L86.2 -111.1 L88.2 -110.6 L90.1 -109.9 L92.0 -108.9 L93.8 -107.7 L95.7 -106.3 L97.6 -104.8 L99.4 -103.0 L101.2 -101.1 L102.9 -99.1 L104.6 -97.0 L106.2 -94.9 L107.7 -92.7 L109.1 -90.5 L110.4 -88.3 L111.7 -86.1 L112.8 -83.9 L113.8 -81.4 L114.8 -78.7 L115.7 -75.8 L116.5 -72.9 L117.2 -69.9 L117.9 -67.0 L118.5 -64.1 L119.0 -61.3 L119.5 -58.7 L119.9 -56.3 L120.4 -54.1 L120.7 -52.3 L121.1 -50.9"/>
+                        <path class="hs-tab" d="M9.0 -56.5 L33.3 -51.9 L18.0 -46.5 L-6.3 -51.1Z"/>
+                        </g>
+                </g>
+            </svg>
+            <ul class="hero-tags" aria-hidden="true">
+                <li>Unity</li><li>XR</li><li>3D</li><li>C#</li>
+            </ul>
+            <ul class="hero-tags hero-tags-b" aria-hidden="true">
+                <li>Real time</li><li>Interaction</li><li>Immersion</li>
+            </ul>
+        </div>
     </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-band">
-    <div class="marquee-inner">
-        <span>Unity 3D</span><em>✦</em><span>MRTK 3</span><em>✦</em><span>OpenXR</span><em>✦</em>
-        <span>VR · MR · AR</span><em>✦</em><span>Motion Capture</span><em>✦</em><span>C#</span><em>✦</em>
-        <span>Python</span><em>✦</em><span>ROS</span><em>✦</em><span>SLAM</span><em>✦</em><span>Blender</span><em>✦</em>
-        <span>XR Interaction Toolkit</span><em>✦</em><span>IK Rigs</span><em>✦</em><span>SolidWorks</span><em>✦</em>
-        <span>Gaussian Splatting</span><em>✦</em><span>Unity 3D</span><em>✦</em><span>MRTK 3</span><em>✦</em><span>OpenXR</span><em>✦</em>
-        <span>VR · MR · AR</span><em>✦</em><span>Motion Capture</span><em>✦</em><span>C#</span><em>✦</em>
-        <span>Python</span><em>✦</em><span>ROS / SLAM</span><em>✦</em><span>Blender</span><em>✦</em>
-        <span>XR Interaction Toolkit</span><em>✦</em><span>IK Rigs</span><em>✦</em><span>SolidWorks</span><em>✦</em>
-    </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about" class="sec">
+<!-- WORK -->
+<section class="sec" id="work" aria-labelledby="work-title">
     <div class="wrap">
-        <div class="about-grid">
-            <div data-aos="fade-right">
-                <p class="eyebrow">01 — About</p>
-                <h2 class="sec-title">Engineering immersive &amp;<br><em>intelligent systems</em></h2>
-                <div class="about-portrait-wrap">
-                    <img src="assets/images/profile.jpg" alt="Vishnu Prasad N V" class="about-portrait" onerror="this.closest('.about-portrait-wrap').style.display='none'">
-                </div>
-            </div>
-            <div data-aos="fade-left" data-aos-delay="80">
-                <p class="body-text">I have a mechanical engineering background and am completing an M.Eng. in Mechatronics &amp; Cyber-Physical Systems at Deggendorf Institute of Technology (THD) — coursework finished, thesis topic still being finalized. My strongest software experience is Unity and C# for XR application development: six months as an XR Developer Intern at <strong>Lufthansa Technik AG</strong>, and currently a combined internship/thesis placement at the <strong>Virtual Dimension Center</strong> on the XR²ACH vocational-training project, focused on XR development and learning analytics. I also bring academic experience in robotics simulation (ROS, Gazebo, autonomous navigation) and mechanical/engineering design (MATLAB/Simulink, SolidWorks).</p>
-                <div class="stats-row">
-                    <div class="stat"><span class="stat-n">6<sup>+</sup></span><span class="stat-l">XR / robotics systems<br>built to date</span></div>
-                    <div class="stat"><span class="stat-n">8.5</span><span class="stat-l">Bachelor's GPA<br>CUSAT, out of 10</span></div>
-                </div>
-                <div class="about-row">
-                    <a href="Resume_Vishnu.pdf" target="_blank" class="btn-sm"><i class="fas fa-file-pdf"></i> Download CV</a>
-                    <div class="lang-circles" id="langCircles">
-                        <div class="lc-item">
-                            <svg class="lc-svg" width="70" height="70" viewBox="0 0 70 70">
-                                <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#00d4ff"/><stop offset="100%" style="stop-color:#0057ff"/></linearGradient></defs>
-                                <circle class="lc-bg" cx="35" cy="35" r="28"/>
-                                <circle class="lc-prog" cx="35" cy="35" r="28" data-pct="95"/>
-                                <text x="35" y="35" class="lc-label" text-anchor="middle" dominant-baseline="middle">C2</text>
-                            </svg>
-                            <p class="lc-name">English</p>
-                        </div>
-                        <div class="lc-item">
-                            <svg class="lc-svg" width="70" height="70" viewBox="0 0 70 70">
-                                <circle class="lc-bg" cx="35" cy="35" r="28"/>
-                                <circle class="lc-prog" cx="35" cy="35" r="28" data-pct="40"/>
-                                <text x="35" y="35" class="lc-label" text-anchor="middle" dominant-baseline="middle">B1</text>
-                            </svg>
-                            <p class="lc-name">German <span style="opacity:.6;font-size:.75em">(in progress)</span></p>
-                        </div>
-                        <div class="lc-item">
-                            <svg class="lc-svg" width="70" height="70" viewBox="0 0 70 70">
-                                <circle class="lc-bg" cx="35" cy="35" r="28"/>
-                                <circle class="lc-prog" cx="35" cy="35" r="28" data-pct="100"/>
-                                <text x="35" y="35" class="lc-label" text-anchor="middle" dominant-baseline="middle" style="font-size:7px">Native</text>
-                            </svg>
-                            <p class="lc-name">Malayalam</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="sec-head">
+            <p class="kicker">Selected work</p>
+            <h2 id="work-title">Projects</h2>
+            <p class="sec-intro">Enterprise XR applications from my internship at Lufthansa Technik, current work at the Virtual Dimension Center, and an earlier robotics project. Select any tile for the technical detail.</p>
+        </div>
+
+        <div class="tiles">
+            <!-- 1 XR2ACH (no public media yet) -->
+            <button type="button" class="tile t5 tile-plain" data-open="xr2ach" aria-haspopup="dialog">
+                <span class="tile-body">
+                    <span class="tile-meta">Virtual Dimension Center · Current</span>
+                    <span class="tile-title">XR²ACH: usability in VR vocational training</span>
+                    <span class="tile-text">Making VR training easier for first time users: interface rebuilds, interaction flow, and CAD model viewing.</span>
+                    <span class="tile-note">Screenshots and recordings follow once they are cleared for public release.</span>
+                    <span class="tile-foot"><span class="tile-tags">Unity 3D · OpenXR · USS/UXML</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+
+            <!-- 2 Mocap -->
+            <button type="button" class="tile t7" data-open="mocap" aria-haspopup="dialog">
+                <span class="tile-art tile-art-photos" aria-hidden="true">
+                    <img src="assets/images/mocap-1.jpg" alt="" loading="lazy">
+                    <img src="assets/images/mocap-2.jpg" alt="" loading="lazy">
+                </span>
+                <span class="tile-body">
+                    <span class="tile-meta">Lufthansa Technik</span>
+                    <span class="tile-title">Full body motion capture on a standalone headset</span>
+                    <span class="tile-text">Tracking, IK solving and recording with no PC attached, plus a calibration step and JSON playback.</span>
+                    <span class="tile-foot"><span class="tile-tags">Unity 3D · OpenXR · Full body IK</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+
+            <!-- 3 Training -->
+            <button type="button" class="tile t5" data-open="training" aria-haspopup="dialog">
+                <span class="tile-art tile-art-ui" aria-hidden="true">
+                    <img src="assets/images/vr-training-1.jpg" alt="" loading="lazy">
+                    <img src="assets/images/vr-training-2.jpg" alt="" loading="lazy">
+                    <img src="assets/images/vr-training-3.jpg" alt="" loading="lazy">
+                </span>
+                <span class="tile-body">
+                    <span class="tile-meta">Lufthansa Technik</span>
+                    <span class="tile-title">Modular VR training and assessment</span>
+                    <span class="tile-text">A quiz and analytics module driven by ScriptableObjects and packaged as a VR Builder behavior.</span>
+                    <span class="tile-foot"><span class="tile-tags">Unity 3D · VR Builder · C#</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+
+            <!-- 4 Cinematic -->
+            <button type="button" class="tile t7" data-open="cinematic" aria-haspopup="dialog">
+                <span class="tile-art tile-art-photos one" aria-hidden="true">
+                    <img src="assets/images/trailer-1.jpg" alt="" loading="lazy">
+                </span>
+                <span class="tile-body">
+                    <span class="tile-meta">Lufthansa Technik</span>
+                    <span class="tile-title">Cinematic space to Earth experience</span>
+                    <span class="tile-text">A flight from orbit to a 3D globe with location pins, with the XR rig locked to a Cinemachine dolly spline.</span>
+                    <span class="tile-foot"><span class="tile-tags">Unity 3D · Cinemachine · OpenXR</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+
+            <!-- 5 AR cabin -->
+            <button type="button" class="tile t7" data-open="ar-cabin" aria-haspopup="dialog">
+                <span class="tile-art tile-art-photos" aria-hidden="true">
+                    <img src="assets/images/ar-cabin-1.jpg" alt="" loading="lazy">
+                    <img src="assets/images/ar-cabin-2.jpg" alt="" loading="lazy">
+                </span>
+                <span class="tile-body">
+                    <span class="tile-meta">Lufthansa Technik</span>
+                    <span class="tile-title">AR training interface for cabin crew</span>
+                    <span class="tile-text">QR based world locking anchors guided workflows and 3D models in the real cabin.</span>
+                    <span class="tile-foot"><span class="tile-tags">Unity 3D · MRTK 3 · USS/UXML</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+
+            <!-- 6 Robot -->
+            <button type="button" class="tile t5" data-open="robot" aria-haspopup="dialog">
+                <span class="tile-art tile-art-photos one" aria-hidden="true">
+                    <img src="assets/images/bot-poster.jpg" alt="" loading="lazy">
+                </span>
+                <span class="tile-body">
+                    <span class="tile-meta">Academic project · Robotics</span>
+                    <span class="tile-title">Warehouse robot with SLAM navigation</span>
+                    <span class="tile-text">A simulated robot that localizes on a map, plans paths and moves a tray, built in ROS and Gazebo.</span>
+                    <span class="tile-foot"><span class="tile-tags">ROS · Gazebo · Python</span><span class="tile-go">Explore <i aria-hidden="true">→</i></span></span>
+                </span>
+            </button>
+        </div>
+
+        <div class="more">
+            <h3 class="more-title">More work</h3>
+            <ul class="more-list">
+                <li><button type="button" class="more-row" data-open="conditions" aria-haspopup="dialog"><span class="mr-title">Custom VR Builder conditions</span><span class="mr-text">Gaze and visual inspection conditions for training scenarios</span><span class="mr-meta">Lufthansa Technik</span><i aria-hidden="true">→</i></button></li>
+                <li><button type="button" class="more-row" data-open="gsplat" aria-haspopup="dialog"><span class="mr-title">Gaussian Splatting in Unity</span><span class="mr-text">R&amp;D evaluation of photorealistic scenes on desktop and standalone VR</span><span class="mr-meta">Lufthansa Technik</span><i aria-hidden="true">→</i></button></li>
+                <li><button type="button" class="more-row" data-open="safety" aria-haspopup="dialog"><span class="mr-title">Industrial safety training simulation</span><span class="mr-text">VR oven operation and emergency scenarios</span><span class="mr-meta">Personal project</span><i aria-hidden="true">→</i></button></li>
+                <li><button type="button" class="more-row" data-open="solar" aria-haspopup="dialog"><span class="mr-title">Dual axis solar tracker</span><span class="mr-text">Sensor feedback control in MATLAB and Simulink</span><span class="mr-meta">Academic project</span><i aria-hidden="true">→</i></button></li>
+                <li><button type="button" class="more-row" data-open="sae" aria-haspopup="dialog"><span class="mr-title">Yeti Racing, Formula SAE</span><span class="mr-text">Brake Team Captain at national competitions</span><span class="mr-meta">Student team</span><i aria-hidden="true">→</i></button></li>
+            </ul>
         </div>
     </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience" class="sec sec-alt">
+<section class="sec sec-tint" id="experience" aria-labelledby="exp-title">
     <div class="wrap">
-        <p class="eyebrow" data-aos="fade-up">02 — Experience</p>
-        <h2 class="sec-title" data-aos="fade-up" data-aos-delay="40">Where I've worked</h2>
-        <div class="timeline">
-            <div class="tl-item" data-aos="fade-up" data-aos-delay="60">
-                <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                <div class="tl-right">
-                    <div class="tl-head">
-                        <div>
-                            <h3 class="tl-role">Praktikum/Masterarbeit — XR-Entwicklung &amp; Learning Analytics</h3>
-                            <p class="tl-co">Virtual Dimension Center (VDC) <span>· Fellbach, DE</span></p>
-                        </div>
-                        <span class="tl-date">Sep 2026 — Current</span>
-                    </div>
-                    <ul class="tl-list">
-                        <li>Combined internship/thesis placement contributing to <strong>XR²ACH</strong>, an XR-based vocational training application for Meta Quest 3/3S built in Unity with OpenXR</li>
-                        <li>Improving interface usability and interaction flow so first-time VR trainees need less reliance on trainer instructions</li>
-                        <li>Rebuilding UI screens with Unity USS/UXML for a more intuitive, modern interface — deepening my USS/UXML experience significantly beyond the Lufthansa Technik work</li>
-                        <li>Investigating a reusable approach for importing and visualising CAD models — including a compressor model — from multiple views inside the VR training environment</li>
-                        <li>Working toward a Master's thesis direction centred on XR development and learning analytics, with exact scope still being finalized</li>
-                    </ul>
-                    <div class="tl-chips"><span>Unity 3D</span><span>OpenXR</span><span>Meta Quest 3/3S</span><span>USS/UXML</span><span>VR Interaction Design</span><span>CAD Visualisation</span></div>
+        <div class="sec-head">
+            <p class="kicker">Experience</p>
+            <h2 id="exp-title">Where the work happened</h2>
+        </div>
+
+        <ol class="exp">
+            <li class="exp-item">
+                <div class="exp-when">
+                    <p class="exp-date">Sep 2026 to present</p>
+                    <p class="exp-org">Virtual Dimension Center</p>
+                    <p class="exp-place">Fellbach, Germany</p>
                 </div>
-            </div>
-            <div class="tl-item" data-aos="fade-up" data-aos-delay="90">
-                <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                <div class="tl-right">
-                    <div class="tl-head">
-                        <div>
-                            <h3 class="tl-role">XR Developer Intern</h3>
-                            <p class="tl-co">Lufthansa Technik AG <span>· Nürnberg, DE</span></p>
-                        </div>
-                        <span class="tl-date">Oct 2025 — Mar 2026</span>
-                    </div>
-                    <ul class="tl-list">
-                        <li>Delivered five enterprise XR applications across VR, MR, and AR for standalone headsets — from motion capture systems to cinematic experiences and training platforms</li>
-                        <li>Worked across the full development lifecycle — system architecture, implementation, UI design (USS/UXML), and technical documentation for each project</li>
-                        <li>Built scalable, modular XR systems designed for reuse across multiple training scenarios within Lufthansa Technik's enterprise pipeline</li>
-                        <li>Sole developer on my assigned work across all five projects, several of which built on existing frameworks and team conventions</li>
-                    </ul>
-                    <div class="tl-chips"><span>Unity 3D</span><span>MRTK 3</span><span>OpenXR</span><span>C#</span><span>USS/UXML</span><span>Motion Capture</span><span>MR Passthrough</span><span>VR Builder</span></div>
+                <div class="exp-what">
+                    <h3>Internship, XR development and learning analytics</h3>
+                    <p>Contributing to <strong>XR²ACH</strong>, an XR vocational training application for Meta Quest 3 and 3S built in Unity with OpenXR. My focus is interface usability and interaction flow so first time VR trainees depend less on trainer instructions, rebuilding screens with USS and UXML, and exploring how CAD models can be imported and viewed from several angles inside VR.</p>
+                    <p class="exp-links"><span>Related project</span><button type="button" class="link-btn" data-open="xr2ach" aria-haspopup="dialog">XR²ACH</button></p>
                 </div>
-            </div>
-            <div class="tl-item" data-aos="fade-up" data-aos-delay="120">
-                <div class="tl-left"><div class="tl-dot"></div></div>
-                <div class="tl-right">
-                    <div class="tl-head">
-                        <div>
-                            <h3 class="tl-role">Assistant Manager — Service &amp; Operations</h3>
-                            <p class="tl-co">Godrej &amp; Boyce Mfg. Co. Ltd. <span>· Kochi, India</span></p>
-                        </div>
-                        <span class="tl-date">Dec 2021 — May 2022</span>
-                    </div>
-                    <ul class="tl-list">
-                        <li>Led cross-functional teams for technician scheduling, warehouse operations, and product assembly</li>
-                        <li>Achieved 95%+ service completion within 48 hours through streamlined workflows</li>
-                    </ul>
-                    <div class="tl-chips"><span>Operations</span><span>Team Leadership</span><span>Service Management</span></div>
+            </li>
+            <li class="exp-item">
+                <div class="exp-when">
+                    <p class="exp-date">Oct 2025 to Mar 2026</p>
+                    <p class="exp-org">Lufthansa Technik AG</p>
+                    <p class="exp-place">XR developer intern</p>
                 </div>
+                <div class="exp-what">
+                    <h3>Five enterprise XR applications</h3>
+                    <p>Delivered applications across VR, MR and AR for standalone headsets, from motion capture to cinematic experiences and training platforms. I covered architecture, implementation, UI with USS and UXML, and technical documentation for each, and built the systems to be modular and reusable across training scenarios. I was the sole developer on my assigned work in all five projects, several of which built on existing frameworks and team conventions.</p>
+                    <p class="exp-links"><span>Related projects</span>
+                        <button type="button" class="link-btn" data-open="mocap" aria-haspopup="dialog">Motion capture</button>
+                        <button type="button" class="link-btn" data-open="training" aria-haspopup="dialog">VR training</button>
+                        <button type="button" class="link-btn" data-open="cinematic" aria-haspopup="dialog">Cinematic experience</button>
+                        <button type="button" class="link-btn" data-open="ar-cabin" aria-haspopup="dialog">AR cabin interface</button>
+                        <button type="button" class="link-btn" data-open="conditions" aria-haspopup="dialog">VR Builder conditions</button>
+                        <button type="button" class="link-btn" data-open="gsplat" aria-haspopup="dialog">Gaussian Splatting</button>
+                    </p>
+                </div>
+            </li>
+        </ol>
+        <p class="exp-early">Earlier: Assistant Manager, Service and Operations at Godrej and Boyce in Kochi, India, Dec 2021 to May 2022. Led technician scheduling, warehouse operations and product assembly teams, with over 95% of service calls completed within 48 hours.</p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about" aria-labelledby="about-title">
+    <div class="wrap about">
+        <div class="about-head">
+            <p class="kicker">About</p>
+            <h2 id="about-title">From mechanical design to immersive systems</h2>
+            <figure class="portrait">
+                <img src="assets/images/profile.jpg" alt="Vishnu Prasad N V" loading="lazy" onerror="this.closest('.portrait').hidden=true">
+            </figure>
+        </div>
+        <div class="about-text">
+            <p>I come from mechanical engineering and am completing an M.Eng. in Mechatronics and Cyber Physical Systems at Deggendorf Institute of Technology.</p>
+            <p>Most of my software work is Unity and C# for XR: six months as an XR developer intern at Lufthansa Technik, and now the XR²ACH vocational training project at the Virtual Dimension Center. Alongside that I have academic experience in robotics simulation with ROS and Gazebo, and in engineering design with MATLAB, Simulink and SolidWorks.</p>
+            <p>The common thread is systems where software has to deal with physical things: trackers, headsets, sensors, robots, and the people using them.</p>
+            <dl class="facts">
+                <div><dt>Studying</dt><dd>M.Eng. Mechatronics and Cyber Physical Systems, Deggendorf Institute of Technology</dd></div>
+                <div><dt>Based</dt><dd>Stuttgart, Germany</dd></div>
+            </dl>
+            <div class="langs">
+                <svg class="rd-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--arc-a)"/><stop offset="1" style="stop-color:var(--arc-b)"/></linearGradient></defs></svg>
+                <h3 class="langs-title">Languages</h3>
+                <ul class="langs-list">
+                    <li class="lang" style="--off:14">
+                        <div class="radial" role="img" aria-label="English, C1">
+                            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle class="rd-track" cx="50" cy="50" r="42"/><circle class="rd-arc" cx="50" cy="50" r="42" pathLength="100"/></svg>
+                            <span class="rd-level">C1</span>
+                        </div>
+                        <p class="lang-name">English</p>
+                    </li>
+                    <li class="lang" style="--off:58">
+                        <div class="radial" role="img" aria-label="German, B1, in progress">
+                            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle class="rd-track" cx="50" cy="50" r="42"/><circle class="rd-arc" cx="50" cy="50" r="42" pathLength="100"/></svg>
+                            <span class="rd-level">B1</span>
+                        </div>
+                        <p class="lang-name">German <small>(in progress)</small></p>
+                    </li>
+                    <li class="lang" style="--off:0">
+                        <div class="radial" role="img" aria-label="Malayalam, native">
+                            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle class="rd-track" cx="50" cy="50" r="42"/><circle class="rd-arc" cx="50" cy="50" r="42" pathLength="100"/></svg>
+                            <span class="rd-level is-sm">Native</span>
+                        </div>
+                        <p class="lang-name">Malayalam</p>
+                    </li>
+                </ul>
             </div>
+            <p><a class="btn btn-quiet" href="Resume_Vishnu.pdf" target="_blank" rel="noopener">Download CV (PDF)</a></p>
         </div>
     </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects" class="sec">
+<!-- CAPABILITIES -->
+<section class="sec sec-tint" id="skills" aria-labelledby="skills-title">
     <div class="wrap">
-        <p class="eyebrow" data-aos="fade-up">03 — Projects</p>
-        <h2 class="sec-title" data-aos="fade-up" data-aos-delay="40">Featured Projects</h2>
-        <p class="sec-sub" data-aos="fade-up" data-aos-delay="70">Current work at the Virtual Dimension Center, enterprise XR applications from my internship at Lufthansa Technik, and autonomous robotics work.</p>
-    </div>
-
-    <!-- ═══ PROJECT 01: XR²ACH ═══ -->
-    <div class="proj-block" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout-full">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">01</span><span class="proj-tag">XR Development &amp; Learning Analytics</span><span class="proj-org">Virtual Dimension Center · Current</span></div>
-                    <h3 class="proj-title">XR²ACH — Improving Usability<br>in VR-Based Vocational Training</h3>
-                    <p class="proj-desc">I contribute to the development and refinement of an XR-based vocational training application at the Virtual Dimension Center, as part of a combined internship/thesis placement (<em>Praktikum/Masterarbeit — XR-Entwicklung &amp; Learning Analytics</em>). The wider project — built in Unity for Meta Quest 3/3S with OpenXR — involves an identity broker, Moodle LMS integration, a Learning Record Store, a dashboard, multiplayer functionality, and learning analytics; my current work focuses on VR interface usability, interaction design, and exploring reusable approaches to CAD-model visualisation in training scenarios, with my thesis direction building toward the learning-analytics side of the project.</p>
-                    <ul class="proj-bullets">
-                        <li>Improving the user interface and interaction flow of VR training scenarios so first-time trainees rely less on trainer instructions</li>
-                        <li>Rebuilding and restyling UI screens with Unity USS/UXML for a more intuitive, modern in-headset look and feel</li>
-                        <li>Refining interface elements and interaction logic in Unity for clearer, more intuitive in-headset guidance</li>
-                        <li>Investigating a reusable approach for importing and visualising CAD models — including a compressor model — from different views inside the VR environment</li>
-                        <li>Working toward a Master's thesis centred on XR development and learning analytics; exact scope and research question still being finalized</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 3D</span><span>OpenXR</span><span>Meta Quest 3/3S</span><span>USS/UXML</span><span>VR Interaction Design</span><span>CAD Visualisation</span></div>
-                    <div class="proj-gsplat-findings" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem;">
-                        <span class="gsplat-finding gsplat-finding-ok"><i class="fas fa-circle-check"></i> Implemented: VR interface &amp; interaction refinements</span>
-                        <span class="gsplat-finding gsplat-finding-warn"><i class="fas fa-triangle-exclamation"></i> Exploring: CAD import &amp; visualisation, thesis direction</span>
-                    </div>
-                    <a href="https://xr2ach.de/" target="_blank" class="btn-sm" style="margin-top:1.2rem"><i class="fas fa-arrow-up-right-from-square"></i> About the XR²ACH project</a>
-                    <p style="font-size:.78rem;color:var(--muted);margin-top:1rem;font-style:italic">Screenshots and recordings from this project will be added once cleared for public release.</p>
-                </div>
-            </div>
+        <div class="sec-head">
+            <p class="kicker">Capabilities</p>
+            <h2 id="skills-title">What I work with, and where I used it</h2>
         </div>
-    </div>
-
-    <!-- ═══ PROJECT 02: MoCap ═══ -->
-    <div class="proj-block proj-block-alt" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout-full">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">02</span><span class="proj-tag">VR · Motion Capture</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Standalone XR Full-Body<br>Motion Capture System</h3>
-                    <p class="proj-desc">Built a full-body motion capture system running entirely on Android standalone XR — no PC, no external processing. The system tracks, solves, and records motion in real time using a custom IK pipeline built on OpenXR pose data, with runtime T-pose calibration and JSON-based animation serialization for reusable playback inside Unity.</p>
-                    <ul class="proj-bullets">
-                        <li>Designed modular architecture separating tracking input, IK solving, and recording into independent pipelines for maintainability and extensibility</li>
-                        <li>Built full-body IK system covering arms, legs, and hips using Unity Animator IK with constraint-based stabilization and tracker-to-avatar retargeting</li>
-                        <li>Developed runtime T-pose calibration for position and rotation alignment across all tracked joints at session start</li>
-                        <li>Engineered hierarchical transform recording per frame, serialized to JSON and reconstructable as Unity AnimationClips for reuse</li>
-                        <li>Integrated VIVE OpenXR passthrough for mixed-reality recording, optimized for real-time performance on standalone Android XR with no external compute</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 3D</span><span>OpenXR</span><span>C#</span><span>Full-Body IK</span><span>Motion Capture Pipelines</span><span>XR Input Systems</span><span>JSON Serialization</span><span>MR Passthrough</span></div>
-                </div>
-                <div class="proj-videos-row">
-                    <div class="proj-video-panel">
-                        <video autoplay muted loop playsinline poster="assets/images/mocap-poster-1.jpg" class="proj-vid">
-                            <source src="assets/videos/mocap-1.mp4" type="video/mp4">
-                        </video>
-                        <div class="vid-label"><i class="fas fa-circle" style="color:#ff4444;font-size:.4rem;vertical-align:middle"></i>&nbsp;Full Body Demo</div>
-                    </div>
-                    <div class="proj-video-panel">
-                        <video autoplay muted loop playsinline poster="assets/images/mocap-poster-2.jpg" class="proj-vid">
-                            <source src="assets/videos/mocap-2.mp4" type="video/mp4">
-                        </video>
-                        <div class="vid-label"><i class="fas fa-circle" style="color:#ff4444;font-size:.4rem;vertical-align:middle"></i>&nbsp;IK Rig &amp; Calibration</div>
-                    </div>
-                </div>
-                <div class="pol-wrap">
-                    <div class="polaroid-stack polaroid-stack-square" data-count="3">
-                        <div class="pol-card" style="--r:-9deg;--tx:-7px;--ty:6px;--z:1"><img src="assets/images/mocap-3.jpg" alt="MoCap 3"></div>
-                        <div class="pol-card" style="--r:5deg;--tx:6px;--ty:-5px;--z:2"><img src="assets/images/mocap-2.jpg" alt="MoCap 2"></div>
-                        <div class="pol-card pol-top" style="--r:-1deg;--tx:1px;--ty:2px;--z:3">
-                            <img src="assets/images/mocap-1.jpg" alt="MoCap 1">
-                            <div class="pol-caption">hover to fan open</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ PROJECT 04: VR Training ═══ -->
-    <div class="proj-block proj-block-alt proj-block-vr-training" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout proj-layout-rev">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">03</span><span class="proj-tag">VR · Training</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Modular VR Training<br>&amp; Assessment Platform</h3>
-                    <p class="proj-desc">A data-driven VR training framework where all content is loaded from ScriptableObjects and all UI is generated at runtime — no hardcoded screens. Designed as a plug-and-play VR Builder behavior, it slots into any industrial training scenario as a self-contained learning module.</p>
-                    <ul class="proj-bullets">
-                        <li>MCQ engine built on ScriptableObjects with per-session answer shuffling and two modes — Beginner with live feedback and Advanced with post-session analytics only</li>
-                        <li>Full session analytics tracking correctness, error rate, and retry count, displayed as a structured performance table inside VR at session end</li>
-                        <li>Packaged as a custom VR Builder Behavior so the entire quiz system can be dropped into any scenario pipeline without modification</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 3D</span><span>VR Builder</span><span>C#</span><span>ScriptableObjects</span><span>Runtime UI</span><span>Session Analytics</span><span>OpenXR</span></div>
-                </div>
-                <div class="proj-media proj-media-center">
-                    <div class="pol-wrap">
-                        <div class="polaroid-stack polaroid-stack-lg polaroid-stack-tall" data-count="3">
-                            <div class="pol-card" style="--r:-7deg;--tx:-10px;--ty:7px;--z:1"><img src="assets/images/vr-training-3.jpg" alt="VR Training 3"></div>
-                            <div class="pol-card" style="--r:5deg;--tx:8px;--ty:-5px;--z:2"><img src="assets/images/vr-training-2.jpg" alt="VR Training 2"></div>
-                            <div class="pol-card pol-top" style="--r:-1deg;--tx:-2px;--ty:2px;--z:3">
-                                <img src="assets/images/vr-training-1.jpg" alt="VR Training 1">
-                                <div class="pol-caption">hover to fan open</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ PROJECT 03: Inventory Bot ═══ -->
-    <div class="proj-block proj-block-alt" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout-full">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">04</span><span class="proj-tag">Robotics · ROS</span><span class="proj-org">Academic Project</span></div>
-                    <h3 class="proj-title">Autonomous Warehouse Robot<br>with SLAM Navigation</h3>
-                    <p class="proj-desc">A 4-wheeled autonomous mobile robot designed for warehouse navigation and tray manipulation, simulated end-to-end in ROS and Gazebo. The robot localizes on a pre-built map, plans collision-free paths, and actuates a prismatic tray joint — all without human input.</p>
-                    <ul class="proj-bullets">
-                        <li>Modelled complete robot in URDF with 4 continuous wheel joints, prismatic tray joint, Hokuyo LiDAR, and RGB camera with full inertial and collision properties</li>
-                        <li>Implemented AMCL localization fusing LiDAR scan data against a pre-built map for real-time pose estimation inside a warehouse environment</li>
-                        <li>Configured move_base stack with DWA planner and custom global/local costmaps for autonomous point-to-point navigation with obstacle avoidance</li>
-                        <li>Built tray actuation via Gazebo SetModelConfiguration service using 100-step interpolation for smooth prismatic joint movement to any target height</li>
-                        <li>Integrated omni-directional drive plugin with odometry feedback, enabling precise velocity-commanded motion published over cmd_vel</li>
-                    </ul>
-                    <div class="proj-chips"><span>ROS</span><span>Python</span><span>URDF</span><span>AMCL</span><span>move_base</span><span>Gazebo</span><span>LiDAR</span><span>RViz</span></div>
-                    <a href="https://github.com/prasadvnv/Inventory-Bot" target="_blank" class="btn-sm" style="margin-top:1.2rem"><i class="fab fa-github"></i> View on GitHub</a>
-                </div>
-                <div class="proj-bot-video">
-                    <video id="botVid" autoplay muted loop playsinline poster="assets/images/bot-poster.jpg" class="proj-bot-vid">
-                        <source src="assets/videos/bot-demo.mp4" type="video/mp4">
-                        <source src="assets/videos/bot-demo.mkv" type="video/x-matroska">
-                    </video>
-                    <div class="mkv-notice">
-                        <i class="fas fa-triangle-exclamation"></i>
-                        Video not playing? <a href="assets/videos/bot-demo.mkv" download>Download MKV</a> or convert to MP4.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ PROJECT 05: VR Builder Custom Conditions ═══ -->
-    <div class="proj-block" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">05</span><span class="proj-tag">VR · Tools</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Custom VR Builder<br>Condition Extensions</h3>
-                    <p class="proj-desc">Two custom conditions built as native extensions to the VR Builder framework, expanding its out-of-the-box capabilities for enterprise training scenarios at Lufthansa Technik.</p>
-                    <ul class="proj-bullets">
-                        <li>Visibility &amp; Gaze Condition — detects whether a target object is within the camera frustum or directly gazed at for a configurable duration, with support for distance limits, gaze angle threshold, and accumulative timing</li>
-                        <li>Visual Inspection Condition — requires the user to look at a target from within a defined distance and angle for a set time, with a circular progress indicator, optional object highlight, and a scene-view editor preview for designer-friendly placement</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 3D</span><span>VR Builder</span><span>C#</span><span>Custom Editor Tools</span><span>Gaze Interaction</span><span>XR UX</span></div>
-                </div>
-                <div class="proj-media proj-media-center">
-                    <div class="pol-wrap">
-                        <div class="polaroid-stack polaroid-stack-lg" data-count="4">
-                            <div class="pol-card" style="--r:-8deg;--tx:-10px;--ty:8px;--z:1"><img src="assets/images/vrb-condition-4.jpg" alt="VR Builder Condition 4"></div>
-                            <div class="pol-card" style="--r:5deg;--tx:8px;--ty:-5px;--z:2"><img src="assets/images/vrb-condition-3.jpg" alt="VR Builder Condition 3"></div>
-                            <div class="pol-card" style="--r:-3deg;--tx:-5px;--ty:5px;--z:3"><img src="assets/images/vrb-condition-2.jpg" alt="VR Builder Condition 2"></div>
-                            <div class="pol-card pol-top" style="--r:2deg;--tx:4px;--ty:-2px;--z:4">
-                                <img src="assets/images/vrb-condition-1.jpg" alt="VR Builder Condition 1">
-                                <div class="pol-caption">hover to fan open</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ PROJECT 06: AR Training ═══ -->
-    <div class="proj-block proj-block-alt" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout proj-layout-rev">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">06</span><span class="proj-tag">AR · UI/UX</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">AR Training Interface<br>for Cabin Crew</h3>
-                    <p class="proj-desc">AR-based training interface for Lufthansa Technik cabin crew with QR-based world locking for precise spatial anchoring. USS/UXML-driven interactive UI, 3D model visualization, and guided navigation workflows with real-world AR overlay integration and scalable content delivery for aviation training.</p>
-                    <div class="proj-chips"><span>Unity 3D</span><span>MRTK 3</span><span>USS/UXML</span><span>AR</span><span>QR World Locking</span><span>3D Visualization</span></div>
-                </div>
-                <div class="proj-media proj-media-center">
-                    <div class="pol-wrap">
-                        <div class="polaroid-stack polaroid-stack-lg" data-count="3">
-                            <div class="pol-card" style="--r:-8deg;--tx:-8px;--ty:6px;--z:1"><img src="assets/images/ar-cabin-3.jpg" alt="AR Cabin Training 3"></div>
-                            <div class="pol-card" style="--r:6deg;--tx:7px;--ty:-5px;--z:2"><img src="assets/images/ar-cabin-2.jpg" alt="AR Cabin Training 2"></div>
-                            <div class="pol-card pol-top" style="--r:-1deg;--tx:0px;--ty:2px;--z:3">
-                                <img src="assets/images/ar-cabin-1.jpg" alt="AR Cabin Training 1">
-                                <div class="pol-caption">hover to fan open</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ PROJECT 07: Gaussian Splatting ═══ -->
-    <div class="proj-block" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">07</span><span class="proj-tag">XR · Research</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Gaussian Splatting in Unity —<br>R&amp;D Evaluation</h3>
-                    <p class="proj-desc">Evaluated Gaussian Splatting as a photorealistic scene representation technique inside Unity URP, using real-world datasets from Lufthansa Technik environments — including an aircraft galley interior. Investigated PLY and proprietary LCC pipelines, rendering parameter tuning, and XR deployment feasibility.</p>
-                    <ul class="proj-bullets">
-                        <li>Integrated gsplat-unity package into Unity 6 URP with Direct3D12/Vulkan compatibility and a custom Gsplat URP Forward Renderer feature</li>
-                        <li>Rendered photorealistic PLY-based aircraft interior scenes in real time; analysed structural differences between PLY and proprietary LCC dataset formats</li>
-                        <li>Tuned Spherical Harmonics degree, gamma correction, and brightness for visual stability — SH Degree 0 provided the most consistent output</li>
-                        <li>Assessed standalone VR deployment: identified GPU memory bandwidth as the primary constraint limiting real-time performance on current-gen headsets</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 6</span><span>URP</span><span>Gaussian Splatting</span><span>PLY / LCC Formats</span><span>XR Feasibility</span><span>Rendering Optimisation</span></div>
-                    <div class="proj-gsplat-findings" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem;">
-                        <span class="gsplat-finding gsplat-finding-ok"><i class="fas fa-circle-check"></i> Desktop: real-time capable</span>
-                        <span class="gsplat-finding gsplat-finding-warn"><i class="fas fa-triangle-exclamation"></i> Standalone VR: GPU-bound</span>
-                    </div>
-                </div>
-                <div class="proj-media proj-media-center">
-                    <div class="pol-wrap">
-                        <div class="polaroid-stack polaroid-stack-lg" data-count="4">
-                            <div class="pol-card" style="--r:-8deg;--tx:-10px;--ty:8px;--z:1"><img src="assets/images/gsplat-4.jpg" alt="Gaussian Splatting 4"></div>
-                            <div class="pol-card" style="--r:5deg;--tx:6px;--ty:-5px;--z:2"><img src="assets/images/gsplat-3.jpg" alt="Gaussian Splatting 3"></div>
-                            <div class="pol-card" style="--r:-3deg;--tx:-5px;--ty:4px;--z:3"><img src="assets/images/gsplat-2.jpg" alt="Gaussian Splatting 2"></div>
-                            <div class="pol-card pol-top" style="--r:2deg;--tx:3px;--ty:-2px;--z:4">
-                                <img src="assets/images/gsplat-1.jpg" alt="Gaussian Splatting 1">
-                                <div class="pol-caption">hover to fan open</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ═══ PROJECT 08: Trailer ═══ -->
-    <div class="proj-block proj-block-alt" data-aos="fade-up">
-        <div class="wrap">
-            <div class="proj-layout-full">
-                <div class="proj-header">
-                    <div class="proj-meta"><span class="proj-num">08</span><span class="proj-tag">XR · Cinematics</span><span class="proj-org">Lufthansa Technik</span></div>
-                    <h3 class="proj-title">Cinematic XR<br>Space-to-Earth Experience</h3>
-                    <p class="proj-desc">An immersive cinematic intro sequence built in XR — simulating a flight from outer space toward Earth along a Cinemachine Dolly Spline, with the XR rig synchronized to the camera path for full spatial presence. The experience transitions through orbital movement, a metallic logo reveal, and a 3D globe with modular location pins, designed as a flagship brand experience for Lufthansa Technik.</p>
-                    <ul class="proj-bullets">
-                        <li>Developed a dynamic 3D Earth visualization with interactive geographic pin placement, supporting modular location markers with runtime position correction</li>
-                        <li>Implemented a cinematic flight system using Cinemachine Dolly Spline with the XR rig synchronized to the camera path, giving users full spatial presence throughout the sequence</li>
-                        <li>Built a modular title and logo reveal system featuring curved orbital text animation and a controlled lighting-based metallic reveal effect</li>
-                    </ul>
-                    <div class="proj-chips"><span>Unity 3D</span><span>Cinemachine</span><span>OpenXR</span><span>C#</span><span>World Map Globe</span><span>State Machines</span><span>Spatial Lighting</span><span>Geospatial Systems</span></div>
-                </div>
-                <div class="proj-videos-row">
-                    <div class="proj-video-panel">
-                        <video autoplay muted loop playsinline poster="assets/images/trailer-poster-1.jpg" class="proj-vid">
-                            <source src="assets/videos/trailer-1.mp4" type="video/mp4">
-                        </video>
-                        <div class="vid-label"><i class="fas fa-circle" style="color:#ff4444;font-size:.4rem;vertical-align:middle"></i>&nbsp;Cinematic Trailer</div>
-                    </div>
-                    <div class="proj-video-panel">
-                        <video autoplay muted loop playsinline poster="assets/images/trailer-poster-2.jpg" class="proj-vid">
-                            <source src="assets/videos/trailer-2.mp4" type="video/mp4">
-                        </video>
-                        <div class="vid-label"><i class="fas fa-circle" style="color:#ff4444;font-size:.4rem;vertical-align:middle"></i>&nbsp;Globe Interaction</div>
-                    </div>
-                </div>
-                <div class="pol-wrap">
-                    <div class="polaroid-stack" data-count="4">
-                        <div class="pol-card" style="--r:-8deg;--tx:-8px;--ty:7px;--z:1"><img src="assets/images/trailer-4.jpg" alt="Trailer 4"></div>
-                        <div class="pol-card" style="--r:5deg;--tx:6px;--ty:-5px;--z:2"><img src="assets/images/trailer-3.jpg" alt="Trailer 3"></div>
-                        <div class="pol-card" style="--r:-3deg;--tx:-4px;--ty:4px;--z:3"><img src="assets/images/trailer-2.jpg" alt="Trailer 2"></div>
-                        <div class="pol-card pol-top" style="--r:2deg;--tx:3px;--ty:-2px;--z:4">
-                            <img src="assets/images/trailer-1.jpg" alt="Trailer 1">
-                            <div class="pol-caption">hover to fan open</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-<!-- CASE STUDIES -->
-<section id="case-studies" class="sec sec-alt">
-    <div class="wrap">
-        <p class="eyebrow" data-aos="fade-up">05 — Case Studies</p>
-        <h2 class="sec-title" data-aos="fade-up" data-aos-delay="40">Personal &amp; Academic Projects</h2>
-        <p class="sec-sub" data-aos="fade-up" data-aos-delay="70">Deep-dive projects from robotics to simulation. Documentation, source code, and media available on GitHub.</p>
-
-        <div class="cs-grid">
-
-            <!-- VR Safety Training -->
-            <div class="cs-card" data-aos="fade-up" data-aos-delay="60">
-                <div class="cs-media-wrap">
-                    <div class="cs-img-strip" id="strip-vr">
-                        <div class="strip-item"><img src="assets/images/vr-safety-1.jpg" alt="VR Safety 1"></div>
-                        <div class="strip-item"><img src="assets/images/vr-safety-2.jpg" alt="VR Safety 2"></div>
-                        <div class="strip-item"><img src="assets/images/vr-safety-3.jpg" alt="VR Safety 3"></div>
-                    </div>
-                    <div class="strip-dots" id="dots-vr"></div>
-                </div>
-                <div class="cs-body">
-                    <div class="cs-top-meta">
-                        <span class="cs-num-badge">CS·01</span>
-                        <span class="cs-tag-badge">VR · C# · Unity</span>
-                        <a href="https://github.com/prasadvnv/VR-Safety-Training---Industrial-Oven" target="_blank" class="cs-gh"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                    <h3 class="cs-title">Industrial Safety Training Simulation</h3>
-                    <p class="cs-desc">Complete VR simulation replicating industrial oven operations. <strong>300+ development hours</strong> focused on industrial realism and user experience. Covers safety protocols, interactive machine operation, and emergency scenarios.</p>
-                    <div class="cs-footer-chips"><span>Unity 3D</span><span>XR Interaction Toolkit</span><span>C#</span><span>Meta Oculus</span></div>
-                </div>
-            </div>
-
-            <!-- Solar Tracker -->
-            <div class="cs-card" data-aos="fade-up" data-aos-delay="130">
-                <div class="cs-body" style="padding-top:1.8rem">
-                    <div class="cs-top-meta">
-                        <span class="cs-num-badge">CS·02</span>
-                        <span class="cs-tag-badge">Hardware · MATLAB</span>
-                        <a href="https://github.com/prasadvnv/Dual-Axis-Solar-Tracker" target="_blank" class="cs-gh"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                    <h3 class="cs-title">Dual-Axis Solar Tracker</h3>
-                    <p class="cs-desc">Solar tracking system adjusting panel orientation both horizontally and vertically using sensor feedback and actuators. Optimizes sun-tracking for maximum energy efficiency throughout the day.</p>
-                    <div class="cs-footer-chips"><span>Simulink</span><span>MATLAB</span><span>Sensor Control</span><span>PID</span></div>
-                </div>
-            </div>
-
-            <!-- SAE Yeti Racing -->
-            <div class="cs-card cs-card-sae" data-aos="fade-up" data-aos-delay="200">
-                <div class="cs-media-wrap cs-sae-media">
-                    <div class="cs-img-strip" id="strip-sae">
-                        <div class="strip-item"><img src="assets/images/sae-1.jpg" alt="Yeti Racing Formula Bharat"></div>
-                        <div class="strip-item"><img src="assets/images/sae-2.jpg" alt="Yeti Racing Braking System"></div>
-                    </div>
-                    <div class="strip-dots" id="dots-sae"></div>
-                </div>
-                <div class="cs-body">
-                    <div class="cs-top-meta">
-                        <span class="cs-num-badge">CS·03</span>
-                        <span class="cs-tag-badge">Motorsport · Mechanical</span>
-                        <span class="sae-captain-badge">
-                            <i class="fas fa-shield-halved"></i>
-                            Brake Team Captain
-                        </span>
-                    </div>
-                    <a href="https://yetiracing.cusat.co.in/" target="_blank" class="sae-team-brand" aria-label="Visit Yeti Racing website">
-                        <img src="https://ik.imagekit.io/r70knk9pu/logo1.png?updatedAt=1739006550479" alt="Yeti Racing CUSAT" class="sae-team-logo">
-                        <div class="sae-team-info">
-                            <span class="sae-team-name">Yeti Racing</span>
-                            <span class="sae-team-uni">CUSAT · Kochi, India</span>
-                        </div>
-                        <i class="fas fa-arrow-up-right-from-square sae-brand-arrow"></i>
-                    </a>
-                    <h3 class="cs-title">SAE Formula Bharat &amp; SAE Supra — Yeti Racing</h3>
-                    <p class="cs-desc">Active member of <strong>Yeti Racing</strong>, the Formula SAE team of CUSAT, competing at national-level events — <strong>Formula Bharat</strong> and <strong>SAE Supra India</strong>. Led the braking subsystem as team captain while collaborating across vehicle dynamics, suspension, and powertrain for overall car development.</p>
-                    <ul class="sae-bullets">
-                        <li><i class="fas fa-check"></i>Oversaw end-to-end design and validation of the vehicle braking system — rotor sizing, caliper selection, brake bias, and hydraulic circuit layout</li>
-                        <li><i class="fas fa-check"></i>Collaborated across subsystems — suspension, chassis, and powertrain — to integrate braking performance into overall vehicle dynamics</li>
-                        <li><i class="fas fa-check"></i>Represented the team at national-level competitions, contributing to technical scrutineering and dynamic event preparation</li>
-                    </ul>
-                    <div class="cs-footer-chips"><span>SolidWorks</span><span>Brake System Design</span><span>Vehicle Dynamics</span><span>Team Leadership</span><span>Formula SAE</span></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="sec">
-    <div class="wrap">
-        <p class="eyebrow" data-aos="fade-up">06 — Skills</p>
-        <h2 class="sec-title" data-aos="fade-up" data-aos-delay="40">Technology Stack</h2>
-        <div class="skills-table" data-aos="fade-up" data-aos-delay="80">
-            <div class="sk-row"><span class="sk-cat">Immersive Tech</span><div class="sk-chips"><span>Unity 3D</span><span>MRTK 3</span><span>Meta Oculus SDK</span><span>VIVE XR</span><span>XR Interaction Toolkit</span><span>OpenXR</span><span>VR Builder</span><span>USS/UXML</span></div></div>
-            <div class="sk-row"><span class="sk-cat">Programming</span><div class="sk-chips"><span>C#</span><span>Python</span><span>MATLAB</span></div></div>
-            <div class="sk-row"><span class="sk-cat">Robotics</span><div class="sk-chips"><span>ROS</span><span>SLAM</span><span>Path Planning</span><span>Obstacle Avoidance</span><span>Sensor Fusion</span><span>Gazebo</span><span>RViz</span></div></div>
-            <div class="sk-row"><span class="sk-cat">3D &amp; Rendering</span><div class="sk-chips"><span>Blender</span><span>SolidWorks</span><span>Ansys</span><span>Gaussian Splatting</span></div></div>
-            <div class="sk-row"><span class="sk-cat">Tools</span><div class="sk-chips"><span>Git</span><span>MS Office</span><span>System Documentation</span><span>Modular Architecture</span></div></div>
+        <div class="caps">
+            <article class="cap cap-main">
+                <h3>Unity and C#</h3>
+                <p class="cap-note">My strongest area</p>
+                <p class="cap-list">C# · ScriptableObjects · runtime generated UI · USS and UXML · custom editor tools</p>
+                <p class="cap-apply"><span>Used in</span> <button type="button" class="link-btn" data-open="training" aria-haspopup="dialog">VR training</button> <button type="button" class="link-btn" data-open="conditions" aria-haspopup="dialog">VR Builder conditions</button> <button type="button" class="link-btn" data-open="xr2ach" aria-haspopup="dialog">XR²ACH</button></p>
+            </article>
+            <article class="cap">
+                <h3>XR applications and interaction</h3>
+                <p class="cap-list">OpenXR · MRTK 3 · XR Interaction Toolkit · VR Builder · Meta Quest and VIVE XR · VR, MR and AR</p>
+                <p class="cap-apply"><span>Used in</span> <button type="button" class="link-btn" data-open="ar-cabin" aria-haspopup="dialog">AR cabin interface</button> <button type="button" class="link-btn" data-open="xr2ach" aria-haspopup="dialog">XR²ACH</button> <button type="button" class="link-btn" data-open="safety" aria-haspopup="dialog">Safety simulation</button></p>
+            </article>
+            <article class="cap">
+                <h3>Real time 3D and animation</h3>
+                <p class="cap-list">Inverse kinematics · motion capture data · Cinemachine · Blender · Gaussian Splatting evaluation</p>
+                <p class="cap-apply"><span>Used in</span> <button type="button" class="link-btn" data-open="mocap" aria-haspopup="dialog">Motion capture</button> <button type="button" class="link-btn" data-open="cinematic" aria-haspopup="dialog">Cinematic experience</button> <button type="button" class="link-btn" data-open="gsplat" aria-haspopup="dialog">Gaussian Splatting</button></p>
+            </article>
+            <article class="cap">
+                <h3>Robotics and simulation</h3>
+                <p class="cap-note">Academic projects</p>
+                <p class="cap-list">ROS · Gazebo · RViz · URDF · AMCL · move_base · Python</p>
+                <p class="cap-apply"><span>Used in</span> <button type="button" class="link-btn" data-open="robot" aria-haspopup="dialog">Warehouse robot</button></p>
+            </article>
+            <article class="cap">
+                <h3>Engineering and tools</h3>
+                <p class="cap-list">MATLAB · Simulink · SolidWorks · Ansys · Git · system documentation</p>
+                <p class="cap-apply"><span>Used in</span> <button type="button" class="link-btn" data-open="solar" aria-haspopup="dialog">Solar tracker</button> <button type="button" class="link-btn" data-open="sae" aria-haspopup="dialog">Yeti Racing</button></p>
+            </article>
         </div>
     </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="sec sec-alt contact-sec">
-    <div class="wrap">
-        <div class="contact-grid">
-            <div data-aos="fade-right">
-                <p class="eyebrow">07 — Contact</p>
-                <h2 class="contact-heading">Let's build<br>something<br><em>impactful.</em></h2>
-                <p class="body-text" style="max-width:360px;margin-top:1.2rem">Open to XR Developer and Robotics Engineer roles, research collaborations, and thesis opportunities. Based in Hamburg — available remote or on-site, immediately.</p>
-            </div>
-            <div class="contact-links" data-aos="fade-left" data-aos-delay="80">
-                <a href="mailto:prasadvnv299@gmail.com" class="cl-item">
-                    <span class="cl-icon"><i class="fas fa-envelope"></i></span>
-                    <span class="cl-info"><em>Email</em>prasadvnv299@gmail.com</span>
-                    <i class="fas fa-arrow-right cl-arr"></i>
-                </a>
-                <a href="https://github.com/prasadvnv" target="_blank" class="cl-item">
-                    <span class="cl-icon"><i class="fab fa-github"></i></span>
-                    <span class="cl-info"><em>GitHub</em>github.com/prasadvnv</span>
-                    <i class="fas fa-arrow-right cl-arr"></i>
-                </a>
-                <a href="https://linkedin.com/in/vishnu-prasad-n-v-4592401b3" target="_blank" class="cl-item">
-                    <span class="cl-icon"><i class="fab fa-linkedin"></i></span>
-                    <span class="cl-info"><em>LinkedIn</em>vishnu-prasad-n-v</span>
-                    <i class="fas fa-arrow-right cl-arr"></i>
-                </a>
-                <a href="tel:+4915510087359" class="cl-item">
-                    <span class="cl-icon"><i class="fas fa-phone"></i></span>
-                    <span class="cl-info"><em>Phone</em>+49 155 1008 7359</span>
-                    <i class="fas fa-arrow-right cl-arr"></i>
-                </a>
-            </div>
+<section class="sec contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+        <div>
+            <p class="kicker">Contact</p>
+            <h2 id="contact-title">Let's talk about XR and engineering.</h2>
+            <p class="sec-intro">I am open to XR and Unity roles, working student positions and internships. Based in Stuttgart, and happy to work remotely or on site.</p>
         </div>
+        <ul class="contact-links">
+            <li><a href="mailto:prasadvnv299@gmail.com"><span>Email</span>prasadvnv299@gmail.com<i aria-hidden="true">→</i></a></li>
+            <li><a href="https://github.com/prasadvnv" target="_blank" rel="noopener"><span>GitHub</span>github.com/prasadvnv<i aria-hidden="true">→</i></a></li>
+            <li><a href="https://linkedin.com/in/vishnu-prasad-n-v-4592401b3" target="_blank" rel="noopener"><span>LinkedIn</span>Vishnu Prasad N V<i aria-hidden="true">→</i></a></li>
+            <li><a href="tel:+4915510087359"><span>Phone</span>+49 155 1008 7359<i aria-hidden="true">→</i></a></li>
+        </ul>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="wrap footer-row">
-        <span class="f-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="34" height="34">
-        <rect width="32" height="32" rx="7" fill="#07090f"/>
-        <rect x="6.5" y="7.5" width="19" height="17" rx="6" fill="#ffffff" opacity="0.95"/>
-        <rect x="8.5" y="11" width="15" height="8" rx="4" fill="#07090f"/>
-        <circle cx="12.5" cy="15" r="3" fill="#00d4ff" opacity="0.95"/>
-        <circle cx="19.5" cy="15" r="3" fill="#00d4ff" opacity="0.6"/>
-        <circle cx="16" cy="16" r="10" stroke="#00d4ff" stroke-width="1" opacity="0.15" fill="none"/>
-    </svg>
-</span>
-        <span class="f-copy">© 2026 Vishnu Prasad N V · XR & Robotics Engineer · Hamburg</span>
-        <a href="#hero" class="f-top"><i class="fas fa-arrow-up"></i> Top</a>
+</main>
+
+<footer class="site-footer">
+    <div class="wrap foot">
+        <span class="foot-brand">
+            <svg class="logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
+                <rect class="lg-bg" width="32" height="32" rx="7"/>
+                <rect class="lg-body" x="6.5" y="7.5" width="19" height="17" rx="6"/>
+                <rect class="lg-visor" x="8.5" y="11" width="15" height="8" rx="4"/>
+                <circle class="lg-eye" cx="12.5" cy="15" r="3"/>
+                <circle class="lg-eye lg-eye2" cx="19.5" cy="15" r="3"/>
+            </svg>
+            © 2026 Vishnu Prasad N V · Stuttgart, Germany
+        </span>
+        <a href="#top">Back to top ↑</a>
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- PROJECT DIALOG -->
+<dialog id="projectDialog" class="pd-dialog" aria-labelledby="pd-title">
+    <div class="pd-bar">
+        <span class="pd-bar-label">Project detail</span>
+        <button type="button" class="pd-close" id="pdClose" aria-label="Close project detail">
+            <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 4l12 12M16 4L4 16"/></svg>
+        </button>
+    </div>
+    <div class="pd-content" id="pdContent"></div>
+</dialog>
+
+<!-- PROJECT TEMPLATES
+     Media comes right after the intro so videos are in view (and playing) the moment the dialog opens.
+     No captions under images or videos. -->
+
+<template id="p-xr2ach">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Virtual Dimension Center · Current</p>
+        <h2 id="pd-title">XR²ACH: usability in VR vocational training</h2>
+        <p class="pd-lede">An XR vocational training application for Meta Quest 3 and 3S, built in Unity with OpenXR. I contribute to its interface and interaction design as part of my internship.</p>
+    </header>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>The wider project</h3>
+                <p>XR²ACH also involves an identity broker, Moodle LMS integration, a Learning Record Store, a dashboard, multiplayer functionality and learning analytics. Those parts are the work of the wider team. This page covers only my own contribution.</p>
+            </section>
+            <section>
+                <h3>My contribution</h3>
+                <ul>
+                    <li>Improving the interface and interaction flow of VR training scenarios so first time trainees rely less on trainer instructions</li>
+                    <li>Rebuilding and restyling UI screens with Unity USS and UXML for a clearer, more modern look in the headset</li>
+                    <li>Refining interface elements and interaction logic in Unity for more intuitive in headset guidance</li>
+                    <li>Investigating a reusable approach for importing and viewing CAD models, including a compressor model, from different angles inside the VR environment</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Status</h3>
+                <p class="status-row"><span class="chip chip-ok">Implemented</span> VR interface and interaction refinements</p>
+                <p class="status-row"><span class="chip chip-wip">Exploring</span> CAD import and visualization</p>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Virtual Dimension Center, Fellbach</dd>
+                <dt>My role</dt><dd>Intern, XR development and learning analytics</dd>
+                <dt>Technologies</dt><dd>Unity 3D, OpenXR, Meta Quest 3 and 3S, USS and UXML, VR interaction design, CAD visualization</dd>
+            </dl>
+        </aside>
+    </div>
+    <p class="pd-note">Screenshots and recordings will be added once they are cleared for public release.</p>
+    <p class="pd-links"><a class="btn btn-quiet" href="https://xr2ach.de/" target="_blank" rel="noopener">About the XR²ACH project ↗</a></p>
+</article>
+</template>
+
+<template id="p-mocap">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · XR developer internship</p>
+        <h2 id="pd-title">Full body motion capture on a standalone headset</h2>
+        <p class="pd-lede">A motion capture system that runs entirely on Android standalone XR, with no PC and no external processing. It tracks, solves and records motion in real time, with a calibration step at session start and JSON animation files that play back inside Unity.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure class="m-wide"><video controls muted loop playsinline preload="auto" poster="assets/images/mocap-poster-1.jpg"><source src="assets/videos/mocap-1.mp4" type="video/mp4"></video></figure>
+            <figure class="m-wide"><video controls muted loop playsinline preload="auto" poster="assets/images/mocap-poster-2.jpg"><source src="assets/videos/mocap-2.mp4" type="video/mp4"></video></figure>
+            <figure><img src="assets/images/mocap-1.jpg" alt="Motion capture project screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/mocap-2.jpg" alt="Motion capture project screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/mocap-3.jpg" alt="Motion capture project screenshot 3" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>The constraint</h3>
+                <p>Everything had to run on the headset itself. That shaped the architecture and the performance work below.</p>
+            </section>
+            <section>
+                <h3>What I built</h3>
+                <ul>
+                    <li>A modular architecture that separates tracking input, IK solving and recording into independent pipelines, for maintainability and extension</li>
+                    <li>A full body IK system for arms, legs and hips using Unity Animator IK, with constraint based stabilization and tracker to avatar retargeting</li>
+                    <li>Runtime T pose calibration that aligns position and rotation for all tracked joints at the start of a session</li>
+                    <li>Hierarchical transform recording per frame, serialized to JSON and reconstructable as Unity AnimationClips for reuse</li>
+                    <li>VIVE OpenXR passthrough for mixed reality recording, optimized for real time performance with no external compute</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Scope note</h3>
+                <p>The trackers and headsets are off the shelf VIVE hardware. The tracking to avatar software described above is the work I did.</p>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>My role</dt><dd>Developer on my assigned work</dd>
+                <dt>Hardware</dt><dd>VIVE Ultimate Trackers, VIVE Focus 3, VIVE XR Elite</dd>
+                <dt>Technologies</dt><dd>Unity 3D, C#, OpenXR, Animator IK, JSON serialization, MR passthrough, Android standalone</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-training">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · XR developer internship</p>
+        <h2 id="pd-title">Modular VR training and assessment</h2>
+        <p class="pd-lede">A data driven VR training framework where all content is loaded from ScriptableObjects and all UI is generated at runtime, with no hardcoded screens. It is packaged as a VR Builder behavior, so it can be dropped into any industrial training scenario as a self contained learning module.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/vr-training-1.jpg" alt="VR training project screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/vr-training-2.jpg" alt="VR training project screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/vr-training-3.jpg" alt="VR training project screenshot 3" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>What I built</h3>
+                <ul>
+                    <li>A multiple choice question engine on ScriptableObjects, with answer shuffling per session and two modes: Beginner with live feedback, and Advanced with analytics only after the session</li>
+                    <li>Session analytics covering correctness, error rate and retry count, shown as a structured performance table inside VR at the end of a session</li>
+                    <li>Packaging as a custom VR Builder Behavior, so the whole quiz system can enter a scenario pipeline without modification</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Scope note</h3>
+                <p>VR Builder is an existing framework. This project extends it with the module described above.</p>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>My role</dt><dd>Developer on my assigned work</dd>
+                <dt>Technologies</dt><dd>Unity 3D, VR Builder, C#, ScriptableObjects, runtime UI, session analytics, OpenXR</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-cinematic">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · XR developer internship</p>
+        <h2 id="pd-title">Cinematic space to Earth experience</h2>
+        <p class="pd-lede">An immersive intro sequence in XR that flies from outer space toward Earth along a Cinemachine dolly spline, with the XR rig synchronized to the camera path. It moves through orbital motion, a metallic logo reveal and a 3D globe with modular location pins, designed as a flagship brand experience.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure class="m-wide"><video controls muted loop playsinline preload="auto" poster="assets/images/trailer-poster-1.jpg"><source src="assets/videos/trailer-1.mp4" type="video/mp4"></video></figure>
+            <figure class="m-wide"><video controls muted loop playsinline preload="auto" poster="assets/images/trailer-poster-2.jpg"><source src="assets/videos/trailer-2.mp4" type="video/mp4"></video></figure>
+            <figure><img src="assets/images/trailer-1.jpg" alt="Cinematic experience screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/trailer-2.jpg" alt="Cinematic experience screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/trailer-3.jpg" alt="Cinematic experience screenshot 3" loading="lazy"></figure>
+            <figure><img src="assets/images/trailer-4.jpg" alt="Cinematic experience screenshot 4" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>What I built</h3>
+                <ul>
+                    <li>A dynamic 3D Earth visualization with interactive geographic pin placement, supporting modular location markers with runtime position correction</li>
+                    <li>A cinematic flight system on a Cinemachine dolly spline, with the XR rig synchronized to the camera path so users keep full spatial presence</li>
+                    <li>A modular title and logo reveal with curved orbital text animation and a controlled, lighting based metallic reveal</li>
+                </ul>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>My role</dt><dd>Developer on my assigned work</dd>
+                <dt>Technologies</dt><dd>Unity 3D, Cinemachine, OpenXR, C#, world map globe, state machines, spatial lighting, geospatial systems</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-ar-cabin">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · XR developer internship</p>
+        <h2 id="pd-title">AR training interface for cabin crew</h2>
+        <p class="pd-lede">An AR training interface for Lufthansa Technik cabin crew, using QR based world locking for precise spatial anchoring in the real cabin.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/ar-cabin-1.jpg" alt="AR cabin interface screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/ar-cabin-2.jpg" alt="AR cabin interface screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/ar-cabin-3.jpg" alt="AR cabin interface screenshot 3" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>What it covers</h3>
+                <ul>
+                    <li>Interactive UI driven by USS and UXML</li>
+                    <li>3D model visualization</li>
+                    <li>Guided navigation workflows with real world AR overlay integration</li>
+                    <li>Scalable content delivery for aviation training</li>
+                </ul>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>My role</dt><dd>Developer on my assigned work</dd>
+                <dt>Technologies</dt><dd>Unity 3D, MRTK 3, USS and UXML, AR, QR world locking, 3D visualization</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-robot">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Academic project · Robotics</p>
+        <h2 id="pd-title">Warehouse robot with SLAM navigation</h2>
+        <p class="pd-lede">A four wheeled autonomous mobile robot for warehouse navigation and tray handling, simulated end to end in ROS and Gazebo. It localizes on a pre built map, plans collision free paths and moves a prismatic tray joint without human input.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure class="m-full"><video controls muted loop playsinline preload="auto" poster="assets/images/bot-poster.jpg"><source src="assets/videos/bot-demo.mp4" type="video/mp4"><source src="assets/videos/bot-demo.mkv" type="video/x-matroska"></video></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>Implementation</h3>
+                <ul>
+                    <li>A complete URDF model with four continuous wheel joints, a prismatic tray joint, a Hokuyo LiDAR and an RGB camera, including inertial and collision properties</li>
+                    <li>AMCL localization that matches LiDAR scans against a pre built map for real time pose estimation in a warehouse environment</li>
+                    <li>A move_base setup with the DWA planner and custom global and local costmaps for point to point navigation with obstacle avoidance</li>
+                    <li>Tray actuation through the Gazebo SetModelConfiguration service, using 100 step interpolation for smooth movement to any target height</li>
+                    <li>An omnidirectional drive plugin with odometry feedback, giving velocity commanded motion over cmd_vel</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Context</h3>
+                <p>This is part of my academic engineering background. It is a simulation project, not a deployed robot.</p>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Type</dt><dd>Academic project</dd>
+                <dt>Technologies</dt><dd>ROS, Python, URDF, AMCL, move_base, Gazebo, LiDAR, RViz</dd>
+            </dl>
+        </aside>
+    </div>
+    <p class="pd-links"><a class="btn btn-quiet" href="https://github.com/prasadvnv/Inventory-Bot" target="_blank" rel="noopener">View on GitHub ↗</a></p>
+</article>
+</template>
+
+<template id="p-conditions">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · XR developer internship</p>
+        <h2 id="pd-title">Custom VR Builder conditions</h2>
+        <p class="pd-lede">Two custom conditions built as native extensions to the VR Builder framework, widening what it can do out of the box for enterprise training scenarios.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/vrb-condition-1.jpg" alt="VR Builder condition screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/vrb-condition-2.jpg" alt="VR Builder condition screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/vrb-condition-3.jpg" alt="VR Builder condition screenshot 3" loading="lazy"></figure>
+            <figure><img src="assets/images/vrb-condition-4.jpg" alt="VR Builder condition screenshot 4" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>The two conditions</h3>
+                <ul>
+                    <li><strong>Visibility and Gaze condition.</strong> Detects whether a target object is inside the camera frustum, or directly gazed at for a configurable duration, with distance limits, a gaze angle threshold and accumulative timing</li>
+                    <li><strong>Visual Inspection condition.</strong> Requires the user to look at a target from within a set distance and angle for a set time, with a circular progress indicator, an optional object highlight and a scene view editor preview so designers can place it easily</li>
+                </ul>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>Technologies</dt><dd>Unity 3D, VR Builder, C#, custom editor tools, gaze interaction, XR UX</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-gsplat">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Lufthansa Technik · R&amp;D evaluation</p>
+        <h2 id="pd-title">Gaussian Splatting in Unity</h2>
+        <p class="pd-lede">An evaluation of Gaussian Splatting as a photorealistic scene representation inside Unity URP, using real datasets from Lufthansa Technik environments, including an aircraft galley interior. It covered PLY and proprietary LCC pipelines, rendering parameter tuning and XR deployment feasibility.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/gsplat-1.jpg" alt="Gaussian Splatting evaluation screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/gsplat-2.jpg" alt="Gaussian Splatting evaluation screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/gsplat-3.jpg" alt="Gaussian Splatting evaluation screenshot 3" loading="lazy"></figure>
+            <figure><img src="assets/images/gsplat-4.jpg" alt="Gaussian Splatting evaluation screenshot 4" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>What I did</h3>
+                <ul>
+                    <li>Integrated the gsplat package for Unity into Unity 6 URP with Direct3D12 and Vulkan compatibility and a custom Gsplat URP Forward Renderer feature</li>
+                    <li>Rendered photorealistic PLY based aircraft interior scenes in real time, and analysed structural differences between PLY and proprietary LCC dataset formats</li>
+                    <li>Tuned Spherical Harmonics degree, gamma correction and brightness for visual stability, where SH Degree 0 gave the most consistent output</li>
+                    <li>Assessed standalone VR deployment and identified GPU memory bandwidth as the main constraint on real time performance on current headsets</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Findings</h3>
+                <p class="status-row"><span class="chip chip-ok">Desktop</span> Real time capable</p>
+                <p class="status-row"><span class="chip chip-wip">Standalone VR</span> GPU bound</p>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Organisation</dt><dd>Lufthansa Technik AG</dd>
+                <dt>Technologies</dt><dd>Unity 6, URP, Gaussian Splatting, PLY and LCC formats, XR feasibility, rendering optimization</dd>
+            </dl>
+        </aside>
+    </div>
+</article>
+</template>
+
+<template id="p-safety">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Personal project · VR</p>
+        <h2 id="pd-title">Industrial safety training simulation</h2>
+        <p class="pd-lede">A complete VR simulation that replicates industrial oven operation, with over 300 development hours spent on industrial realism and user experience. It covers safety protocols, interactive machine operation and emergency scenarios.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/vr-safety-1.jpg" alt="Safety simulation screenshot 1" loading="lazy"></figure>
+            <figure><img src="assets/images/vr-safety-2.jpg" alt="Safety simulation screenshot 2" loading="lazy"></figure>
+            <figure><img src="assets/images/vr-safety-3.jpg" alt="Safety simulation screenshot 3" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid pd-grid-solo">
+        <aside class="pd-aside">
+            <dl>
+                <dt>Type</dt><dd>Personal project</dd>
+                <dt>Technologies</dt><dd>Unity 3D, XR Interaction Toolkit, C#, Meta Oculus</dd>
+            </dl>
+        </aside>
+    </div>
+    <p class="pd-links"><a class="btn btn-quiet" href="https://github.com/prasadvnv/VR-Safety-Training---Industrial-Oven" target="_blank" rel="noopener">View on GitHub ↗</a></p>
+</article>
+</template>
+
+<template id="p-solar">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Academic project · Hardware and MATLAB</p>
+        <h2 id="pd-title">Dual axis solar tracker</h2>
+        <p class="pd-lede">A solar tracking system that adjusts panel orientation both horizontally and vertically using sensor feedback and actuators, to optimize sun tracking for energy efficiency through the day.</p>
+    </header>
+    <div class="pd-grid pd-grid-solo">
+        <aside class="pd-aside">
+            <dl>
+                <dt>Type</dt><dd>Academic project</dd>
+                <dt>Technologies</dt><dd>Simulink, MATLAB, sensor control, PID</dd>
+            </dl>
+        </aside>
+    </div>
+    <p class="pd-links"><a class="btn btn-quiet" href="https://github.com/prasadvnv/Dual-Axis-Solar-Tracker" target="_blank" rel="noopener">View on GitHub ↗</a></p>
+</article>
+</template>
+
+<template id="p-sae">
+<article class="pd">
+    <header class="pd-hero">
+        <p class="kicker">Student team · Mechanical</p>
+        <h2 id="pd-title">Yeti Racing, Formula SAE</h2>
+        <p class="pd-lede">Active member of Yeti Racing, the Formula SAE team of CUSAT in Kochi, competing at the national events Formula Bharat and SAE Supra India. I led the braking subsystem as team captain while working across vehicle dynamics, suspension and powertrain.</p>
+    </header>
+    <section class="pd-media">
+        <div class="media-grid">
+            <figure><img src="assets/images/sae-1.jpg" alt="Yeti Racing at Formula Bharat" loading="lazy"></figure>
+            <figure><img src="assets/images/sae-2.jpg" alt="Yeti Racing braking system" loading="lazy"></figure>
+        </div>
+    </section>
+    <div class="pd-grid">
+        <div class="pd-main">
+            <section>
+                <h3>My contribution</h3>
+                <ul>
+                    <li>Oversaw the design and validation of the vehicle braking system end to end, including rotor sizing, caliper selection, brake bias and hydraulic circuit layout</li>
+                    <li>Worked with the suspension, chassis and powertrain groups to integrate braking performance into overall vehicle dynamics</li>
+                    <li>Represented the team at national competitions, contributing to technical scrutineering and dynamic event preparation</li>
+                </ul>
+            </section>
+        </div>
+        <aside class="pd-aside">
+            <dl>
+                <dt>Role</dt><dd>Brake Team Captain</dd>
+                <dt>Technologies</dt><dd>SolidWorks, brake system design, vehicle dynamics, team leadership, Formula SAE</dd>
+            </dl>
+        </aside>
+    </div>
+    <p class="pd-links"><a class="btn btn-quiet" href="https://yetiracing.cusat.co.in/" target="_blank" rel="noopener">Yeti Racing website ↗</a></p>
+</article>
+</template>
+
 <script src="script.js"></script>
 </body>
 </html>

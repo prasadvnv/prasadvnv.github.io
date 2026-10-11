@@ -1,248 +1,182 @@
 /* ============================================================
-   script.js — Vishnu Prasad Portfolio v4
+   script.js, Vishnu Prasad portfolio v6
+   Theme switch, mobile menu, project dialog with autoplaying
+   videos. No dependencies.
    ============================================================ */
+(function () {
+    'use strict';
 
-const prefersReducedMotionEarly = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var root = document.documentElement;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var colorQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-/* ─── 1. CUSTOM CURSOR ─────────────────── */
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
+    /* ── Theme ───────────────────────────── */
+    var themeBtn = document.getElementById('themeToggle');
+    var themeMeta = document.querySelector('meta[name="theme-color"]');
 
-if (cursor && ring && !prefersReducedMotionEarly) {
-    document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        cursor.style.left = mx + 'px';
-        cursor.style.top  = my + 'px';
-    });
-    (function tick() {
-        rx += (mx - rx) * 0.1;
-        ry += (my - ry) * 0.1;
-        ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
-        requestAnimationFrame(tick);
-    })();
-
-    document.querySelectorAll('a,button,.sk-chips span,.proj-chips span,.cs-card,.polaroid-stack').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
-            cursor.style.background = 'rgba(0,212,255,0.4)';
-            ring.style.width = ring.style.height = '48px';
-        });
-        el.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-            cursor.style.background = 'var(--accent)';
-            ring.style.width = ring.style.height = '30px';
-        });
-    });
-}
-
-/* ─── 2. HERO CANVAS ──────────────────── */
-const canvas = document.getElementById('heroCanvas');
-const ctx    = canvas && !prefersReducedMotionEarly ? canvas.getContext('2d') : null;
-let W, H, pts = [];
-
-function resize() {
-    if (!ctx) return;
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-}
-function initPts() {
-    pts = [];
-    const n = Math.floor(W / 14);
-    for (let i = 0; i < n; i++) {
-        pts.push({
-            x: Math.random() * W, y: Math.random() * H,
-            r: Math.random() * 1.2 + 0.2,
-            vx: (Math.random() - .5) * .25,
-            vy: (Math.random() - .5) * .25,
-            a: Math.random()
-        });
+    function currentTheme() {
+        return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     }
-}
-resize(); initPts();
-window.addEventListener('resize', () => { resize(); initPts(); });
 
-(function draw() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(0,212,255,0.022)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < W; x += 80) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
-    for (let y = 0; y < H; y += 80) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
-    pts.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,212,255,${.12 + p.a * .2})`;
-        ctx.fill();
-    });
-    for (let i = 0; i < pts.length; i++) {
-        for (let j = i + 1; j < pts.length; j++) {
-            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
-            const d  = Math.sqrt(dx*dx + dy*dy);
-            if (d < 110) {
-                ctx.beginPath();
-                ctx.moveTo(pts[i].x, pts[i].y);
-                ctx.lineTo(pts[j].x, pts[j].y);
-                ctx.strokeStyle = `rgba(0,212,255,${.045 * (1 - d/110)})`;
-                ctx.lineWidth = .4;
-                ctx.stroke();
-            }
+    function paintTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        if (themeBtn) {
+            themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+        }
+        if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#161B26' : '#F3F5F9');
+    }
+
+    function setTheme(theme, persist) {
+        if (!reduceMotion.matches) {
+            root.classList.add('theme-anim');
+            window.setTimeout(function () { root.classList.remove('theme-anim'); }, 400);
+        }
+        paintTheme(theme);
+        if (persist) {
+            try { localStorage.setItem('theme', theme); } catch (e) { /* storage blocked */ }
         }
     }
-    requestAnimationFrame(draw);
-})();
 
-/* ─── 3. TYPED.JS ─────────────────────── */
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    paintTheme(currentTheme());
 
-if (!prefersReducedMotion && typeof Typed !== 'undefined') {
-    new Typed('#typed', {
-        strings: [
-            'Unity · C# · XR Development',
-            'OpenXR · Meta Quest · VIVE XR',
-            'ROS · Gazebo · Robotics Simulation',
-            'VR · MR · AR Application Development',
-            'Mechatronics & Cyber-Physical Systems'
-        ],
-        typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true
-    });
-} else {
-    const typedEl = document.getElementById('typed');
-    if (typedEl) typedEl.textContent = 'Unity · C# · XR Development · Robotics Simulation';
-}
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function () {
+            setTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+        });
+    }
 
-/* ─── 4. AOS ──────────────────────────── */
-AOS.init({ duration: 850, once: true, easing: 'ease-out-cubic', offset: 50, disable: prefersReducedMotion });
+    // Follow the operating system only while the visitor has not chosen a theme.
+    function onSystemChange(e) {
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch (err) {}
+        if (stored !== 'light' && stored !== 'dark') setTheme(e.matches ? 'dark' : 'light', false);
+    }
+    if (colorQuery.addEventListener) colorQuery.addEventListener('change', onSystemChange);
+    else if (colorQuery.addListener) colorQuery.addListener(onSystemChange);
 
-/* ─── 4b. FOOTER YEAR ─────────────────── */
-const fYear = document.getElementById('fYear');
-if (fYear) fYear.textContent = new Date().getFullYear();
+    /* ── Mobile menu ─────────────────────── */
+    var menuBtn = document.getElementById('menuBtn');
+    var nav = document.getElementById('siteNav');
 
-/* ─── 5. NAVBAR ───────────────────────── */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+    function setMenu(open) {
+        if (!menuBtn || !nav) return;
+        nav.classList.toggle('is-open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
 
-function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-}
-document.querySelectorAll('.nav-links a').forEach(a =>
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
-);
+    if (menuBtn && nav) {
+        menuBtn.addEventListener('click', function () {
+            setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+        });
+        nav.addEventListener('click', function (e) {
+            if (e.target.closest('a')) setMenu(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') {
+                setMenu(false);
+                menuBtn.focus();
+            }
+        });
+        window.matchMedia('(min-width: 821px)').addEventListener('change', function (e) {
+            if (e.matches) setMenu(false);
+        });
+    }
 
-/* ─── 6. LANGUAGE CIRCLES ─────────────── */
-const circumference = 2 * Math.PI * 28;
-const langSection = document.getElementById('langCircles') || document.body;
-new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            document.querySelectorAll('.lc-prog').forEach(c => {
-                const pct = parseFloat(c.getAttribute('data-pct')) || 0;
-                c.style.strokeDasharray  = circumference;
-                c.style.strokeDashoffset = circumference * (1 - pct / 100);
+    /* ── Tile images: if a file is missing, drop the picture area instead of showing a broken box ── */
+    document.addEventListener('error', function (e) {
+        var t = e.target;
+        if (!t || t.tagName !== 'IMG' || !t.closest) return;
+        var art = t.closest('.tile-art');
+        if (!art) return;
+        t.remove();
+        if (!art.querySelector('img')) art.hidden = true;
+    }, true);
+
+    /* ── Language radials: arm them, then spin and fill each ring as it scrolls into view ── */
+    var langs = document.querySelectorAll('.lang');
+    if (langs.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
+        var langObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                var el = entry.target;
+                langObserver.unobserve(el);
+                var i = Array.prototype.indexOf.call(langs, el);
+                window.setTimeout(function () { el.classList.remove('is-armed'); }, i * 160);
             });
-        }
-    });
-}, { threshold: 0.4 }).observe(langSection);
-
-/* ─── 7. CASE STUDY IMAGE STRIP ─────────
-   Auto-slideshow with dot navigation.
-   Works for both .cs-img-strip (card strips)
-   and .proj-ar-strip (full-width project strip).
-────────────────────────────────────────── */
-function initStrip(stripId, dotsId) {
-    const strip  = document.getElementById(stripId);
-    const dotsEl = document.getElementById(dotsId);
-    if (!strip || !dotsEl) return;
-
-    const items = strip.querySelectorAll('.strip-item');
-    const count = items.length;
-    let current = 0;
-
-    // Build dots
-    for (let i = 0; i < count; i++) {
-        const d = document.createElement('span');
-        if (i === 0) d.classList.add('active');
-        d.addEventListener('click', () => goTo(i));
-        dotsEl.appendChild(d);
-    }
-
-    // Lock strip dimensions
-    strip.style.display = 'flex';
-    strip.style.width = `${count * 100}%`;
-    items.forEach(it => { it.style.flex = `0 0 ${100 / count}%`; });
-
-    function goTo(n) {
-        current = (n + count) % count;
-        strip.style.transform = `translateX(-${current * (100 / count)}%)`;
-        strip.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
-        dotsEl.querySelectorAll('span').forEach((d, i) =>
-            d.classList.toggle('active', i === current));
-    }
-
-    setInterval(() => goTo(current + 1), 3200);
-}
-
-initStrip('strip-vr',    'dots-vr');
-initStrip('strip-solar', 'dots-solar');
-initStrip('strip-sae',   'dots-sae');
-// AR Training now uses polaroid stack — strip-ar removed
-
-/* ─── 8. POLAROID STACK — tap to fan on mobile + hint ─── */
-document.querySelectorAll('.polaroid-stack').forEach(stack => {
-    stack.addEventListener('click', () => stack.classList.toggle('fanned'));
-    const hint = document.createElement('p');
-    hint.className = 'pol-hint';
-    hint.textContent = 'hover to fan · tap on mobile';
-    stack.insertAdjacentElement('afterend', hint);
-});
-
-/* ─── 9. MKV VIDEO FALLBACK ──────────── */
-document.querySelectorAll('.cs-video').forEach(vid => {
-    vid.addEventListener('error', () => {
-        const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
-        if (notice) notice.classList.add('visible');
-    });
-    setTimeout(() => {
-        if (vid.readyState === 0 || vid.networkState === 3) {
-            const notice = vid.closest('.cs-video-wrap')?.querySelector('.mkv-notice');
-            if (notice) notice.classList.add('visible');
-        }
-    }, 2500);
-});
-
-/* ─── 9b. BOT VIDEO — scroll-triggered autoplay ── */
-const botVid = document.getElementById('botVid');
-if (botVid) {
-    new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                botVid.play();
-            } else {
-                botVid.pause();
-            }
+        }, { threshold: 0.6 });
+        langs.forEach(function (el) {
+            el.classList.add('is-armed');
+            langObserver.observe(el);
         });
-    }, { threshold: 0.3 }).observe(botVid);
+    }
 
-    botVid.addEventListener('error', () => {
-        const notice = botVid.closest('.proj-bot-video')?.querySelector('.mkv-notice');
-        if (notice) notice.classList.add('visible');
-    });
-}
+    /* ── Project dialog ──────────────────── */
+    var dialog = document.getElementById('projectDialog');
+    var content = document.getElementById('pdContent');
+    var closeBtn = document.getElementById('pdClose');
+    var opener = null;
 
-/* ─── 10. SKILLS chip ripple ──────────── */
-document.querySelectorAll('.sk-chips span').forEach(s => {
-    s.addEventListener('click', () => {
-        s.style.borderColor = 'var(--accent)';
-        s.style.color = 'var(--accent)';
-        s.style.background = 'rgba(0,212,255,.1)';
-        setTimeout(() => {
-            s.style.borderColor = '';
-            s.style.color = '';
-            s.style.background = '';
-        }, 600);
-    });
-});
+    // Videos start by themselves when a project opens (muted, so browsers allow it).
+    // Visitors who asked their system for reduced motion keep the controls and press play themselves.
+    function playVideos() {
+        if (reduceMotion.matches) return;
+        content.querySelectorAll('video').forEach(function (v) {
+            v.muted = true;
+            var p = v.play();
+            if (p && typeof p.catch === 'function') p.catch(function () { /* blocked, controls stay available */ });
+        });
+    }
+
+    function openProject(id, trigger) {
+        var tpl = document.getElementById('p-' + id);
+        if (!dialog || !content || !tpl) return;
+        content.replaceChildren(tpl.content.cloneNode(true));
+        opener = trigger || null;
+        if (!dialog.open) dialog.showModal();
+        dialog.scrollTop = 0;
+        root.classList.add('modal-open');
+        playVideos();
+    }
+
+    if (dialog && content) {
+        // One delegated handler covers tiles, list rows and inline links.
+        document.addEventListener('click', function (e) {
+            var trigger = e.target.closest('[data-open]');
+            if (!trigger) return;
+            e.preventDefault();
+            openProject(trigger.getAttribute('data-open'), trigger);
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', function () { dialog.close(); });
+
+        // Click on the backdrop closes. The dialog has no padding, so a click whose target is
+        // the dialog itself can only be the backdrop.
+        dialog.addEventListener('click', function (e) {
+            if (e.target === dialog) dialog.close();
+        });
+
+        // Escape is handled natively by <dialog>. On close: stop media, unlock scroll, return focus.
+        dialog.addEventListener('close', function () {
+            content.querySelectorAll('video').forEach(function (v) { v.pause(); });
+            content.replaceChildren();
+            root.classList.remove('modal-open');
+            if (opener && document.contains(opener)) opener.focus();
+            opener = null;
+        });
+
+        // Media that is not present in the repository is hidden instead of showing a broken box.
+        dialog.addEventListener('error', function (e) {
+            var t = e.target;
+            if (!t || !t.closest) return;
+            // A video with several sources only fails once its last source fails.
+            if (t.tagName === 'SOURCE' && t.nextElementSibling && t.nextElementSibling.tagName === 'SOURCE') return;
+            var fig = t.closest('figure');
+            if (!fig) return;
+            fig.hidden = true;
+            // If nothing in the media block is left, drop the whole block so no empty gap remains.
+            var media = fig.closest('.pd-media');
+            if (media && !media.querySelector('figure:not([hidden])')) media.hidden = true;
+        }, true);
+    }
+})();
