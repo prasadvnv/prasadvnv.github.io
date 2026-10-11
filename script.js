@@ -2,43 +2,48 @@
    script.js — Vishnu Prasad Portfolio v4
    ============================================================ */
 
+const prefersReducedMotionEarly = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ─── 1. CUSTOM CURSOR ─────────────────── */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-});
-(function tick() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(tick);
-})();
+if (cursor && ring && !prefersReducedMotionEarly) {
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top  = my + 'px';
+    });
+    (function tick() {
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(tick);
+    })();
 
-document.querySelectorAll('a,button,.sk-chips span,.proj-chips span,.cs-card,.polaroid-stack').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
-        cursor.style.background = 'rgba(0,212,255,0.4)';
-        ring.style.width = ring.style.height = '48px';
+    document.querySelectorAll('a,button,.sk-chips span,.proj-chips span,.cs-card,.polaroid-stack').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+            cursor.style.background = 'rgba(0,212,255,0.4)';
+            ring.style.width = ring.style.height = '48px';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+            cursor.style.background = 'var(--accent)';
+            ring.style.width = ring.style.height = '30px';
+        });
     });
-    el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-        cursor.style.background = 'var(--accent)';
-        ring.style.width = ring.style.height = '30px';
-    });
-});
+}
 
 /* ─── 2. HERO CANVAS ──────────────────── */
 const canvas = document.getElementById('heroCanvas');
-const ctx    = canvas.getContext('2d');
+const ctx    = canvas && !prefersReducedMotionEarly ? canvas.getContext('2d') : null;
 let W, H, pts = [];
 
 function resize() {
+    if (!ctx) return;
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
 }
@@ -59,6 +64,7 @@ resize(); initPts();
 window.addEventListener('resize', () => { resize(); initPts(); });
 
 (function draw() {
+    if (!ctx) return;
     ctx.clearRect(0, 0, W, H);
     ctx.strokeStyle = 'rgba(0,212,255,0.022)';
     ctx.lineWidth = 1;
@@ -91,19 +97,30 @@ window.addEventListener('resize', () => { resize(); initPts(); });
 })();
 
 /* ─── 3. TYPED.JS ─────────────────────── */
-new Typed('#typed', {
-    strings: [
-        'XR Developer · Robotics Engineer',
-        'Unity · MRTK 3 · OpenXR',
-        'ROS · SLAM · Autonomous Systems',
-        'VR · MR · AR · Simulation',
-        'Building Immersive & Intelligent Systems'
-    ],
-    typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true
-});
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReducedMotion && typeof Typed !== 'undefined') {
+    new Typed('#typed', {
+        strings: [
+            'Unity · C# · XR Development',
+            'OpenXR · Meta Quest · VIVE XR',
+            'ROS · Gazebo · Robotics Simulation',
+            'VR · MR · AR Application Development',
+            'Mechatronics & Cyber-Physical Systems'
+        ],
+        typeSpeed: 50, backSpeed: 25, backDelay: 2000, loop: true
+    });
+} else {
+    const typedEl = document.getElementById('typed');
+    if (typedEl) typedEl.textContent = 'Unity · C# · XR Development · Robotics Simulation';
+}
 
 /* ─── 4. AOS ──────────────────────────── */
-AOS.init({ duration: 850, once: true, easing: 'ease-out-cubic', offset: 50 });
+AOS.init({ duration: 850, once: true, easing: 'ease-out-cubic', offset: 50, disable: prefersReducedMotion });
+
+/* ─── 4b. FOOTER YEAR ─────────────────── */
+const fYear = document.getElementById('fYear');
+if (fYear) fYear.textContent = new Date().getFullYear();
 
 /* ─── 5. NAVBAR ───────────────────────── */
 const nav = document.getElementById('nav');
