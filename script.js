@@ -93,9 +93,20 @@
         if (!art.querySelector('img')) art.hidden = true;
     }, true);
 
+    /* ── Back to top ─────────────────────────
+       The #top target is the sticky header, which is already "in view" at any scroll position,
+       so the browser's native anchor jump has nothing to scroll to. Scroll the window itself. */
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href="#top"]');
+        if (!a || e.defaultPrevented || e.button) return;
+        e.preventDefault();
+        window.scrollTo({ top: 0, left: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        if (history.replaceState) history.replaceState(null, '', '#top');
+    });
+
     /* ── Language radials: arm them, then spin and fill each ring as it scrolls into view ── */
     var langs = document.querySelectorAll('.lang');
-    if (langs.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
+    if (langs.length && 'IntersectionObserver' in window) {
         var langObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
