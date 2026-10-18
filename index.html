@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" class="modal-open">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,9 +26,33 @@
         })();
     </script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="welcome/welcome.css">
+    <noscript><style>#welcome-overlay{display:none}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
+<!-- WELCOME SCENE — the site's opening. Reveals the real site below on
+     completion, skip, or its own fallback timeout (see the script near the
+     end of body). header/main/footer are `inert` until then: present in
+     the DOM (so this still works with JS disabled or slow to load) but
+     out of the tab order and hidden from assistive tech while covered. -->
+<div id="welcome-overlay">
+  <canvas id="scene-canvas"></canvas>
+  <div id="welcome-ui">
+    <div class="corner-label">INTERACTIVE STUDY / 001</div>
+    <button id="skip-btn" class="skip-btn" type="button">Skip</button>
+    <div id="intro-copy" class="intro-copy">
+      <h1 id="headline">Something&rsquo;s missing.</h1>
+      <p id="subline" class="subline">Inspect the object.</p>
+    </div>
+    <div id="tooltip" class="tooltip" hidden>
+      <span class="tooltip-mark"></span>
+      <span class="tooltip-label">Restore propeller</span>
+    </div>
+    <div id="loading" class="loading">Loading</div>
+  </div>
+</div>
 
 <!-- HEADER -->
 <header class="site-header" id="top">
@@ -78,9 +102,9 @@
 <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
         <div class="hero-copy">
-            <p class="kicker">XR developer · Mechatronics engineer</p>
-            <h1 id="hero-title">Building experiences <em>beyond the screen.</em></h1>
-            <p class="lede">Unity, immersive technology, and engineering that connects the virtual and physical worlds.</p>
+            <p class="kicker">XR Developer · Unity · Interactive Systems</p>
+            <h1 id="hero-title">Building interactive systems <em>that bridge software and the physical world.</em></h1>
+            <p class="lede">I build interactive applications that connect software, 3D environments and real-world workflows — from standalone XR experiences to training and simulation systems.</p>
             <div class="hero-actions">
                 <a class="btn btn-primary" href="#work">Explore my work <span aria-hidden="true">→</span></a>
                 <a class="btn btn-quiet" href="#contact">Get in touch</a>
@@ -876,5 +900,69 @@
 </template>
 
 <script src="script.js"></script>
+<!-- Classic (non-module) script on purpose: browsers refuse to run type="module"
+     scripts from file:// pages, which is what silently broke the intro when
+     index.html was double-clicked. -->
+<script src="welcome/welcome.js" onerror="window.__welcomeFailed='welcome.js could not be loaded'"></script>
+<script>
+    /* Welcome scene -> real site handoff. welcome.js dispatches:
+         welcome:ready    first frame rendered (model loaded)
+         welcome:progress download progress
+         welcome:complete the visitor finished (or skipped) the intro
+         welcome:failed   the 3D intro cannot run (no WebGL, model failed...)
+       This script is the only piece that knows about the rest of the page. */
+    (function () {
+        var overlay = document.getElementById('welcome-overlay');
+        var header = document.getElementById('top');
+        var main = document.getElementById('main');
+        var footer = document.querySelector('.site-footer');
+        if (!overlay) return;
+        var covered = [header, main, footer];
+        covered.forEach(function (el) { if (el) el.setAttribute('inert', ''); });
+
+        var revealed = false, ready = false, stallTimer;
+        function revealSite() {
+            if (revealed) return;
+            revealed = true;
+            clearTimeout(stallTimer);
+            overlay.classList.add('hiding');
+            covered.forEach(function (el) { if (el) el.removeAttribute('inert'); });
+            document.documentElement.classList.remove('modal-open');
+            var done = false;
+            function cleanup() {
+                if (done) return;
+                done = true;
+                if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            }
+            overlay.addEventListener('transitionend', cleanup);
+            setTimeout(cleanup, 700);
+        }
+
+        // Last-resort safety net for a *stalled startup* only: if nothing
+        // (no progress, no ready, no failure) happens for 15 s, open the
+        // site. It is re-armed by download progress and cancelled for good
+        // once the scene is ready, so it never cuts off the interactive intro.
+        function armStall() {
+            clearTimeout(stallTimer);
+            stallTimer = setTimeout(function () {
+                console.warn('[welcome] startup stalled for 15s, opening the portfolio');
+                revealSite();
+            }, 15000);
+        }
+        armStall();
+        window.addEventListener('welcome:progress', function () { if (!ready && !revealed) armStall(); });
+        window.addEventListener('welcome:ready', function () { ready = true; clearTimeout(stallTimer); });
+        window.addEventListener('welcome:complete', revealSite);
+        function onFailed(reason) {
+            console.error('[welcome] intro unavailable:', reason);
+            clearTimeout(stallTimer);
+            setTimeout(revealSite, 1200); // let the visitor read the one-line notice
+        }
+        window.addEventListener('welcome:failed', function (e) { onFailed(e && e.detail); });
+        // welcome.js runs before this script, so a failure that happened
+        // synchronously (no WebGL, script missing) left a flag instead.
+        if (window.__welcomeFailed) onFailed(window.__welcomeFailed);
+    })();
+</script>
 </body>
 </html>
