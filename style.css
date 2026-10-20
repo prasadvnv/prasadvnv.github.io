@@ -509,6 +509,22 @@ h3 { font-size: 1.35rem; line-height: 1.25; }
     .media-grid .m-wide { grid-column: auto; }
 }
 
+/* ── Welcome-scene handoff staging ──
+   Added by the sphere-led transition in welcome/welcome.js right as the
+   travelling sphere approaches the HMD hero, so the headset + orbit become
+   visible before the rest of the page. The class is added and removed
+   entirely by that script; it is never left on if the intro is skipped,
+   fails, or stalls (those paths never touch this class). */
+html.hero-stage-wait #top,
+html.hero-stage-wait .hero-copy,
+html.hero-stage-wait .hero-tags,
+html.hero-stage-wait .hero-tags-b,
+html.hero-stage-wait #main > .sec,
+html.hero-stage-wait .site-footer {
+    opacity: 0;
+    transition: opacity .6s ease;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
