@@ -524,6 +524,38 @@ html.hero-stage-wait .site-footer {
     opacity: 0;
     transition: opacity .6s ease;
 }
+/* .hero-art is deliberately left out of the rule above: while staged, it is
+   lifted above the (still-opaque) welcome overlay and faded in on its own,
+   so the HMD is the only thing visible until html.hero-pool-lit is added a
+   frame later. Nothing else on the page is touched by this -- the rest
+   stays hidden behind the overlay, which only goes away once
+   window.__revealOverlay() runs at the real, final handoff. */
+html.hero-stage-wait .hero-art {
+    position: relative;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+html.hero-stage-wait.hero-pool-lit .hero-art {
+    opacity: 1;
+}
+/* Soft ambient highlight suggesting the beam's light reaching the HMD --
+   sits behind it (z-index: -1, inside the already-positioned .hero-art)
+   and never touches the headset's own colours or the page background. */
+html.hero-stage-wait.hero-pool-lit .hero-art::before {
+    content: "";
+    position: absolute;
+    inset: -16%;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(ellipse 58% 52% at 50% 48%, color-mix(in srgb, var(--accent-2, #ff7a6e) 32%, transparent) 0%, transparent 72%);
+    opacity: 0;
+    animation: hero-pool-glow 1.1s ease forwards;
+}
+@keyframes hero-pool-glow {
+    to { opacity: 1; }
+}
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {

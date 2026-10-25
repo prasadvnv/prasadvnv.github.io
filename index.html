@@ -40,12 +40,15 @@
 <div id="welcome-overlay">
   <canvas id="scene-canvas"></canvas>
   <div id="welcome-ui">
-    <div class="corner-label">INTERACTIVE STUDY / 001</div>
-    <button id="skip-btn" class="skip-btn" type="button">Skip</button>
     <div id="intro-copy" class="intro-copy">
-      <h1 id="headline">Something&rsquo;s missing.</h1>
-      <p id="subline" class="subline">Drag to rotate and inspect.</p>
+      <div class="hud-status">
+        <span id="hud-dot" class="hud-dot"></span>
+        <span id="hud-status-text">INSPECTION MODE</span>
+      </div>
+      <h1 id="headline">Rotate the drone to inspect its components.</h1>
+      <p id="subline" class="subline">Find and replace the missing propeller.</p>
     </div>
+    <button id="skip-btn" class="skip-btn" type="button">Skip</button>
     <div id="tooltip" class="tooltip" hidden>
       <span class="tooltip-mark"></span>
       <span class="tooltip-label">Restore propeller</span>
