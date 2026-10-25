@@ -557,6 +557,27 @@ html.hero-stage-wait.hero-pool-lit .hero-art::before {
     to { opacity: 1; }
 }
 
+/* Beam-led reveal: the page underneath goes fully opaque at once, still hidden
+   by the welcome veil (a canvas in the overlay), which the beam then opens. */
+html.hero-stage-wait.hero-revealing #top,
+html.hero-stage-wait.hero-revealing .hero-copy,
+html.hero-stage-wait.hero-revealing .hero-tags,
+html.hero-stage-wait.hero-revealing .hero-tags-b,
+html.hero-stage-wait.hero-revealing #main > .sec,
+html.hero-stage-wait.hero-revealing .site-footer {
+    opacity: 1;
+    /* No opacity ramp of its own: the page is already fully "there" under the
+       veil, and the beam-driven veil alone decides where it can be seen. */
+    transition: none;
+}
+html.hero-stage-wait.hero-pool-lit.hero-glow-out .hero-art::before {
+    animation: hero-pool-fade .8s ease forwards;
+}
+@keyframes hero-pool-fade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
