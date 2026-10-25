@@ -25,9 +25,8 @@
 .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:12px;letter-spacing:.08em;color:var(--wc-ink-dim);transition:opacity .4s ease}
 .loading.hidden{opacity:0}
 
-/* The HMD-only reveal itself (raising .hero-art above this opaque overlay)
-   lives in style.css next to the existing html.hero-stage-wait rule it
-   belongs to, since .hero-art is part of the real page, not this overlay. */
+/* The beam-led reveal staging (html.hero-stage-wait / .hero-revealing) lives in
+   style.css, since .hero-art is part of the real page, not this overlay. */
 
 @keyframes wc-fade-in-c{0%{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes wc-fade-in{0%{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}

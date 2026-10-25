@@ -3911,7 +3911,7 @@ const __beamFadeTex=new Ty(__beamFadeCanvas);
 const __beamMat=new Ct({color:P.getHex(),transparent:!0,opacity:0,blending:2,depthWrite:!1,side:2,toneMapped:!1,alphaMap:__beamFadeTex});
 const __beamCone=new Xe(__beamGeo,__beamMat);
 __beamRig.add(__beamCone);
-let __flickerOn=!1,__hmdPoint=null;
+let __flickerOn=!1,__hmdPoint=null,__veilTick=null;
 function __refreshHmdPoint(){
   const __hmdEl=document.querySelector(".hero-art");
   const __r=__hmdEl?__hmdEl.getBoundingClientRect():null;
@@ -3961,6 +3961,8 @@ e.setStatus&&e.setStatus("LIFT-OFF","rising");
 const L=Un.LIGHT_INTENSITY,O=Un.BEAM_OPACITY;
 if(Eo){T&&(T.timeScale=1),__droneLight.intensity=L,__beamMat.opacity=O,__lightReveal();return}
 __flickerOn=!0;
+// The portfolio reveal starts with the beam: the veil opens along it from its first frame.
+__beamVeilStart();
 // Rotor spin-up, the camera-light flicker-on/off/steady sequence, the
 // upright reorientation, and the ascent all start together right here
 // (instead of the light sequence running first and only then handing off
@@ -4000,43 +4002,36 @@ console.log("[drone-intro] rise tween: complete, t=",(performance.now()-ie).toFi
 }}))
 }
 let __revealStarted=!1;
+// Beam has settled on the headset: hand over to the outward flood. (The portfolio has
+// already been lighting up under the beam since the moment it spawned -- see __beamVeilStart.)
 function __lightReveal(){
 if(__revealStarted)return;__revealStarted=!0;
 if(Eo){We();return}
-try{
-var __html=document.documentElement;
-console.log("[drone-intro] reveal: HMD only");
-__html.classList.add("hero-stage-wait");
-requestAnimationFrame(function(){requestAnimationFrame(function(){__html.classList.add("hero-pool-lit")})});
-setTimeout(__fullReveal,Un.POOL_REVEAL_MS+Un.BEAM_HOLD_MS)
-}catch(__err){
-console.warn("[drone-intro] light reveal failed, falling back:",__err);
-document.documentElement.classList.remove("hero-stage-wait","hero-pool-lit");
-We()
+// skipped (or already finished) while the beam was still travelling: nothing left to reveal
+if(__wed||a===$t.SKIPPED||a===$t.PORTFOLIO)return;
+__fullReveal()
 }
-}
-function __fullReveal(){
-console.log("[drone-intro] reveal: beam-led portfolio handoff");
-const __html=document.documentElement,__ov=document.getElementById("welcome-overlay");
-const __finish=()=>{
-if(window.__revealOverlay)window.__revealOverlay();
-// fade the HMD's ambient glow out before the staging classes go, so it does not pop off
-__html.classList.add("hero-glow-out");
-setTimeout(()=>{__html.classList.remove("hero-stage-wait","hero-pool-lit","hero-revealing","hero-glow-out")},850);
-setTimeout(We,100)
-};
-try{
-if(!__ov)throw new Error("no welcome overlay");
 // ---------------------------------------------------------------------
 // Beam-driven reveal. Layers, bottom to top:
 //   real page  <  #welcome-veil (2D canvas, page-bg colour, per-pixel alpha)
 //              <  #scene-canvas (WebGL, drone + beam, made transparent here)
-// The veil's "hole" is recomputed every frame from the beam's own screen
-// geometry (projected lens, aim axis and cone width): (1) a lit front runs
-// down the cone from the lens to the headset, revealing the page along the
-// beam; (2) once it lands, the light floods outward from the headset with a
-// soft edge. The drone and beam dissolve over the revealed page.
+// The veil's "hole" is recomputed every frame (see __veilTick in the render loop)
+// from the beam's own screen geometry (projected lens, aim axis, cone width and
+// the point it is landing on). It is created the moment the beam spawns, so:
+//   (1) from the beam's first frame the page shows wherever the light falls --
+//       along the cone and in a soft pool at its endpoint -- and that lit area
+//       follows the beam as the drone turns and rises (flashlight phase);
+//   (2) once the beam is on the headset the light also floods outward from the
+//       headset with a soft edge, and the drone and beam dissolve over the page.
 // ---------------------------------------------------------------------
+const __ss=(a,b,x)=>{x=(x-a)/(b-a);x=x<0?0:x>1?1:x;return x*x*(3-2*x)};
+const __clamp01=x=>x<0?0:x>1?1:x;
+let __veil=null,__veilFailed=!1;
+function __beamVeilStart(){
+if(__veil||__veilFailed)return __veil;
+try{
+const __html=document.documentElement,__ov=document.getElementById("welcome-overlay");
+if(!__ov)throw new Error("no welcome overlay");
 const vctx0=document.createElement("canvas").getContext("2d");
 if(!vctx0)throw new Error("2D canvas unavailable");
 const __rgbOf=(css,fb)=>{try{vctx0.canvas.width=vctx0.canvas.height=1;vctx0.clearRect(0,0,1,1);vctx0.fillStyle="#000";vctx0.fillStyle=css;vctx0.fillRect(0,0,1,1);const d=vctx0.getImageData(0,0,1,1).data;return d[3]?[d[0],d[1],d[2]]:fb}catch(e){return fb}};
@@ -4047,21 +4042,25 @@ const vc=document.createElement("canvas");vc.id="welcome-veil";vc.setAttribute("
 const vctx=vc.getContext("2d");
 if(!vctx)throw new Error("2D canvas unavailable");
 let img=null,cw=0,ch=0,cell=4,lastW=0,lastH=0;
-const ss=(a,b,x)=>{x=(x-a)/(b-a);x=x<0?0:x>1?1:x;return x*x*(3-2*x)};
-const clamp01=x=>x<0?0:x>1?1:x;
+let pi0=0,pi1=-1,pj0=0,pj1=-1;           // cells the previous frame may have opened
+const ss=__ss,clamp01=__clamp01;
 const _v=new w,_e=new w,_d=new w,_rt=new w;
 const proj=(p,out)=>{_v.copy(p).project(n);out[0]=(_v.x*.5+.5)*window.innerWidth;out[1]=(-_v.y*.5+.5)*window.innerHeight};
 const Lp=[0,0],Ep=[0,0],E2p=[0,0];
-function paint(p){
+const V={p:0,vc};                          // p: lock-on/flood progress (0 = beam still travelling)
+function paint(){
+const p=V.p;
 const vw=window.innerWidth,vh=window.innerHeight;
+let full=!1;
 if(vw!==lastW||vh!==lastH){
 lastW=vw;lastH=vh;
 cell=Math.max(3,Math.ceil(Math.sqrt(vw*vh/70000)));
 cw=Math.ceil(vw/cell);ch=Math.ceil(vh/cell);
-vc.width=cw;vc.height=ch;img=vctx.createImageData(cw,ch)
+vc.width=cw;vc.height=ch;img=vctx.createImageData(cw,ch);full=!0
 }
-__refreshHmdPoint();
-// --- beam geometry in screen space (CSS px)
+if(p>0){__refreshHmdPoint();full=!0}
+// --- beam geometry in screen space (CSS px), from this frame's camera and rig pose
+n.updateMatrixWorld(!0);
 __beamRig.updateMatrixWorld(!0);
 proj(__beamRig.position,Lp);
 _d.set(0,0,1).transformDirection(__beamRig.matrixWorld);
@@ -4077,43 +4076,84 @@ const Rh=Math.max(60,Math.min(__hmdPoint.w,__hmdPoint.h)*.5);
 // part of the headset art at the far end so the lit patch lands on it
 const tanA=Math.hypot(E2p[0]-Ep[0],E2p[1]-Ep[1])/Math.max(1,Math.hypot(Ep[0]-Lx,Ep[1]-Ly));
 const w0=Math.max(8,D*.012),wH=Math.max(D*tanA,Rh*.62);
-// --- timeline
+// --- live flashlight: lens -> the point the beam is landing on right now.
+// Strength follows the beam itself (so it appears with it, and lets go with it).
+const bk=p>0?1-ss(.6,.72,p):ss(.12,.7,__beamMat.opacity/Un.BEAM_OPACITY);
+const lex=Ep[0]-Lx,ley=Ep[1]-Ly,Dl=Math.hypot(lex,ley);
+const liveOn=bk>.002&&Dl>2&&isFinite(Dl+Lx+Ly+Ep[0]+Ep[1]+E2p[0]+E2p[1]);
+let lux=1,luy=0,lw0=8,lw1=8,rp=8;
+if(liveOn){
+const vmin=Math.min(vw,vh);
+lux=lex/Dl;luy=ley/Dl;
+lw0=Math.max(8,Dl*.012);
+lw1=Math.max(lw0,Math.min(Math.hypot(E2p[0]-Ep[0],E2p[1]-Ep[1]),vmin*.45));
+rp=Math.max(lw1*1.1,vmin*.07)               // light pool where the beam lands
+}
+// --- timeline (flood phase; all of it is zero until the beam has locked on)
 const front=Po(clamp01(p/.36))*(D*1.2);            // lit front travelling lens -> headset (and just past)
 const soft=Math.max(90,D*.2);                      // front softness along the beam
 const far=Math.max(Math.hypot(Hx,Hy),Math.hypot(vw-Hx,Hy),Math.hypot(Hx,vh-Hy),Math.hypot(vw-Hx,vh-Hy));
 const feather=Math.max(150,Math.min(vw,vh)*.3);
 const rho=-feather+ss(0,1,clamp01((p-.24)/.76))*(far+feather*2);
 const glowK=.16*(1-ss(.6,1,p)),washK=.11*(1-ss(.5,.95,p));
+// --- which cells to (re)compute. Before lock-on only the flashlight can be open, so
+// repaint just its bounding box plus last frame's (to close what it just left).
+let i0=0,i1=cw-1,j0=0,j1=ch-1;
+const ci0=i0,ci1=i1,cj0=j0,cj1=j1;
+let ni0=0,ni1=-1,nj0=0,nj1=-1;
+if(!full&&p<=0){
+if(liveOn){
+const R=Math.max(lw0,lw1,rp)*1.3+cell*2;
+ni0=Math.max(0,Math.floor((Math.min(Lx,Ep[0])-R)/cell));ni1=Math.min(cw-1,Math.floor((Math.max(Lx,Ep[0])+R)/cell));
+nj0=Math.max(0,Math.floor((Math.min(Ly,Ep[1])-R)/cell));nj1=Math.min(ch-1,Math.floor((Math.max(Ly,Ep[1])+R)/cell))
+}
+i0=ni1<ni0?pi0:pi1<pi0?ni0:Math.min(ni0,pi0);i1=ni1<ni0?pi1:pi1<pi0?ni1:Math.max(ni1,pi1);
+j0=ni1<ni0?pj0:pi1<pi0?nj0:Math.min(nj0,pj0);j1=ni1<ni0?pj1:pi1<pi0?nj1:Math.max(nj1,pj1)
+}else{ni0=ci0;ni1=ci1;nj0=cj0;nj1=cj1}
+pi0=ni0;pi1=ni1;pj0=nj0;pj1=nj1;
+if(i1<i0||j1<j0)return;
 const data=img.data,br=BG[0],bg=BG[1],bb=BG[2],wr=WARM[0],wg=WARM[1],wb=WARM[2];
-let o=0;
-for(let j=0;j<ch;j++){
+for(let j=j0;j<=j1;j++){
 const y=(j+.5)*cell;
-for(let i=0;i<cw;i++,o+=4){
+let o=(j*cw+i0)*4;
+for(let i=i0;i<=i1;i++,o+=4){
 const x=(i+.5)*cell;
+let hc=0,hp=0;
+if(p>0){
 const dx=x-Lx,dy=y-Ly,t=dx*ax+dy*ay,sp=Math.abs(dx*ay-dy*ax);
-// (1) the beam cone
+// (1) the beam cone, grown out to the headset
 const hw=w0+(wH-w0)*(t<0?0:t>D?1:t/D);
 const across=1-ss(hw*.3,hw*1.15,sp);
 const along=ss(-.02*D,.05*D,t)*(1-ss(front-soft,front,t))*(1-ss(D+Rh*.2,D+Rh*1.1,t));
-const hc=across*along;
+hc=across*along;
 // (2) light flooding outward from the headset
 const px=x-Hx,py=y-Hy,rr=Math.sqrt(px*px+py*py);
-const hp=1-ss(rho-feather,rho,rr);
-let h=1-(1-hc)*(1-hp);
+hp=1-ss(rho-feather,rho,rr)
+}
+let hl=0;
+if(liveOn){
+const lx=x-Lx,ly=y-Ly,lt=lx*lux+ly*luy,ls=Math.abs(lx*luy-ly*lux);
+const lh=lw0+(lw1-lw0)*(lt<0?0:lt>Dl?1:lt/Dl);
+const lcone=(1-ss(lh*.3,lh*1.15,ls))*ss(-.02*Dl,.05*Dl,lt)*(1-ss(Dl,Dl+rp*.9,lt));
+const ex=x-Ep[0],ey=y-Ep[1];
+const lpool=1-ss(rp*.4,rp*1.05,Math.sqrt(ex*ex+ey*ey));
+hl=(1-(1-lcone)*(1-lpool))*bk
+}
+const hcl=1-(1-hc)*(1-hl);
+const h=1-(1-hcl)*(1-hp);
 // faint warm rim where the light is still arriving
-const rim=Math.max(glowK*4*h*(1-h),washK*hc);
+const rim=Math.max(glowK*4*h*(1-h),washK*hcl);
 // the page behind never sees a hard 8-bit step: add sub-LSB noise
 const nz=((i*73856093^j*19349663)&255)/255-.5;
 const a=1-h,A=a+(1-a)*rim,k=A>0?(1-a)*rim/A:0;
 data[o]=br+(wr-br)*k;data[o+1]=bg+(wg-bg)*k;data[o+2]=bb+(wb-bb)*k;
 const A8=A*255+nz*.9;data[o+3]=A8<0?0:A8>255?255:A8
 }}
-vctx.putImageData(img,0,0)
+vctx.putImageData(img,0,0,i0,j0,i1-i0+1,j1-j0+1)
 }
 // Put the veil in place of the overlay's own solid background (same colour,
 // same frame, so nothing flickers), and let the WebGL canvas see through.
-vc.style.cssText="";
-paint(0);
+paint();
 __ov.insertBefore(vc,__ov.firstChild);
 __ov.style.background="transparent";
 t.background=null;i.setClearColor(0,0);
@@ -4121,21 +4161,46 @@ t.background=null;i.setClearColor(0,0);
 // RGB += colour*alpha, canvas alpha untouched (identical result over the veil).
 __beamMat.blending=5;__beamMat.blendEquation=100;__beamMat.blendSrc=204;__beamMat.blendDst=201;__beamMat.blendSrcAlpha=200;__beamMat.blendDstAlpha=201;__beamMat.needsUpdate=!0;
 r.style.transition="none";
-__html.classList.add("hero-revealing");
+// the page already sits fully rendered under the overlay; this keeps it (and the
+// headset, which stays beneath the veil like everything else) exactly as is
+__html.classList.add("hero-stage-wait","hero-revealing");
+__veil=V;__veilTick=paint;
+return V
+}catch(__err){
+__veilFailed=!0;
+console.warn("[drone-intro] progressive reveal unavailable, plain handoff:",__err);
+return null
+}
+}
+function __fullReveal(){
+console.log("[drone-intro] reveal: beam on the headset, outward flood");
+const __html=document.documentElement;
+const __finish=()=>{
+if(window.__revealOverlay)window.__revealOverlay();
+// fade the HMD's ambient glow out before the staging classes go, so it does not pop off
+__html.classList.add("hero-glow-out");
+setTimeout(()=>{__html.classList.remove("hero-stage-wait","hero-pool-lit","hero-revealing","hero-glow-out")},850);
+setTimeout(We,100)
+};
+try{
+const V=__beamVeilStart();
+if(!V)throw new Error("veil unavailable");
+// soft warm glow behind the headset: the light has arrived
+__html.classList.add("hero-pool-lit");
 const L0=Un.LIGHT_INTENSITY,O0=Un.BEAM_OPACITY;
 o.add(new Sn({duration:Un.SWEEP_MS,easing:x=>x,onUpdate:(e,p)=>{
-paint(p);
+V.p=p;     // the render loop repaints the veil each frame with this progress
 // the beam lets go once the light has landed; the drone fades after it
-const bm=1-ss(.3,.62,p);
+const bm=1-__ss(.3,.62,p);
 __droneLight.intensity=L0*bm;__beamMat.opacity=O0*bm;
-r.style.opacity=String(1-ss(.46,.94,p))
-},onComplete:()=>{vc.style.display="none";r.style.opacity="0";__finish()}}))
+r.style.opacity=String(1-__ss(.46,.94,p))
+},onComplete:()=>{V.vc.style.display="none";__veilTick=null;r.style.opacity="0";__finish()}}))
 }catch(__err){
 console.warn("[drone-intro] progressive reveal unavailable, plain handoff:",__err);
 __finish()
 }
 }
 function We(){if(__wed)return;__wed=!0;r.style.transition="opacity 700ms ease";requestAnimationFrame(()=>{r.style.opacity="0"});setTimeout(()=>{B($t.PORTFOLIO),e.hideSkip(),window.dispatchEvent(new CustomEvent("welcome:complete")),Ne(),setTimeout(()=>document.documentElement.classList.remove("hero-stage-wait","hero-pool-lit","hero-revealing","hero-glow-out"),900)},700)}
-function Ze(){if(a===$t.PORTFOLIO||a===$t.SKIPPED)return;clearTimeout(de),B($t.SKIPPED),e.hideTooltip();const ie=Eo?1:500;r.style.transition=`opacity ${ie}ms ease`,r.style.opacity="0",e.fadeOutIntro(),setTimeout(We,ie)}e.onSkip(Ze),B($t.INSPECTING);const X=new Ql;let te=null,ve=!0;function le(){if(!ve)return;te=requestAnimationFrame(le);const ie=X.getDelta(),be=performance.now();E.update(ie),U==null||U.update(be),o.update(be),(a===$t.INSPECTING||a===$t.TARGET_HOVERED)&&M.update(),b.update(),__syncBeamRig();if(__flickerOn){const __fk=1+.1*Math.sin(be*.0019)+.06*Math.sin(be*.0049+1.9)+.04*Math.sin(be*.0113+.6);__droneLight.intensity=Un.LIGHT_INTENSITY*__fk,__beamMat.opacity=Un.BEAM_OPACITY*__fk}ve&&i.render(t,n)}le(),console.log("[drone-intro] ready: first frame rendered"),window.dispatchEvent(new CustomEvent("welcome:ready"));function Ne(){ve=!1,te&&cancelAnimationFrame(te);try{clearTimeout(de),E.stopAllAction(),t.traverse(__o=>{__o.geometry&&__o.geometry.dispose&&__o.geometry.dispose();const __m=__o.material;(Array.isArray(__m)?__m:__m?[__m]:[]).forEach(__x=>{for(const __k in __x){const __v=__x[__k];__v&&__v.isTexture&&__v.dispose()}__x.dispose()})}),t.environment&&t.environment.dispose&&t.environment.dispose(),__rd&&__rd(),i.forceContextLoss&&i.forceContextLoss()}catch(__e){console.warn("[drone-intro] cleanup:",__e)}console.log("[drone-intro] render loop stopped, GPU resources released")}}function tS(r,e,t){const n=new w;r.getWorldPosition(n),n.project(e);const i=t.getBoundingClientRect();return{x:i.left+(n.x*.5+.5)*i.width,y:i.top+(-n.y*.5+.5)*i.height}}eS().catch(r=>{console.error("[drone-intro] FAILED to start the 3D welcome, falling back to the portfolio:",r);const e=document.getElementById("loading");e&&(e.textContent="3D intro unavailable, opening portfolio...");window.__welcomeFailed=String(r&&r.message||r),window.dispatchEvent(new CustomEvent("welcome:failed",{detail:window.__welcomeFailed}))});
+function Ze(){if(a===$t.PORTFOLIO||a===$t.SKIPPED)return;clearTimeout(de),B($t.SKIPPED),e.hideTooltip();const ie=Eo?1:500;r.style.transition=`opacity ${ie}ms ease`,r.style.opacity="0",e.fadeOutIntro(),setTimeout(We,ie)}e.onSkip(Ze),B($t.INSPECTING);const X=new Ql;let te=null,ve=!0;function le(){if(!ve)return;te=requestAnimationFrame(le);const ie=X.getDelta(),be=performance.now();E.update(ie),U==null||U.update(be),o.update(be),(a===$t.INSPECTING||a===$t.TARGET_HOVERED)&&M.update(),b.update(),__syncBeamRig();if(__flickerOn){const __fk=1+.1*Math.sin(be*.0019)+.06*Math.sin(be*.0049+1.9)+.04*Math.sin(be*.0113+.6);__droneLight.intensity=Un.LIGHT_INTENSITY*__fk,__beamMat.opacity=Un.BEAM_OPACITY*__fk}__veilTick&&__veilTick();ve&&i.render(t,n)}le(),console.log("[drone-intro] ready: first frame rendered"),window.dispatchEvent(new CustomEvent("welcome:ready"));function Ne(){ve=!1,te&&cancelAnimationFrame(te);try{clearTimeout(de),E.stopAllAction(),t.traverse(__o=>{__o.geometry&&__o.geometry.dispose&&__o.geometry.dispose();const __m=__o.material;(Array.isArray(__m)?__m:__m?[__m]:[]).forEach(__x=>{for(const __k in __x){const __v=__x[__k];__v&&__v.isTexture&&__v.dispose()}__x.dispose()})}),t.environment&&t.environment.dispose&&t.environment.dispose(),__rd&&__rd(),i.forceContextLoss&&i.forceContextLoss()}catch(__e){console.warn("[drone-intro] cleanup:",__e)}console.log("[drone-intro] render loop stopped, GPU resources released")}}function tS(r,e,t){const n=new w;r.getWorldPosition(n),n.project(e);const i=t.getBoundingClientRect();return{x:i.left+(n.x*.5+.5)*i.width,y:i.top+(-n.y*.5+.5)*i.height}}eS().catch(r=>{console.error("[drone-intro] FAILED to start the 3D welcome, falling back to the portfolio:",r);const e=document.getElementById("loading");e&&(e.textContent="3D intro unavailable, opening portfolio...");window.__welcomeFailed=String(r&&r.message||r),window.dispatchEvent(new CustomEvent("welcome:failed",{detail:window.__welcomeFailed}))});
 
 })();
