@@ -27,6 +27,7 @@
     </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="welcome/welcome.css">
+    <link rel="stylesheet" href="tile-video.css">
     <noscript><style>#welcome-overlay{display:none}</style></noscript>
 </head>
 <body>
@@ -233,9 +234,9 @@
 
             <!-- 2 Mocap -->
             <button type="button" class="tile t7" data-open="mocap" aria-haspopup="dialog">
-                <span class="tile-art tile-art-photos" aria-hidden="true">
+                <span class="tile-art tile-art-photos tile-art-vid one" aria-hidden="true">
                     <img src="assets/images/mocap-1.jpg" alt="" loading="lazy">
-                    <img src="assets/images/mocap-2.jpg" alt="" loading="lazy">
+                    <video class="tile-vid" muted loop playsinline preload="none" tabindex="-1" poster="assets/images/mocap-1.jpg" data-src="assets/videos/mocap-1.mp4"></video>
                 </span>
                 <span class="tile-body">
                     <span class="tile-meta">Lufthansa Technik</span>
@@ -262,8 +263,9 @@
 
             <!-- 4 Cinematic -->
             <button type="button" class="tile t7" data-open="cinematic" aria-haspopup="dialog">
-                <span class="tile-art tile-art-photos one" aria-hidden="true">
+                <span class="tile-art tile-art-photos tile-art-vid one" aria-hidden="true">
                     <img src="assets/images/trailer-1.jpg" alt="" loading="lazy">
+                    <video class="tile-vid" muted loop playsinline preload="none" tabindex="-1" poster="assets/images/trailer-1.jpg" data-src="assets/videos/trailer-1.mp4"></video>
                 </span>
                 <span class="tile-body">
                     <span class="tile-meta">Lufthansa Technik</span>
@@ -289,8 +291,9 @@
 
             <!-- 6 Robot -->
             <button type="button" class="tile t5" data-open="robot" aria-haspopup="dialog">
-                <span class="tile-art tile-art-photos one" aria-hidden="true">
+                <span class="tile-art tile-art-photos tile-art-vid one" aria-hidden="true">
                     <img src="assets/images/bot-poster.jpg" alt="" loading="lazy">
+                    <video class="tile-vid" muted loop playsinline preload="none" tabindex="-1" poster="assets/images/bot-poster.jpg" data-src="assets/videos/bot-demo.mp4"></video>
                 </span>
                 <span class="tile-body">
                     <span class="tile-meta">Academic project · Robotics</span>
@@ -903,6 +906,7 @@
 </template>
 
 <script src="script.js"></script>
+<script src="tile-video.js" defer></script>
 <!-- Classic (non-module) script on purpose: browsers refuse to run type="module"
      scripts from file:// pages, which is what silently broke the intro when
      index.html was double-clicked. -->

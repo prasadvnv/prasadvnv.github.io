@@ -1,0 +1,24 @@
+/* Muted looping video previews inside project tiles.
+   The poster <img> stays a normal flex child of .tile-art (so the tile layout is exactly
+   as before); the <video> is layered over it and only fades in once it is really playing.
+   If autoplay is blocked or motion is reduced, the poster simply stays visible. */
+.tile-art-vid > video.tile-vid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .45s ease, transform .5s var(--ease);
+    pointer-events: none;
+    background: transparent;
+}
+
+.tile-art-vid > video.tile-vid.is-playing { opacity: 1; }
+
+/* same hover zoom the photo tiles have */
+.tile:hover .tile-art-vid > video.tile-vid { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: reduce) {
+    .tile-art-vid > video.tile-vid { display: none; }
+}
