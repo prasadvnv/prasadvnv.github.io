@@ -3968,6 +3968,9 @@ const __camDistAtSetup=Math.max(n.position.distanceTo(u.position),p);
 // keeps this safe even though it's long, not a short length.
 const __beamLen=__camDistAtSetup*.62,__beamEndRadius=__beamLen*.1;
 const __beamAngle=Math.atan2(__beamEndRadius,__beamLen);
+// Effective beam length. Always __beamLen on desktop; on mobile it is shortened every frame
+// so the beam ends on the headset (see __syncBeamRig) instead of running on past it.
+let __beamLenEff=__beamLen;
 const __droneLight=new Jl(P.getHex(),0,__beamLen*1.3,__beamAngle,.55,1.6);
 __droneLight.target.position.set(0,0,1);
 __beamRig.add(__droneLight,__droneLight.target);
@@ -4025,7 +4028,14 @@ function __syncBeamRig(){
   // from the rig by an arbitrary, much shorter beamLen did.
   const depth=n.position.distanceTo(__beamRig.position);
   __beamAimTarget.copy(n.position).addScaledVector(dir,depth);
-  __beamRig.lookAt(__beamAimTarget)
+  __beamRig.lookAt(__beamAimTarget);
+  // Mobile only: __beamAimTarget projects exactly onto the headset centre, so stop the cone there.
+  // A uniform scale about the apex keeps the cone's angle; the reveal mask in paint() reads
+  // __beamLenEff, so the visible beam and the lit area keep ending at the same point.
+  if(__MOBILE){
+    __beamLenEff=Math.min(Math.max(__beamRig.position.distanceTo(__beamAimTarget),__beamLen*.02),__beamLen*1.2);
+    __beamCone.scale.setScalar(__beamLenEff/__beamLen)
+  }
 }
 __syncBeamRig();
 
@@ -4143,10 +4153,10 @@ n.updateMatrixWorld(!0);
 __beamRig.updateMatrixWorld(!0);
 proj(__beamRig.position,Lp);
 _d.set(0,0,1).transformDirection(__beamRig.matrixWorld);
-_e.copy(__beamRig.position).addScaledVector(_d,__beamLen);
+_e.copy(__beamRig.position).addScaledVector(_d,__beamLenEff);
 proj(_e,Ep);
 _rt.setFromMatrixColumn(n.matrixWorld,0);
-_e.addScaledVector(_rt,__beamEndRadius);
+_e.addScaledVector(_rt,__beamEndRadius*(__beamLenEff/__beamLen));
 proj(_e,E2p);
 const Lx=Lp[0],Ly=Lp[1],Hx=__hmdPoint.x,Hy=__hmdPoint.y;
 let ax=Hx-Lx,ay=Hy-Ly;const D=Math.max(1,Math.hypot(ax,ay));ax/=D;ay/=D;
@@ -4166,7 +4176,7 @@ const vmin=Math.min(vw,vh);
 lux=lex/Dl;luy=ley/Dl;
 lw0=Math.max(8,Dl*.012);
 lw1=Math.max(lw0,Math.min(Math.hypot(E2p[0]-Ep[0],E2p[1]-Ep[1]),vmin*.45));
-rp=Math.max(lw1*1.1,vmin*.07)               // light pool where the beam lands
+rp=Math.max(lw1*1.1,vmin*.07,__MOBILE?Rh*.7:0)               // light pool where the beam lands (mobile: sized to the headset, since the beam now ends on it)
 }
 // --- timeline (flood phase; all of it is zero until the beam has locked on)
 const front=Po(clamp01(p/.36))*(D*1.2);            // lit front travelling lens -> headset (and just past)
