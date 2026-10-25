@@ -3862,6 +3862,84 @@ u.rotation.y=Un.DRONE_YAW;
 const __restLookTarget=new w(0,p*Un.FRAME_LOWER_FRACTION,0);
 if(!Eo)n.lookAt(__restLookTarget);
 
+// --- Mobile (single-column layout, same 960px breakpoint as style.css) ---------
+// Everything below is inert on desktop: __MOBILE is false there, __mobEnd stays
+// null and the original rise (DRONE_YAW framing, RISE_DISTANCE/LEFT_SHIFT, camera
+// pull-back) runs untouched. On mobile the camera stays at its rest pose; the
+// drone itself starts low in the viewport and flies a straight, diagonal screen
+// path to a spot just above the headset (see __mobileEndOffset, used by me()).
+const __MOBILE=!Eo&&window.matchMedia("(max-width: 960px)").matches;
+const __MOB={BOTTOM_CLEAR_MIN:72,BOTTOM_CLEAR_FRAC:.1,START_X_FRAC:.08,END_SHIFT_X_FRAC:.2,END_GAP_PX:6,EDGE_PAD:18,TOP_PAD:12,END_SCALE:.96};
+const __mobTmp=new w;
+// Screen-space bounds (CSS px) of the drone, from its real (skinned) vertices as the
+// camera sees them. Projecting the corners of a world-space box would over-estimate
+// the footprint once the camera is tilted, which matters for the tight edge gaps.
+let __mobMeshes=null;
+function __mobBounds(){
+  n.updateMatrixWorld(!0);u.updateMatrixWorld(!0);
+  if(!__mobMeshes){__mobMeshes=[];u.traverse(o=>{o.isMesh&&o.geometry&&o.geometry.attributes.position&&__mobMeshes.push(o)})}
+  const vw=window.innerWidth,vh=window.innerHeight;
+  let x0=1/0,y0=1/0,x1=-1/0,y1=-1/0;
+  for(const mesh of __mobMeshes){
+    let vis=!0;for(let o=mesh;o&&o!==u;o=o.parent)if(!o.visible){vis=!1;break}
+    if(!vis)continue;
+    const cnt=mesh.geometry.attributes.position.count,step=Math.max(1,Math.floor(cnt/1500));
+    for(let k=0;k<cnt;k+=step){
+      mesh.getVertexPosition(k,__mobTmp);__mobTmp.applyMatrix4(mesh.matrixWorld).project(n);
+      const sx=(__mobTmp.x*.5+.5)*vw,sy=(-__mobTmp.y*.5+.5)*vh;
+      x0=Math.min(x0,sx);x1=Math.max(x1,sx);y0=Math.min(y0,sy);y1=Math.max(y1,sy)
+    }
+  }
+  return{x0,y0,x1,y1,cx:(x0+x1)/2,cy:(y0+y1)/2,hw:(x1-x0)/2,hh:(y1-y0)/2}
+}
+if(__MOBILE){
+  const vw=window.innerWidth,vh=window.innerHeight;
+  const prevScale=u.scale.x;u.scale.setScalar(Un.DRONE_SCALE);   // measure at its settled size
+  E.update(0);                                                    // measure the animated pose, not the bind pose
+  const pxu=vh/(2*n.position.length()*Math.tan(n.fov*Math.PI/360));
+  let m=__mobBounds();
+  const clear=Math.max(__MOB.BOTTOM_CLEAR_MIN,vh*__MOB.BOTTOM_CLEAR_FRAC);
+  // keep the whole drone (arms included) inside the width, and leave room above it for the HUD
+  const wantCx=Math.min(Math.max(vw/2+vw*__MOB.START_X_FRAC,m.hw+__MOB.EDGE_PAD),Math.max(vw/2,vw-m.hw-__MOB.EDGE_PAD));
+  const wantBottom=vh-clear;
+  for(let k=0;k<10;k++){
+    m=__mobBounds();
+    const ex=wantCx-m.cx,ey=wantBottom-(m.cy+m.hh);
+    if(Math.abs(ex)<.5&&Math.abs(ey)<.5)break;
+    __restLookTarget.x-=ex/pxu;__restLookTarget.y+=ey/pxu;      // aim the camera, as the desktop framing does
+    n.lookAt(__restLookTarget)
+  }
+  u.scale.setScalar(prevScale)
+}
+// Where the drone must end up, as a world offset from its rest position, so that its
+// bounding box sits just above the headset art, left of centre, fully on screen.
+function __mobileEndOffset(endQuat){
+  __refreshHmdPoint();
+  const vw=window.innerWidth,vh=window.innerHeight;
+  const sp=u.position.clone(),sq=u.quaternion.clone(),ss0=u.scale.x;
+  u.position.set(0,0,0);u.quaternion.copy(endQuat);u.scale.setScalar(Un.DRONE_SCALE*__MOB.END_SCALE);
+  const pxu=vh/(2*n.position.length()*Math.tan(n.fov*Math.PI/360));
+  const right=new w().setFromMatrixColumn(n.matrixWorld,0),up=new w().setFromMatrixColumn(n.matrixWorld,1);
+  let m=__mobBounds();
+  const hmdTop=__hmdPoint.y-__hmdPoint.h/2;
+  // bottom edge of the drone just above the headset art (a sliver into the art's own empty margin)
+  const wantBottom=hmdTop+__hmdPoint.h*.1-__MOB.END_GAP_PX;
+  const off=new w();
+  for(let k=0;k<10;k++){
+    m=__mobBounds();
+    // targets re-derived from the current bounds: off-axis the drone's footprint grows, so
+    // the left/top clamps must use its footprint where it will actually be
+    const wantCx=Math.max(m.hw+__MOB.EDGE_PAD,Math.min(vw-m.hw-__MOB.EDGE_PAD,__hmdPoint.x-vw*__MOB.END_SHIFT_X_FRAC));
+    const wantCy=Math.max(m.hh+__MOB.TOP_PAD,wantBottom-m.hh);
+    const ex=wantCx-m.cx,ey=wantCy-m.cy;
+    if(Math.abs(ex)<.5&&Math.abs(ey)<.5)break;
+    off.addScaledVector(right,ex/pxu).addScaledVector(up,-ey/pxu);
+    u.position.copy(off)
+  }
+  u.position.copy(sp);u.quaternion.copy(sq);u.scale.setScalar(ss0);u.updateMatrixWorld(!0);
+  return off
+}
+
 // --- Drone-mounted camera light + soft, narrow-to-wide beam cone. The
 // cone's apex sits at the drone's camera module and widens toward the HMD.
 // Both the cone and the SpotLight's angle are derived from the same two
@@ -3992,11 +4070,12 @@ const __toHmd=__dirToHmd();
 const __targetYaw=Math.atan2(__camLocalFwd.x*__toHmd.z-__camLocalFwd.z*__toHmd.x,__camLocalFwd.x*__toHmd.x+__camLocalFwd.z*__toHmd.z);
 const __targetQuat=new wt().setFromEuler(new en(0,__targetYaw,0));
 const Pe=n.position.clone(),Z=Pe.clone().normalize(),C=Pe.clone().addScaledVector(Z,Pe.length()*Un.CAMERA_PULLBACK),re=p*Un.RISE_DISTANCE,le2=p*Un.LEFT_SHIFT,oe=new w,__qTmp=new wt();
+const __mobEnd=__MOBILE?__mobileEndOffset(__targetQuat):null;
 o.add(new Sn({duration:Un.RISE_DURATION_MS,easing:Po,onUpdate:se=>{
-u.position.y=se*re,u.position.x=-se*le2,u.scale.setScalar(Un.DRONE_SCALE*(1-se*.04));
+__mobEnd?u.position.copy(__mobEnd).multiplyScalar(se):(u.position.y=se*re,u.position.x=-se*le2),u.scale.setScalar(Un.DRONE_SCALE*(1-se*.04));
 __qTmp.copy(__startQuat).slerp(__targetQuat,Math.min(1,se*1.5));
 u.quaternion.copy(__qTmp);
-n.position.lerpVectors(Pe,C,se),oe.set(-se*le2*.3,__restLookTarget.y*(1-se)+se*re*.3,0),n.lookAt(oe)
+__mobEnd||(n.position.lerpVectors(Pe,C,se),oe.set(-se*le2*.3,__restLookTarget.y*(1-se)+se*re*.3,0),n.lookAt(oe))
 },onComplete:()=>{
 console.log("[drone-intro] rise tween: complete, t=",(performance.now()-ie).toFixed(0),"ms after transition start"),__rise=!0,__flickerOn=!1,__droneLight.intensity=L,__beamMat.opacity=O,setTimeout(__lightReveal,220)
 }}))
