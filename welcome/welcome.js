@@ -3966,7 +3966,13 @@ const __camDistAtSetup=Math.max(n.position.distanceTo(u.position),p);
 // camera's actual distance from the rig is what the visible frame is
 // sized against. Low light intensity/opacity (set further down) is what
 // keeps this safe even though it's long, not a short length.
-const __beamLen=__camDistAtSetup*.62,__beamEndRadius=__beamLen*.1;
+// Wider from the start (previously .1, which only looked right once the
+// reveal math's old Rh-based floor kicked in near the end -- see the veil's
+// wH/lw1 below, now driven by this same radius throughout instead of
+// jumping to a separate, wider formula partway through). Widening this one
+// ratio also widens __beamAngle just below, so the SpotLight's illumination
+// cone and the visible mesh cone stay aimed and sized together.
+const __beamLen=__camDistAtSetup*.62,__beamEndRadius=__beamLen*.22;
 const __beamAngle=Math.atan2(__beamEndRadius,__beamLen);
 // Effective beam length. Always __beamLen on desktop; on mobile it is shortened every frame
 // so the beam ends on the headset (see __syncBeamRig) instead of running on past it.
@@ -4029,13 +4035,15 @@ function __syncBeamRig(){
   const depth=n.position.distanceTo(__beamRig.position);
   __beamAimTarget.copy(n.position).addScaledVector(dir,depth);
   __beamRig.lookAt(__beamAimTarget);
-  // Mobile only: __beamAimTarget projects exactly onto the headset centre, so stop the cone there.
-  // A uniform scale about the apex keeps the cone's angle; the reveal mask in paint() reads
-  // __beamLenEff, so the visible beam and the lit area keep ending at the same point.
-  if(__MOBILE){
-    __beamLenEff=Math.min(Math.max(__beamRig.position.distanceTo(__beamAimTarget),__beamLen*.02),__beamLen*1.2);
-    __beamCone.scale.setScalar(__beamLenEff/__beamLen)
-  }
+  // __beamAimTarget projects exactly onto the headset centre, so stop the cone there --
+  // on both layouts: each platform's own __beamRig position and __beamAimTarget already
+  // reflect that layout's own camera and hero-art geometry, so this doesn't copy mobile's
+  // positioning onto desktop, it just stops each platform's own beam at its own headset
+  // instead of letting it run on past it. A uniform scale about the apex keeps the cone's
+  // angle; the reveal mask in paint() reads __beamLenEff, so the visible beam and the lit
+  // area keep ending at the same point.
+  __beamLenEff=Math.min(Math.max(__beamRig.position.distanceTo(__beamAimTarget),__beamLen*.02),__beamLen*1.2);
+  __beamCone.scale.setScalar(__beamLenEff/__beamLen)
 }
 __syncBeamRig();
 
@@ -4161,10 +4169,12 @@ proj(_e,E2p);
 const Lx=Lp[0],Ly=Lp[1],Hx=__hmdPoint.x,Hy=__hmdPoint.y;
 let ax=Hx-Lx,ay=Hy-Ly;const D=Math.max(1,Math.hypot(ax,ay));ax/=D;ay/=D;
 const Rh=Math.max(60,Math.min(__hmdPoint.w,__hmdPoint.h)*.5);
-// cone half-width: the drawn cone's own screen-space taper, at least a good
-// part of the headset art at the far end so the lit patch lands on it
+// cone half-width: the drawn cone's own screen-space taper (tanA), read from
+// the now-wider mesh (see __beamEndRadius above) and reused below for the
+// pre-lock "live" width too, so the reveal is this same width from the
+// beam's first frame instead of only widening once p>0.
 const tanA=Math.hypot(E2p[0]-Ep[0],E2p[1]-Ep[1])/Math.max(1,Math.hypot(Ep[0]-Lx,Ep[1]-Ly));
-const w0=Math.max(8,D*.012),wH=Math.max(D*tanA,Rh*.62);
+const w0=Math.max(8,D*.012),wH=Math.max(D*tanA,w0);
 // --- live flashlight: lens -> the point the beam is landing on right now.
 // Strength follows the beam itself (so it appears with it, and lets go with it).
 const bk=p>0?1-ss(.6,.72,p):ss(.12,.7,__beamMat.opacity/Un.BEAM_OPACITY);
@@ -4175,8 +4185,10 @@ if(liveOn){
 const vmin=Math.min(vw,vh);
 lux=lex/Dl;luy=ley/Dl;
 lw0=Math.max(8,Dl*.012);
-lw1=Math.max(lw0,Math.min(Math.hypot(E2p[0]-Ep[0],E2p[1]-Ep[1]),vmin*.45));
-rp=Math.max(lw1*1.1,vmin*.07,__MOBILE?Rh*.7:0)               // light pool where the beam lands (mobile: sized to the headset, since the beam now ends on it)
+// Same tanA as the locked-on wH above (not a separately-measured width), so the
+// live flashlight is already at the target width instead of growing into it later.
+lw1=Math.max(lw0,Math.min(Dl*tanA,vmin*.45));
+rp=Math.max(lw1*1.1,vmin*.07,Rh*.7)               // light pool where the beam lands, sized to the headset since the beam now ends on it on both layouts
 }
 // --- timeline (flood phase; all of it is zero until the beam has locked on)
 const front=Po(clamp01(p/.36))*(D*1.2);            // lit front travelling lens -> headset (and just past)
