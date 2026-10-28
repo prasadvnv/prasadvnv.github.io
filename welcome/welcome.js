@@ -3972,7 +3972,14 @@ const __camDistAtSetup=Math.max(n.position.distanceTo(u.position),p);
 // jumping to a separate, wider formula partway through). Widening this one
 // ratio also widens __beamAngle just below, so the SpotLight's illumination
 // cone and the visible mesh cone stay aimed and sized together.
-const __beamLen=__camDistAtSetup*.62,__beamEndRadius=__beamLen*.22;
+// Widened again (previously *.22) to meet the ambient glow sphere behind the HMD --
+// see .hero-art::before in style.css: inset -16% around the hero-art box, with a
+// radial-gradient ellipse sized 58%/52% of that larger box. That glow's horizontal
+// radius works out to roughly 0.77x the hero-art box width, versus the ~0.5x (half
+// the box) this ratio was previously tuned against, so it's bumped by that ~1.5x.
+// __beamLen (the cone's apex-to-base distance, still anchored at the drone's own
+// light source via __beamRig each frame -- see __syncBeamRig) is untouched.
+const __beamLen=__camDistAtSetup*.62,__beamEndRadius=__beamLen*.34;
 const __beamAngle=Math.atan2(__beamEndRadius,__beamLen);
 // Effective beam length. Always __beamLen on desktop; on mobile it is shortened every frame
 // so the beam ends on the headset (see __syncBeamRig) instead of running on past it.
@@ -4056,7 +4063,6 @@ e.fadeOutIntro();
 e.setStatus&&e.setStatus("LIFT-OFF","rising");
 const L=Un.LIGHT_INTENSITY,O=Un.BEAM_OPACITY;
 if(Eo){T&&(T.timeScale=1),__droneLight.intensity=L,__beamMat.opacity=O,__lightReveal();return}
-__flickerOn=!0;
 // The portfolio reveal starts with the beam: the veil opens along it from its first frame.
 __beamVeilStart();
 // Rotor spin-up, the camera-light flicker-on/off/steady sequence, the
@@ -4068,13 +4074,31 @@ __beamVeilStart();
 // along for free as the drone rotates and climbs.
 console.log("[drone-intro] cold start: rotor spin-up and camera light sequence begun");
 if(T)o.add(new Sn({duration:Un.COLDSTART_ACCEL_MS,easing:Po,onUpdate:f=>{T.timeScale=Un.IDLE_ROTOR_SCALE+(1-Un.IDLE_ROTOR_SCALE)*f}}));
-o.add(new Sn({duration:Un.COLDSTART_FLICKER_ON_MS,onUpdate:f=>{__droneLight.intensity=L*f,__beamMat.opacity=O*f},onComplete:()=>{
-o.add(new Sn({duration:Un.COLDSTART_FLICKER_OFF_MS,onUpdate:f=>{__droneLight.intensity=L*(1-f),__beamMat.opacity=O*(1-f)},onComplete:()=>{
-o.add(new Sn({duration:Un.COLDSTART_STEADY_MS,easing:Po,onUpdate:f=>{__droneLight.intensity=L*f,__beamMat.opacity=O*f},onComplete:()=>{
-console.log("[drone-intro] cold start: camera light steady")
-}}))
-}}))
-}}));
+// A brief, irregular power-up flicker (several quick, uneven pulses) instead of the old
+// single on/off/on blink, then an eased settle into the steady beam -- avoids an abrupt
+// instant-on while staying subtle. Each segment lerps intensity/opacity from the level
+// the previous one ended at to its own target fraction (f) of the full L/O values.
+const __flickerLin=f=>f;
+function __flickerStep(segs,idx,fromFrac){
+// Only now hand off to the continuous ambient flicker in the render loop (the sine-wave
+// jitter keyed on __flickerOn, used for the rest of the rise) -- while it was true from
+// the very start, it overwrote this pulse sequence's intensity every single frame, which
+// is why the power-up flicker above was invisible (it looked like an instant jump instead).
+if(idx>=segs.length){__flickerOn=!0;console.log("[drone-intro] cold start: camera light steady");return}
+const seg=segs[idx];
+o.add(new Sn({duration:seg.d,easing:seg.ease||__flickerLin,onUpdate:f=>{
+const frac=fromFrac+(seg.f-fromFrac)*f;
+__droneLight.intensity=L*frac,__beamMat.opacity=O*frac
+},onComplete:()=>__flickerStep(segs,idx+1,seg.f)}))
+}
+__flickerStep([
+{d:Un.COLDSTART_FLICKER_ON_MS,f:.5},
+{d:Un.COLDSTART_FLICKER_OFF_MS,f:.07},
+{d:65,f:.72},
+{d:55,f:.18},
+{d:95,f:.46},
+{d:Un.COLDSTART_STEADY_MS,f:1,ease:Po}
+],0,0);
 // Solve the upright yaw that aims the camera module (via its fixed local
 // forward, captured at setup) at the HMD -- a direct solve, not an addition
 // to whatever u.rotation.y currently reads, which is only meaningful on its
