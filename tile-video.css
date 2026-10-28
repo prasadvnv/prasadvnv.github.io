@@ -16,6 +16,17 @@
 
 .tile-art-vid > video.tile-vid.is-playing { opacity: 1; }
 
+/* Warehouse robot tile: show the whole clip instead of cropping it.
+   The video keeps filling the tile's existing media area (so no tile size changes),
+   but object-fit: contain scales the picture to whatever width and height that area has,
+   with its aspect ratio intact. The padding keeps it clear of the tile edges, and the
+   solid ground matches the photo tiles so any letterbox bars look intentional. */
+.tile[data-open="robot"] .tile-art-vid > video.tile-vid {
+    object-fit: contain;
+    padding: .5rem;
+    background: var(--ink);
+}
+
 /* same hover zoom the photo tiles have */
 .tile:hover .tile-art-vid > video.tile-vid { transform: scale(1.03); }
 

@@ -90,7 +90,8 @@
         var art = t.closest('.tile-art');
         if (!art) return;
         t.remove();
-        if (!art.querySelector('img')) art.hidden = true;
+        // Keep the area if a tile video lives in it: a missing poster must not hide the preview video.
+        if (!art.querySelector('img, video')) art.hidden = true;
     }, true);
 
     /* ── Back to top ─────────────────────────
