@@ -412,6 +412,9 @@ h3 { font-size: 1.35rem; line-height: 1.25; }
 .foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .foot-brand { display: inline-flex; align-items: center; gap: .7rem; }
 .foot a:hover { color: var(--accent); }
+.foot-credit { margin-top: 1rem; font-size: .78rem; line-height: 1.5; max-width: 52em; }
+.foot-credit a { text-decoration: underline; text-underline-offset: 2px; }
+.foot-credit a:hover { color: var(--accent); }
 
 /* ── Project dialog ── */
 .pd-dialog {

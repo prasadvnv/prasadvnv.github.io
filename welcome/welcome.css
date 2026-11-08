@@ -24,6 +24,10 @@
 .tooltip-label{color:var(--wc-ink);opacity:.92}
 .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:12px;letter-spacing:.08em;color:var(--wc-ink-dim);transition:opacity .4s ease}
 .loading.hidden{opacity:0}
+/* CC BY credit for the drone model, shown for as long as the model is on screen. */
+.model-credit{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translate(-50%);width:max-content;max-width:92vw;margin:0;text-align:center;font-size:11px;line-height:1.4;letter-spacing:.02em;color:var(--wc-ink-dim);opacity:0;animation:wc-fade-in-c 1.4s ease .6s forwards;pointer-events:none}
+.model-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px;pointer-events:auto}
+.model-credit a:hover{color:var(--wc-ink)}
 
 /* The beam-led reveal staging (html.hero-stage-wait / .hero-revealing) lives in
    style.css, since .hero-art is part of the real page, not this overlay. */
@@ -31,4 +35,4 @@
 @keyframes wc-fade-in-c{0%{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes wc-fade-in{0%{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes wc-dot-pulse{0%,100%{opacity:1}50%{opacity:.55}}
-@media (prefers-reduced-motion: reduce){.skip-btn,.intro-copy{animation:none;opacity:1}#welcome-overlay{transition:opacity .2s linear}#scene-canvas{transition:none !important}}
+@media (prefers-reduced-motion: reduce){.skip-btn,.intro-copy,.model-credit{animation:none;opacity:1}#welcome-overlay{transition:opacity .2s linear}#scene-canvas{transition:none !important}}
