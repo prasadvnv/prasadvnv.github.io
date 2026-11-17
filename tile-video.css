@@ -1,3 +1,4 @@
+/* debug03 */
 /* Muted looping video previews inside project tiles.
    The poster <img> stays a normal flex child of .tile-art (so the tile layout is exactly
    as before); the <video> is layered over it and only fades in once it is really playing.
