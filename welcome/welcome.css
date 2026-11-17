@@ -1,3 +1,4 @@
+/* checking in */
 :root{--wc-bg: var(--bg, #161B26);--wc-ink: var(--ink, #EEF1F6);--wc-ink-dim: var(--ink-2, #A5AEC0);--wc-line: var(--line, #2E374A)}
 #welcome-overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1000;background:var(--wc-bg);color-scheme:dark;transition:opacity .6s ease}
 #welcome-overlay.hiding{opacity:0;pointer-events:none}
