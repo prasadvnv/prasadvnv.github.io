@@ -1,4 +1,3 @@
-/* chcking in*/
 /* ============================================================
    Vishnu Prasad portfolio, v6
    Slate and coral palette, light and dark.
@@ -591,11 +590,3 @@ html.hero-stage-wait.hero-pool-lit.hero-glow-out .hero-art::before {
     to { opacity: 0; }
 }
 
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    /* One-time, finite fill of the language rings stays on: it is part of the design, not a loop. */
-    .radial svg { transition: transform 1.6s var(--ease) !important; }
-    .rd-arc { transition: stroke-dashoffset 1.6s var(--ease) !important; }
-}

@@ -2,7 +2,6 @@
    - Poster shows immediately (it is a normal <img> in the tile).
    - Nothing is downloaded on page load: the video src is only attached when a
      tile is near the viewport, and playback pauses again when it scrolls away.
-   - Respects prefers-reduced-motion and Save-Data (poster only).
    - Works on mobile: muted + playsinline are forced as properties (iOS needs
      that), and a blocked autoplay is retried on the first touch/scroll. */
 (function () {
@@ -11,13 +10,7 @@
     var videos = Array.prototype.slice.call(document.querySelectorAll('video.tile-vid[data-src]'));
     if (!videos.length) return;
 
-    var reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-    function motionAllowed() {
-        if (reduceMq && reduceMq.matches) return false;
-        var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (c && c.saveData) return false;
-        return true;
-    }
+    function motionAllowed() { return true; }
 
     var visible = new Set();
 
@@ -98,16 +91,4 @@
         else retryVisible();
     });
 
-    // Reduced-motion toggled at runtime.
-    if (reduceMq) {
-        var onMq = function () {
-            if (!motionAllowed()) {
-                videos.forEach(function (v) { pause(v); v.classList.remove('is-playing'); });
-            } else {
-                retryVisible();
-            }
-        };
-        if (reduceMq.addEventListener) reduceMq.addEventListener('change', onMq);
-        else if (reduceMq.addListener) reduceMq.addListener(onMq);
-    }
 })();

@@ -1,4 +1,3 @@
-/* checking in */
 :root{--wc-bg: var(--bg, #161B26);--wc-ink: var(--ink, #EEF1F6);--wc-ink-dim: var(--ink-2, #A5AEC0);--wc-line: var(--line, #2E374A)}
 #welcome-overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1000;background:var(--wc-bg);color-scheme:dark;transition:opacity .6s ease}
 #welcome-overlay.hiding{opacity:0;pointer-events:none}
@@ -36,4 +35,3 @@
 @keyframes wc-fade-in-c{0%{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes wc-fade-in{0%{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes wc-dot-pulse{0%,100%{opacity:1}50%{opacity:.55}}
-@media (prefers-reduced-motion: reduce){.skip-btn,.intro-copy,.model-credit{animation:none;opacity:1}#welcome-overlay{transition:opacity .2s linear}#scene-canvas{transition:none !important}}

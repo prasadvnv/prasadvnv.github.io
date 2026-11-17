@@ -7,7 +7,7 @@
     'use strict';
 
     var root = document.documentElement;
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduceMotion = { matches: false };
     var colorQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     /* ── Theme ───────────────────────────── */
@@ -130,7 +130,6 @@
     var opener = null;
 
     // Videos start by themselves when a project opens (muted, so browsers allow it).
-    // Visitors who asked their system for reduced motion keep the controls and press play themselves.
     function playVideos() {
         if (reduceMotion.matches) return;
         content.querySelectorAll('video').forEach(function (v) {
